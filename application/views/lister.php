@@ -12,7 +12,11 @@
                     <h3>Annonce passager</h3>
                 <?php } ?>
                 <p><?php echo $annonce->username?> vous propose</p>
-                <h4><?php echo $annonce->depart ?> -> <?php echo $annonce->arrivee ?></h4>
+                <?php echo anchor( 'annonce/voir/'.$annonce->id,
+                                   '<h4>'.$annonce->depart.' -> '.$annonce->arrivee.'</h4>',
+                                   array('title'=>'voir l\'annonce '.$annonce->depart.'-'.$annonce->arrivee, 'hreflang'=>'fr' )); ?>    
+                        
+                
                 <p>Le <?php echo $annonce->date ?> à <?php echo $annonce->heure ?> avec +/- <?php echo $annonce->flexibilite ?>jour(s)</p>
                 <p><?php echo $annonce->places ?> place(s) disponible(s)</p>
                 <h4>Description</h4>

@@ -4,9 +4,9 @@
     {
         public function lister()
 	{
-            $this->db->select('annonces.*,users.*, users.id as id_user');
+            $this->db->select('*');
             $this->db->from('annonces');
-            $this->db->join('users','users.id = annonces.user_id');
+            $this->db->join('users','users.user_id = annonces.user_id');
             
            
             $query = $this->db->get();
@@ -14,12 +14,12 @@
                     
 	}
         
-        public function voir($id)
+        public function voir($idAnnonce)
         {
-            $this->db->select('profs.*, specs.nom as specialite, specs.spec_id as sspec_id');
-            $this->db->from('profs');
-            $this->db->join('specs','profs.spec_id = specs.spec_id');
-            $this->db->where('profs.prof_id',$id);
+            $this->db->select('*');
+            $this->db->from('annonces');
+            $this->db->join('users','users.user_id = annonces.user_id');
+            $this->db->where('annonces.id',$idAnnonce);
             
             $query = $this->db->get();
             return $query->row();

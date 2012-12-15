@@ -16,6 +16,16 @@ class Annonce extends CI_Controller {
             $this->load->view('layout',$data);
         }
         
+        public function voir(){
+            $idAnnonce = $this->uri->segment(3);
+            $this->load->model('M_Annonce');
+            $dataAnnonce['annonce'] = $this->M_Annonce->voir($idAnnonce);
+            $dataLayout['vue'] = $this->load->view('voir',$dataAnnonce,true);
+            $dataLayout['titre'] = "Annonce  ".$dataAnnonce['annonce']->depart."-".$dataAnnonce['annonce']->arrivee;
+            
+            $this->load->view('layout',$dataLayout);
+        }
+        
        
 }
 
