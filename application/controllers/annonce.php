@@ -4,11 +4,11 @@ class Annonce extends CI_Controller {
 
 	
 	public function index(){
-            $this->load->model('M_Annonce');
             $this->lister();
  	}
         
         public function lister(){
+            $this->load->model('M_Annonce');
             $dataList['page'] = 'Accueil';
             $dataList['titre'] = 'liste des annonces';
             $dataList['annonces'] = $this->M_Annonce->lister();
@@ -26,8 +26,14 @@ class Annonce extends CI_Controller {
             $this->load->view('layout',$dataLayout);
         }
         
+        public function user(){
+           $idUser = $this->uri->segment(3);
+           $this->load->model('M_Annonce');
+           $dataUser['page'] = 'Profil';
+           $dataUser['titre'] = 'liste des annonces de l\'utilisateur';
+           $dataUser['annonces'] = $this->M_Annonce->user($idUser);
+           $dataLayout['vue'] = $this->load->view('user',$dataUser,true);
+           $this->load->view('layout',$dataLayout);
+        }
        
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */

@@ -14,4 +14,5 @@
 
 
     <hr/>
+    <p><?php echo anchor( 'annonce/lister','Retour à la liste des annonces',array('title'=>'Retour à la liste des annonces', 'hreflang'=>'fr' )); ?></p>    
 </div>

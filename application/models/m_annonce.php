@@ -24,4 +24,15 @@
             $query = $this->db->get();
             return $query->row();
         }
+        
+        public function user($idUser){
+            $this->db->select('*');
+            $this->db->from('annonces');
+            $this->db->join('users','users.user_id = annonces.user_id');
+            $this->db->where('annonces.user_id',$idUser);
+            
+            $query = $this->db->get();
+            return $query->result();
+            
+        }
     }

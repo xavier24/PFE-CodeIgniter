@@ -11,7 +11,7 @@
                 else{?>
                     <h3>Annonce passager</h3>
                 <?php } ?>
-                <p><?php echo $annonce->username?> vous propose</p>
+                <p><?php echo anchor('annonce/user/'.$annonce->user_id,$annonce->username, array('title'=>'voir le profil de'.$annonce->username, 'hreflang'=>'fr')) ?> vous propose</p>
                 <?php echo anchor( 'annonce/voir/'.$annonce->id,
                                    '<h4>'.$annonce->depart.' -> '.$annonce->arrivee.'</h4>',
                                    array('title'=>'voir l\'annonce '.$annonce->depart.'-'.$annonce->arrivee, 'hreflang'=>'fr' )); ?>    
