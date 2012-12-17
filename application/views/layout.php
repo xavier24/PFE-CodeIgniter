@@ -6,15 +6,19 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Car-People</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/normalize.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/main.css">
-        <script src="<?php echo base_url(); ?>js/modernizr-2.6.1.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url(); ?>web/css/normalize.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>web/css/style.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>web/css/fontello.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>web/css/animation.css"><!--[if IE 7]>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>web/css/fontello-ie7.css"><![endif]-->
+                
+        <script src="<?php echo base_url(); ?>web/js/modernizr-2.6.1.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -22,14 +26,24 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
+        <header>
+            <img src="<?php echo base_url(); ?>web/images/header.jpg"/>
+            <h1>Car-People</h1>
+            <img src="<?php echo base_url(); ?>web/images/voyageur.png" class="voyageur"/>
+        </header>
+        <nav>
+            <a href="#">Rechercher une annonce</a><a href="#" class="publier_annonce">Publier mon annonce</a><a href="#">Inscription</a><a href="#">Aide&nbsp;-&nbsp;FAQ</a>
+        </nav>
         <?php echo $vue ?>
 
         
-        
+        <footer>
+            <p>footer</p>
+        </footer>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="<?php echo base_url(); ?>js/jquery-1.8.2.min.js"><\/script>')</script>
-        <script src="<?php echo base_url(); ?>js/plugins.js"></script>
-        <script src="<?php echo base_url(); ?>js/main.js"></script>
+        <script>window.jQuery || document.write('<script src="<?php echo base_url(); ?>web/js/jquery-1.8.2.min.js"><\/script>')</script>
+        <script src="<?php echo base_url(); ?>web/js/plugins.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
