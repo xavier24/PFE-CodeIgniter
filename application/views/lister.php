@@ -69,8 +69,8 @@
                 echo form_password($mdpInput);
                 
                 echo form_fieldset_close();
-                echo '<p><a href="#">Mot de passe oublié&nbsp;?</a> / <a href="#">Pas encore inscrit&nbsp;?</a></p>';
-               $data = array(
+                echo '<p><a href="'.base_url().'redefinition">Mot de passe oublié&nbsp;?</a> / <a href="'.base_url().'inscription">Pas encore inscrit&nbsp;?</a></p>';
+                $data = array(
                     'name' => 'button',
                     'id' => 'button',
                     'value' => 'true',

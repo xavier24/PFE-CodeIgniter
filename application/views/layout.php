@@ -32,7 +32,9 @@
             <img src="<?php echo base_url(); ?>web/images/voyageur.png" class="voyageur"/>
         </header>
         <nav>
-            <a href="<?php echo base_url(); ?>">Rechercher une annonce</a><a href="#" class="publier_annonce">Publier mon annonce</a><a href="#">Inscription</a><a href="#">Aide&nbsp;-&nbsp;FAQ</a>
+            <a href="<?php echo base_url(); ?>">Rechercher une annonce</a><a href="#" class="publier_annonce">Publier mon annonce</a><!--
+         --><?php echo (!$this->session->userdata('logged_in'))?  '<a href="'.base_url().'inscription">Inscription</a>': '<a href="'.base_url().'profil">Mon profil</a>' ?><!--
+         --><a href="#">Aide&nbsp;-&nbsp;FAQ</a>
         </nav>
         <?php echo $vue ?>
 
