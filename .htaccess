@@ -543,7 +543,7 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 
 
 
-RewriteCond $1 !^(index.php|images|web|robots\.txt)
+RewriteCond $1 !^(index.php|web|robots\.txt)
     
     #COMMENTAIRE [L] = si correspondance, s'arreter la
 RewriteRule ^(.*)$ index.php/$1 [L] 
