@@ -3,10 +3,18 @@
 class User extends CI_Controller {
     
     public function index(){
-        $this->user();
+        //$this->profil();
         
     }
+    
+    public function __construct(){
+        parent::__construct();
+        $this->lang->load('fr', 'francais');
+    }
+
+
     public function profil(){
+           
            $idUser = $this->uri->segment(3,0);
            $this->load->model('M_User');
            $dataUser['page'] = 'Profil';
@@ -14,6 +22,7 @@ class User extends CI_Controller {
            $dataUser['info_profil'] = $this->M_User->user($idUser);
            $dataUser['annonces'] = $this->M_User->trajet($idUser);
            $dataLayout['vue'] = $this->load->view('profil',$dataUser,true);
+           
            $this->load->view('layout',$dataLayout);
     }
     public function lister(){

@@ -9,4 +9,4 @@
                 <hr/>
             </div>
             <?php endforeach; ?>
-<p><?php echo anchor( 'accueil/lister','Retour à la liste des annonces',array('title'=>'Retour à la liste des annonces', 'hreflang'=>'fr' )); ?></p>    
+<p><?php echo anchor( 'accueil/lister',$this->lang->line('retour_liste_annonces'),array('title'=>'Retour à la liste des annonces', 'hreflang'=>'fr' )); ?></p>    
