@@ -6,6 +6,7 @@
             $this->db->select('*');
             $this->db->from('annonces');
             $this->db->join('users','users.user_id = annonces.user_id');
+            $this->db->limit(10, 20);
             
            
             $query = $this->db->get();

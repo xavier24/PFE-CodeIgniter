@@ -7,6 +7,37 @@ class Annonce extends CI_Controller {
             $this->load->model('M_Annonce');
         }
         
+        public function lister(){
+            $dataList['info_membre'] = $this->session->userdata('logged_in');
+            $dataList['page'] = 'Accueil';
+            $dataList['titre'] = 'liste des resultats';
+            
+            $recherche['passager'] = $this->input->post('passager');
+            $recherche['conducteur'] = $this->input->post('conducteur');
+            $recherche['depart'] = $this->input->post('depart');
+            $recherche['arrivee'] = $this->input->post('arrivee');
+            $recherche['date'] = $this->input->post('date');
+            $recherche['flex'] = $this->input->post('flex');
+            $recherche['places'] = $this->input->post('places');
+            
+            $dataList['annonces'] = $this->M_Annonce->lister($recherche);
+            
+            foreach($dataList['annonces'] as $key => $annonce){
+                $annonce->note = 0;
+                $param_verif = array('depart'=>'100','arrivee'=>'80','date'=>'70');
+                foreach($param_verif as $key_array => $value){
+                    if($annonce->$key_array == $recherche[$key_array]){
+                        $annonce->note += $value;
+                    }
+                }
+            };
+            var_dump($dataList['annonces']); 
+            
+            
+            $data['vue'] = $this->load->view('lister',$dataList,true);
+            $this->load->view('layout',$data);
+        }
+        
         public function voir(){
             $idAnnonce = $this->uri->segment(3);
             $dataAnnonce['annonce'] = $this->M_Annonce->voir($idAnnonce);

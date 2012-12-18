@@ -1,24 +1,27 @@
 <section id="col1">
     <h1>Recherche rapide</h1>
-    <form method="post">
+    <?php echo form_open('annonce/lister',array('method'=>'post')); ?>
         <div id="recherche" class="formulaire">
             <p>Je suis </p>
-            <label class="radio"><input id="passager" type="radio" name="pass-cond" /><img src="<?php echo base_url(); ?>web/images/passager.png" title="" alt=""/></label>
-            <label class="radio"><input id="conducteur" type="radio" name="pass-cond" /><img src="<?php echo base_url(); ?>web/images/conducteur.png" title="" alt=""/></label>
-            <label>voyageant de<input type="text" name="depart" id="depart" placeholder="ville de départ" /></label>
-            <label>à<input type="text" name="arrivee" id="arrivee" placeholder="ville d'arrivée"/></label>
-            <label>le<input type="date" name="date" id="date" placeholder="JJ/MM/AAAA"/></label>
-            <label>+/- <input type="number" name="flex" id="flex" min="0" max="5"> jour(s)</label>
+            <label class="radio"><input id="passager" class="champ" type="radio" name="pass-cond" /><img src="<?php echo base_url(); ?>web/images/passager.png" title="" alt=""/></label>
+            <label class="radio"><input id="conducteur" class="champ" type="radio" name="pass-cond" /><img src="<?php echo base_url(); ?>web/images/conducteur.png" title="" alt=""/></label>
+            <label>voyageant de<input type="text" class="champ" name="depart" id="depart" placeholder="ville de départ" /></label>
+            <label>à<input type="text" class="champ" name="arrivee" id="arrivee" placeholder="ville d'arrivée"/></label>
+            <label>le<input type="date" class="champ" name="date" id="date" placeholder="JJ/MM/AAAA"/></label>
+            <label>+/- <input type="number" class="champ" name="flex" id="flex" min="0" max="5"> jour(s)</label>
+            <?php $data = array(
+                    'name' => 'button',
+                    'id' => 'button',
+                    'value' => 'true',
+                    'type' => 'check',
+                    'content' => 'Rechercher'
+                );
+                echo '<div id="lancer_recherche"><div class="boutton">'.form_button($data).'</div></div>';?>
             <div class="avancee">
-                <label>Avec <input type="number" name="flex" id="flex" min="0" max="5">place(s) et +</label>
+                <label>Avec <input type="number" class="champ" name="places" id="places" min="0" max="5">place(s) et +</label>
             </div>
         </div>
-
-        <div id="lancer_recherche">
-            <div class="boutton"><button type="submit" id="rechercher" >Rechercher</button></div>
-        </div>
-        <p class="ext-form"><a href="#">Recherche simple</a></p>
-    </form>
+    <?php echo form_close(); ?>       
     <section id="resultat">
         <?php foreach($annonces as $annonce): ?>
             <div class="annonce">
