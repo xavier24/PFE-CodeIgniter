@@ -31,16 +31,36 @@
             <h1>Car-People</h1>
             <img src="<?php echo base_url(); ?>web/images/voyageur.png" class="voyageur"/>
         </header>
-        <nav>
+        <nav id="menu">
             <a href="<?php echo base_url(); ?>">Rechercher une annonce</a><a href="#" class="publier_annonce">Publier mon annonce</a><!--
          --><?php echo (!$this->session->userdata('logged_in'))?  '<a href="'.base_url().'inscription">Inscription</a>': '<a href="'.base_url().'profil">Mon profil</a>' ?><!--
          --><a href="#">Aide&nbsp;-&nbsp;FAQ</a>
         </nav>
         <?php echo $vue ?>
-
-        
+               
         <footer>
-            <p>footer</p>
+            <nav>
+                <a href="#" title="">Ajouter une annonce</a><!--
+             --><a href="<?php echo base_url(); ?>" title="">Rechercher un trajet</a><!--
+             --><a href="#" title="">Connexion</a><!--
+             --><a href="<?php echo base_url(); ?>inscription" title="">Inscription</a><!--
+             --><a href="#">Conditions générales</a><!--
+             --><a href="#">Contact&nbsp;-&nbsp;Service Client</a>
+            </nav>
+            <div>
+                <h1>Villes de départ courantes</h1>
+                <ul>
+                    <a href="#"><li>Bruxelles</li></a> - <a href="#"><li>Liège</li></a> - <a href="#"><li>Uccle</li></a> - <li>Ixelles</li> - <li>Namur</li> - <li>Charleroi</li> - 
+                    <li>Mons</li> - <li>Arlon</li> - <li>Saint-Gilles</li> - <li>Hotton</li> - <li>Nivelles</li> - <li>Etterbeek</li> - 
+                    <li>Anderlecht</li> - <li>Dour</li> - <li>Louvain-La-Neuve</li>
+                </ul>
+                <h1>Villes de destination courantes</h1>
+                <ul>
+                    <li>Bruxelles</li> - <li>Liège</li> - <li>Uccle</li> - <li>Ixelles</li> - <li>Namur</li> - <li>Charleroi</li> - 
+                    <li>Mons</li> - <li>Arlon</li> - <li>Saint-Gilles</li> - <li>Hotton</li> - <li>Nivelles</li> - <li>Etterbeek</li> - 
+                    <li>Anderlecht</li> - <li>Dour</li> - <li>Louvain-La-Neuve</li>
+                </ul>
+            </div>
         </footer>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="<?php echo base_url(); ?>web/js/jquery-1.8.2.min.js"><\/script>')</script>
