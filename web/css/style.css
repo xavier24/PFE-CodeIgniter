@@ -19,13 +19,13 @@ html{
 	font-size:16px;
 }
 body{
-	margin:50px auto;
+	margin:50px auto 0;
 	width:940px;
 	padding :10px;
 	-height:600px;
 	background-color:#efefef;
 	-border:1px solid black;
-	border-radius:10px;
+	border-radius:10px 10px 0 0;
 	box-shadow : 2px -1px 5px rgba(0,0,0,0.8);
 }
 header{
@@ -48,7 +48,7 @@ header h1{
 	top:-22px;
 	right:135px;
 }
-nav{
+#menu{
 	background-color:#294248;
 	border-radius:0 0 7px 7px;
 	border-top:1px solid #90a6ac;
@@ -58,15 +58,15 @@ nav{
 	font-size:1.2em;
 	font-weight:bold;
 }
-nav a:first-child{
+#menu a:first-child{
 	border-radius:0 0 0 5px;
 	border-left:none;
 }
-nav a:last-child{
+#menu a:last-child{
 	border-radius:0 0 5px 0;
 	border-right:none;
 }
-nav a{
+#menu a{
 	border-top:1px solid #939393;
 	background-color:#4f808d;
 	color:#fff;
@@ -78,7 +78,7 @@ nav a{
 	border-right:1px solid #939393;
 	text-decoration:none;
 }
-.publier_annonce{
+#menu .publier_annonce{
 	background-color:#294248;
 }
 .formulaire{
@@ -94,6 +94,7 @@ nav a{
 	width:600px;
 	float:left;
 	-border:1px solid black;
+        margin-bottom: 50px;
 }
 #col1 h1{
 	color:#294248;
@@ -161,6 +162,7 @@ input:-moz-placeholder{
 	height:200px;
 	-border:1px solid black;
 	float:right;
+        margin-bottom: 50px;
 }
 #connexion{
 	position:relative;
@@ -171,7 +173,7 @@ input{
 	height:21px;
 	color:#DDD;
 }
-#recherche input{
+.champ{
 	margin:0 10px;
 	box-shadow:inset 1px 1px 0 #111, 1px 1px 0 #96a3a6;
 	background-color:#294248;
@@ -283,6 +285,127 @@ color:white;
 .trajet{
     width:266px;
 }
+#inscription{
+    margin:60px 100px;
+    padding:35px;
+}
+#inscription h1{
+    font-size:2.8em;
+    margin:0;
+    text-shadow: 0 0 3px #111;
+    font-weight:normal;
+}
+
+.methode1,.methode2{
+    -float:left;
+    display: inline-block;
+    -moz-box-sizing: border-box;
+    width: 50%;
+    margin: 20px 0;
+}
+.methode1{
+    padding:0 35px;
+}
+.methode{
+    color:#FFA500;
+    font-weight: normal;
+    margin:0;
+}
+.methode_texte{
+    font-weight:bold;
+    margin:10px 0;
+}
+.methode2{
+    border-left:1px solid #294248;
+}
+.methode2>div{
+    border-left:1px solid #CCC;
+    padding:0 35px;
+    height: 100%;
+}
+.methode2 label, .methode2 input{
+    width:100%;
+}
+.methode2 label{
+    font-size: 0.9em;
+}
+.methode2 input{
+    margin:3px 0 10px 0;
+}
+.inscript_valid{
+   margin:10px auto;
+   text-align:center;
+}
+.inscript_valid p{
+   margin:0;
+}
+.erreur_inscription{
+    color:red;
+    margin:0;
+    
+}
+/*------------------------------------------------
+-----------------FOOTER---------------------------
+-------------------------------------------------*/
 footer{
     clear: both;
+    background-color:#4f808d;
+    padding: 0 10px 20px;
+    margin-bottom: -10px;
+    margin-left: -10px;
+    width: 100%;
+    border-top:1px solid #294248;
+}
+footer nav{
+    text-align: center;
+    border-top:1px solid #ccc;
+    padding:15px 10px;
+    margin-left:-10px;
+    width: 100%;
+    border-bottom:1px solid #294248;
+}
+footer nav a{
+    padding:5px 13px;
+    color:white;
+    text-decoration: none;
+    border-right:1px solid #294248;
+    border-left: 1px solid #ccc;
+}
+footer nav a:first-child{
+    border-left:none;
+}
+footer nav a:last-child{
+    border-right:none;
+}
+footer nav a:hover{
+    color:#161B1C;
+    text-shadow: 0 0 20px #FFF,0 0 15px #FFF,0 0 10px #FFF;
+}
+footer div{
+    border-top:1px solid #ccc;
+    padding:15px 10px;
+    margin-left:-10px;
+    width: 100%;
+}
+footer h1{
+    padding-top:10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size:1em;
+    margin-bottom: 0;
+    color:#161B1C;
+}
+footer ul{
+    font-size:0.9em;
+    padding-left: 50px;
+    padding-right: 50px;
+    
+}
+footer li{
+    display: inline-block;
+    text-decoration: none;
+    color:#161B1C;
+}
+footer li:hover{
+    color:#fff;
 }

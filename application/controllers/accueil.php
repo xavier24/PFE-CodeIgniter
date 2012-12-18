@@ -13,8 +13,6 @@ class Accueil extends CI_Controller {
  	}
         
         public function lister(){
-            $this->load->helper('form');
-            
             $dataList['info_membre'] = $this->session->userdata('logged_in');
             $dataList['page'] = 'Accueil';
             $dataList['titre'] = 'liste des annonces';
