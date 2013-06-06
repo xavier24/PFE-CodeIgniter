@@ -3,8 +3,10 @@
     class M_Inscription extends CI_Model
     {
         public function inscrire($data)
-	{
-            $this->db->insert('users',array('email'=>$data['email'],'password'=>$data['mdp']));
+		{
+			$this->load->library('encrypt');
+			$mdp = $this->encrypt->sha1($data['mdp']);
+			$this->db->insert('users',array('email'=>$data['email'],'password'=>$mdp));
         }
         public function verifier($data){
             $query = $this->db->get_where('users',array('email'=>$data['email']));
