@@ -22,17 +22,12 @@
             $query = $this->db->get();
             return $query->row();
         }
-        public function verifier($data){
-           $query = $this->db->get_where('users',
-                                            array('email'=>$data['email'],
-                                                    'password'=>$data['mdp']));
-            return $query->num_rows();      
-	}
-        public function getIdMembre($data){
-            $this->db->select('*');
-            $this->db->from('users');
-            $this->db->where('email',$data);
+        
+        public function villes(){
+			$this->db->select('*');
+            $this->db->from('villes');
+            
             $query = $this->db->get();
-            return $query->row();
-        }
+            return $query->result();
+		}
     }

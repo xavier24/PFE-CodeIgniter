@@ -5,10 +5,13 @@ class Annonce extends CI_Controller {
         function __construct(){
             parent::__construct();
             $this->load->model('M_Annonce');
+			$this->load->model('M_Accueil');
         }
         
         public function lister(){
-            $dataList['info_membre'] = $this->session->userdata('logged_in');
+            $dataList['villes'] = $this->M_Accueil->villes();
+			
+			$dataList['info_membre'] = $this->session->userdata('logged_in');
             $dataList['page'] = 'Accueil';
             $dataList['titre'] = 'liste des resultats';
             
@@ -26,9 +29,9 @@ class Annonce extends CI_Controller {
                 $annonce->note = 0;
                 $param_verif = array('depart'=>'100','arrivee'=>'80','date'=>'70');
                 foreach($param_verif as $key_array => $value){
-                    if($annonce->$key_array == $recherche[$key_array]){
-                        $annonce->note += $value;
-                    }
+                    // if($annonce->$key_array == $recherche[$key_array]){
+                        // $annonce->note += $value;
+                    // }
                 }
             };
             var_dump($dataList['annonces']); 
@@ -46,4 +49,13 @@ class Annonce extends CI_Controller {
 
             $this->load->view('layout',$dataLayout);
         }
+		
+		public function ajouter(){
+			$dataList['info_membre'] = $this->session->userdata('logged_in');
+            $dataList['page'] = 'Accueil';
+            $dataList['titre'] = 'Publier une annonce';
+                       
+            $data['vue'] = $this->load->view('ajouter',$dataList,true);
+            $this->load->view('layout',$data);			
+		}
 }
