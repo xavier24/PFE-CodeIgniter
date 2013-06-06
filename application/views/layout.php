@@ -19,8 +19,27 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>web/css/fontello-ie7.css"><![endif]-->
                 
         <script src="<?php echo base_url(); ?>web/js/modernizr-2.6.1.min.js"></script>
+        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="<?php echo base_url(); ?>web/js/jquery-1.8.2.min.js"><\/script>')</script>
+        
+        <script src="<?php echo base_url(); ?>web/js/bootstrap.min.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/datePicker.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/colorPicker.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/plugins.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/main.js"></script>
+        
     </head>
     <body>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
@@ -32,10 +51,24 @@
             <img src="<?php echo base_url(); ?>web/images/voyageur.png" class="voyageur"/>
         </header>
         <nav id="menu">
-            <a href="<?php echo base_url(); ?>">Rechercher une annonce</a><a href="#" class="publier_annonce">Publier mon annonce</a><!--
-         --><?php echo (!$this->session->userdata('logged_in'))?  '<a href="'.base_url().'inscription">Inscription</a>': '<a href="'.base_url().'profil">Mon profil</a>' ?><!--
+            <a href="<?php echo base_url(); ?>">Rechercher une annonce</a><a href="<?php echo base_url().'annonce/ajouter'; ?>" class="publier_annonce">Publier mon annonce</a><!--
+         --><?php echo (!$this->session->userdata('logged_in'))?  '<a href="'.base_url().'inscription">Inscription</a>': '<a href="'.base_url().'mon_profil">Mon profil</a>' ?><!--
          --><a href="#">Aide&nbsp;-&nbsp;FAQ</a>
         </nav>
+        <?php echo form_open('hook_lang/choix_lang',array('method'=>'post')); ?>
+        <div>
+            <?php $data = array(
+                    'name' => 'button',
+                    'id' => 'button',
+                    'value' => 'true',
+                    'type' => 'check',
+                    'content' => 'francais'
+                );
+            echo form_button($data);?>
+            <p><a>Français</a></p><p><a>English</a></p>
+        </div>
+    <?php echo form_close(); ?>
+        
         <?php echo $vue ?>
                
         <footer>
@@ -62,11 +95,7 @@
                 </ul>
             </div>
         </footer>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="<?php echo base_url(); ?>web/js/jquery-1.8.2.min.js"><\/script>')</script>
-        <script src="<?php echo base_url(); ?>web/js/plugins.js"></script>
-        <script src="<?php echo base_url(); ?>web/js/main.js"></script>
-
+        
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
