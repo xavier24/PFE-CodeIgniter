@@ -25,17 +25,28 @@
         </div>
 					
     <?php echo form_close(); ?>
-	<script>
+	<!--<script>
 		var villes = [
-		<?php foreach ($villes as $ville) : 
+		<?php /*foreach ($villes as $ville) : 
 				echo '"'.$ville->fr_FR.'",';
-			endforeach; ?>
+			endforeach; */?>
 		];
 		$('.typeahead').typeahead({
 		 source : villes,
 		 items : 5
 		});
-	</script>
+	</script>-->
+        <script type="text/javascript">
+            var villes = [
+		<?php foreach ($villes as $ville) : 
+				echo '"'.$ville->fr_FR.'",';
+			endforeach; ?>
+		];
+            //<![CDATA[
+            $("#depart").autocomplete(villes,{ use_style: true });
+            $("#arrivee").autocomplete(villes,{ use_style: true });
+            //]]>
+        </script>
 	<!-- RESULTATS DE RECHERCHE -->
     <section id="resultat">
         <h1><?php echo $this->lang->line('retour_liste_annonces'); ?></h1>

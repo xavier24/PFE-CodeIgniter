@@ -26,6 +26,7 @@
         <script src="<?php echo base_url(); ?>web/js/bootstrap.min.js"></script>
         <script src="<?php echo base_url(); ?>web/js/datePicker.js"></script>
         <script src="<?php echo base_url(); ?>web/js/colorPicker.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/jquery.autocomplete.min.js"></script>
         <script src="<?php echo base_url(); ?>web/js/plugins.js"></script>
         <script src="<?php echo base_url(); ?>web/js/main.js"></script>
         
