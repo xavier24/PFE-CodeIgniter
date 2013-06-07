@@ -16,7 +16,7 @@
             $input_vehicule = array('id'=>'vehicule','name'=>'vehicule','type'=>'text','value'=>$info_membre->vehicule, 'class'=>'profil_input');
             $input_immatriculation = array('id'=>'immatriculation','name'=>'immatriculation','type'=>'text','value'=>$info_membre->immatriculation,'class'=>'profil_input');
             $colorPicker = array('id'=>'colorPicker','name'=>'colorPicker','type'=>'text','value'=>$info_membre->couleur);
-            $input_confort = array('name'=>'confort','type'=>'radio');
+            $input_confort = array('name'=>'confort','type'=>'hidden');
             
             $data_user_id = array('id'=>'user_id', 'name'=>'user_id', 'type'=>'hidden', 'value'=>$info_membre->user_id);
             $data_submit = array('id' => 'button', 'name' => 'button', 'type' => 'check', 'value' => 'true', 'content' => 'modifier mon profil');
@@ -29,6 +29,9 @@
             else{
                     echo '<img src="'.base_url().'web/images/membre/default.jpg"/>';
             }
+            ?>
+            
+        <?php
             echo form_label('photo','photo');
             echo form_upload('photo').'<br />';
             echo '<input type="submit" value="upload" />';
@@ -60,17 +63,20 @@
 
             echo '<p>véhicule : <span>'.$info_membre->vehicule.'</span></p><br />';
             echo form_input($input_vehicule);
-            echo '<p>immatriculation :<span>'.$info_membre->immatriculation.'</span></p><br />';
+            echo '<p>immatriculation :<span style="border:1px solid #E51F12; padding:1px;display:block;text-align:center;background:white;border-radius:3px;color:#E51F12;font-weight:bold">'.$info_membre->immatriculation.'</span></p><br />';
             echo form_input($input_immatriculation);
             echo '<p>couleur :'.'</p><br />';
             echo form_input($colorPicker);
-            echo '<p>confort :'.'</p><br />';
+            echo '<span class="" style="background-color:'.$info_membre->couleur.';display:block;width:85px"><img src="'.base_url().'web/images/voiture-color.png" /></span>';
+            echo '<p>confort :'.$info_membre->confort.'</p><br />';
+            echo '<img src="'.base_url().'web/images/confort'.$info_membre->confort.'.png" style="float:left"/>';
             for($i=1;$i<6;$i++){
+                echo '<label for="confort'.$i.'" style="display:block;width:18px;height:20px;border:1px solid black;float:left;position:relative;left:-100px;"></label>';
                 if( $i != $info_membre->confort ){
-                    echo form_input($input_confort,$i);
+                    echo form_input($input_confort,$i,"id='confort".$i."'");
                 }
                 else{
-                    echo form_input($input_confort,$i,"checked=checked");
+                    echo form_input($input_confort,$i,"checked='checked' id='confort".$i."'");
                 }
                 
             }
@@ -85,7 +91,7 @@
                 jQuery(document).ready(function($) {
                     $('#colorPicker').colorPicker({
                         pickerDefault: "ffffff", 
-                        colors: ["000000","444444","999999","DDDDDD", "FFFFFF","940107",
+                        colors: ["000000","444444","999999","DDDDDD", "FFFFFF","D3BD8C", "940107",
                                 "F80403","FF9707","FCFF00","AAFF00","03C403","016D00",
                                 "009DA0","00BBFF","1262D1","003B7F","9400FF","D800B1"], 
                         transparency: true, 

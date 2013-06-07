@@ -118,7 +118,7 @@
              * Build replacement interface for original color input.
             **/
             newControl.css("background-color", defaultColor);
-
+            
             newControl.bind("click", function () {
                 if( element.is( ':not(:disabled)' ) ) {
                                     $.fn.colorPicker.togglePalette($('#' + paletteId), $(this));
@@ -143,14 +143,14 @@
             });
 
             element.val(defaultColor);
-
+            
             // Hide the original input.
             if (element[0].tagName.toLowerCase() === 'input') {
                 element.each(function () { this.type = 'hidden' });
             } else {
                 element.hide();
             }
-
+            
             cItterate++;
         });
     };
