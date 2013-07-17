@@ -6,7 +6,7 @@
 		{
 			$this->load->library('encrypt');
 			$mdp = $this->encrypt->sha1($data['mdp']);
-			$this->db->insert('users',array('email'=>$data['email'],'password'=>$mdp));
+			$this->db->insert('users',array('email'=>$data['email'],'password'=>$mdp,'created_at'=>$data['registerDate'],'connected_at'=>$data['registerDate']));
         }
         public function verifier($data){
             $query = $this->db->get_where('users',array('email'=>$data['email']));
