@@ -5,7 +5,7 @@ class Annonce extends CI_Controller {
         function __construct(){
             parent::__construct();
             $this->load->model('M_Annonce');
-			$this->load->model('M_Accueil');
+            $this->load->model('M_Accueil');
         }
         
         public function lister(){
@@ -17,8 +17,8 @@ class Annonce extends CI_Controller {
             
             $recherche['passager'] = $this->input->post('passager');
             $recherche['conducteur'] = $this->input->post('conducteur');
-            $recherche['depart'] = $this->input->post('depart');
-            $recherche['arrivee'] = $this->input->post('arrivee');
+            $recherche['depart'] = $this->input->post('departId');
+            $recherche['arrivee'] = $this->input->post('arriveeId');
             $recherche['date'] = $this->input->post('date');
             $recherche['flex'] = $this->input->post('flex');
             $recherche['places'] = $this->input->post('places');
@@ -50,12 +50,12 @@ class Annonce extends CI_Controller {
             $this->load->view('layout',$dataLayout);
         }
 		
-		public function ajouter(){
-			$dataList['info_membre'] = $this->session->userdata('logged_in');
+        public function ajouter(){
+            $dataList['user_data'] = $this->session->userdata('logged_in');
             $dataList['page'] = 'Accueil';
             $dataList['titre'] = 'Publier une annonce';
                        
             $data['vue'] = $this->load->view('ajouter',$dataList,true);
             $this->load->view('layout',$data);			
-		}
+        }
 }

@@ -9,12 +9,13 @@ class Accueil extends CI_Controller {
 
 	public function index(){
          
-		$dataList['info_membre'] = $this->session->userdata('logged_in');
+		$dataList['user_data'] = $this->session->userdata('logged_in');
 		$dataList['page'] = 'Accueil';
 		$dataList['titre'] = 'liste des annonces';
 		$dataList['annonces'] = $this->M_Accueil->lister();
 		$dataList['villes'] = $this->M_Accueil->villes();
 		$data['vue'] = $this->load->view('lister',$dataList,true);
 		$this->load->view('layout',$data);
+                //var_dump($dataList['villes']);
 	}
 }

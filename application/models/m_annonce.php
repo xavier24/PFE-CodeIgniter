@@ -15,37 +15,37 @@ class M_Annonce extends CI_Model{
             $this->db->order_by('date','asc');
             $this->db->order_by('depart','asc');
             */
-			$this->db->select('annonces.*, users.*,
-			depart.id AS d_ID, depart.fr_FR AS d_fr_FR, depart.nl_NL AS d_nl_NL, 
-			depart.CodePostal AS d_codePostal, depart.Province AS d_province,
-			depart.Latitude AS d_lat, depart.Longitude AS d_long,			
-			arrivee.id AS a_ID, arrivee.fr_FR AS a_fr_FR, arrivee.nl_NL AS a_nl_NL, 
-			arrivee.CodePostal AS a_codePostal, arrivee.Province AS a_province,
-			arrivee.Latitude AS a_lat, arrivee.Longitude AS a_long');
-			$this->db->from('annonces');
+            $this->db->select('annonces.*, users.*,
+                depart.id AS d_ID, depart.fr_FR AS d_fr_FR, depart.nl_NL AS d_nl_NL, 
+                depart.code_postal AS d_code_postal, depart.province AS d_province,
+                depart.latitude AS d_lat, depart.longitude AS d_long,			
+                arrivee.id AS a_ID, arrivee.fr_FR AS a_fr_FR, arrivee.nl_NL AS a_nl_NL, 
+                arrivee.code_postal AS a_code_postal, arrivee.province AS a_province,
+                arrivee.latitude AS a_lat, arrivee.longitude AS a_long');
+            $this->db->from('annonces');
             $this->db->join('villes AS depart','depart.id = annonces.departID');
             $this->db->join('villes AS arrivee','arrivee.id = annonces.arriveeID');
-			$this->db->join('users','users.user_id = annonces.user_id');
-            $this->db->where('depart.fr_FR',$recherche['depart']);
-			/*
-			SELECT annonces.*, 
-			depart.id AS d_ID, depart.fr_FR AS d_fr_FR, depart.nl_NL AS d_nl_NL, 
-			depart.CodePostal AS d_codePostal, depart.Province AS d_province,
-			depart.Latitude AS d_lat, depart.Longitude AS d_long,
-			
-			arrivee.id AS a_ID, arrivee.fr_FR AS a_fr_FR, arrivee.nl_NL AS a_nl_NL, 
-			arrivee.CodePostal AS a_codePostal, arrivee.Province AS a_province,
-			arrivee.Latitude AS a_lat, arrivee.Longitude AS a_long
-			
-			FROM annonces
-			INNER JOIN villes AS depart
-			ON annonces.departID = depart.id
-			INNER JOIN villes AS arrivee
-			ON annonces.arriveeID = arrivee.id
-						
-			
-			
-			*/
+            $this->db->join('users','users.user_id = annonces.user_id');
+            $this->db->where('depart.id',$recherche['depart']);
+            /*
+            SELECT annonces.*, 
+            depart.id AS d_ID, depart.fr_FR AS d_fr_FR, depart.nl_NL AS d_nl_NL, 
+            depart.CodePostal AS d_codePostal, depart.Province AS d_province,
+            depart.Latitude AS d_lat, depart.Longitude AS d_long,
+
+            arrivee.id AS a_ID, arrivee.fr_FR AS a_fr_FR, arrivee.nl_NL AS a_nl_NL, 
+            arrivee.CodePostal AS a_codePostal, arrivee.Province AS a_province,
+            arrivee.Latitude AS a_lat, arrivee.Longitude AS a_long
+
+            FROM annonces
+            INNER JOIN villes AS depart
+            ON annonces.departID = depart.id
+            INNER JOIN villes AS arrivee
+            ON annonces.arriveeID = arrivee.id
+
+
+
+            */
             
            
             $query = $this->db->get();

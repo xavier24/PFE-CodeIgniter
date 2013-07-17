@@ -8,7 +8,6 @@
             $this->db->join('users','users.user_id = annonces.user_id');
             $this->db->limit(10, 20);
             
-           
             $query = $this->db->get();
             return $query->result();
         }
@@ -24,10 +23,10 @@
         }
         
         public function villes(){
-			$this->db->select('*');
+            $this->db->select('*');
             $this->db->from('villes');
             
             $query = $this->db->get();
             return $query->result();
-		}
+        }
     }

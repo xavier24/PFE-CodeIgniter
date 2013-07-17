@@ -1,6 +1,10 @@
 <section id="col1">
     <h1>Recherche rapide</h1>
-    
+    <script>
+	$(function() {
+		
+	});
+	</script>
 	<!-- FORMULAIRE DE RECHERCHE -->
 	<?php echo form_open('annonce/lister',array('method'=>'post')); ?>
         <div id="recherche" class="formulaire">
@@ -23,29 +27,27 @@
                 <label>Avec <input type="number" class="champ" name="places" id="places" min="0" max="5">place(s) et +</label>
             </div>
         </div>
-					
+	
+        <input id="departId" name="departId" value="" type="text">  
+        <input id="arriveeId" name="arriveeId" value="" type="text"> 				
     <?php echo form_close(); ?>
-	<!--<script>
-		var villes = [
-		<?php /*foreach ($villes as $ville) : 
-				echo '"'.$ville->fr_FR.'",';
-			endforeach; */?>
-		];
-		$('.typeahead').typeahead({
-		 source : villes,
-		 items : 5
-		});
-	</script>-->
-        <script type="text/javascript">
-            var villes = [
-		<?php foreach ($villes as $ville) : 
-				echo '"'.$ville->fr_FR.'",';
-			endforeach; ?>
-		];
-            //<![CDATA[
-            $("#depart").autocomplete(villes,{ use_style: true });
-            $("#arrivee").autocomplete(villes,{ use_style: true });
-            //]]>
+	<script type="text/javascript">
+            var villes =[
+                 <?php foreach ($villes as $ville) : 
+                     echo '{"label":"'.$ville->fr_FR.' ('.$ville->code_postal.')'.'", "id":'.$ville->id.'},';
+                 endforeach; ?>
+                 ];
+            
+            $('#depart').autocomplete({
+               autoFocus: true,
+               source: villes,
+               select: function (event, ui) { $('#departId').val(ui.item.id); } });
+            
+            $('#arrivee').autocomplete({
+               autoFocus: true,
+               source: villes,
+               select: function (event, ui) { $('#arriveeId').val(ui.item.id); } });
+            $('#date').datepicker($.datepicker.regional[ "fr" ]);
         </script>
 	<!-- RESULTATS DE RECHERCHE -->
     <section id="resultat">
@@ -79,7 +81,6 @@
     </section>
 </section>
 <section id="col2">
-	<?php include('include/connexion.php');?>
 	<?php include('include/facebook.php');?>
     <section id="news">
     </section>
