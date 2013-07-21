@@ -889,18 +889,28 @@ textarea.profil_modif{
 .editor .icon_modifier{
     background: url(../images/elements.png) no-repeat scroll -200px -100px transparent;
 }
-#modifier{
+.modifier{
     float:right;
     margin-right: 15px;
     height:20px;
 }
-#modifier button{
+.modifier button{
+    background: transparent;
+    text-shadow: 0 none;
+    font-weight: normal;
+    font-size: 0.75em;
+    text-decoration: underline;
+    text-align: left;
+    padding: 5px 0 0 0;
+}
+.modifier button span{
     background: url(../images/elements.png) no-repeat scroll -100px -100px transparent;
     height:20px;
     width:21px;
-    line-height: 20px;
-    text-indent: 999px;
-    overflow: hidden;
+    display:block;
+    float: right;
+    margin-top: -5px;
+    margin-left: 2px;
 }
 .icone-datepicker{
     background: url(../images/elements.png) no-repeat scroll -249px -100px transparent;
@@ -1007,12 +1017,17 @@ textarea.profil_modif{
     background-position:-200px -250px ;
 }
 .profil .vehicule{
-    width: 100px;
+    width: 125px;
     float:left;
     margin-right: 10px;
 }
-.profil .couleur-vehicule p{
-    height:100px;
+.profil .couleur_vehicule{
+    margin-bottom: 15px;
+}
+.profil .couleur_vehicule .img_vehicule{
+    background: url(../images/elements.png) no-repeat scroll 0px -300px transparent;
+    height:50px;
+    width: 122px;
 }
 .profil .immatriculation {
     text-align: center;
@@ -1230,7 +1245,19 @@ div.colorPicker-swatch {
     margin: 2px;
     width: 12px;
 }
+/*========================================================
+    TIMEPICKER STYLES
+ ========================================================*/
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
 
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; }
+.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
 
 @media only screen and (max-width: 1050px){ /*MOINS DE 650px*/
 	.add_trajet{

@@ -3,7 +3,7 @@
     $input_email = array('id'=>'email', 'name'=>'email', 'type'=>'email', 'value'=>$info_membre->email, 'class'=>'profil_input');
     
     $data_user_id = array('id'=>'user_id', 'name'=>'user_id', 'type'=>'hidden', 'value'=>$info_membre->user_id);
-    $data_submit = array('id' => 'button', 'name' => 'button', 'type' => 'check', 'value' => 'true', 'content' => 'modifier mon profil');
+    $data_submit = array('class' => 'button', 'type' => 'check', 'value' => 'true', 'content' => 'Enregister<span class="bouton_modif"></span>');
 ?>
 <div class="content">
     <div class="row-fluid profil">
@@ -59,7 +59,7 @@
                     <?php echo form_open('user/modifier',array('method'=>'post')); ?>
                         <div class="edit_button clearfix">
                             <p class="edit"><span>Modifier</span><span class="icon_modifier"></span></p>
-                            <div id="modifier" class="profil_modif">
+                            <div class="modifier profil_modif">
                                 <?php echo form_button($data_submit) ?>
                             </div>  
                         </div>    
@@ -124,7 +124,7 @@
                     <?php echo form_open('user/modifier',array('method'=>'post')); ?>
                         <div class="edit_button clearfix">
                             <p class="edit"><span>Modifier</span><span class="icon_modifier"></span></p>
-                            <div id="modifier" class="profil_modif">
+                            <div class="modifier profil_modif">
                                 <?php echo form_button($data_submit) ?>
                             </div>  
                         </div>    
@@ -207,7 +207,7 @@
                         <?php echo form_open('user/modifier',array('method'=>'post','class'=>'clearfix')); ?>    
                             <div class="edit_button clearfix">
                                 <p class="edit"><span>Modifier</span><span class="icon_modifier"></span></p>
-                                <div id="modifier" class="profil_modif">
+                                <div class="modifier profil_modif">
                                     <?php echo form_button($data_submit) ?>
                                 </div>  
                             </div>
@@ -300,15 +300,15 @@
                         <?php echo form_open('user/modifier',array('method'=>'post','class'=>'clearfix')); ?>
                             <div class="edit_button clearfix">
                                 <p class="edit"><span>Modifier</span><span class="icon_modifier"></span></p>
-                                <div id="modifier" class="profil_modif">
+                                <div class="modifier profil_modif">
                                     <?php echo form_button($data_submit) ?>
                                 </div>  
                             </div>
                             <h3>Véhicule</h3>
                             <div class="vehicule">
-                                <div class="couleur-vehicule" >
+                                <div class="couleur_vehicule" >
+                                    <div class="img_vehicule" style="background-color:<?php echo $info_membre->couleur ?>"></div>
                                     <input id="colorPicker" name="colorPicker" type="text" value="<?php echo $info_membre->couleur; ?>" />
-                                    <p style="background-color:<?php echo $info_membre->couleur ?>">image voiture</p>
                                 </div>
                                 <p class="immatriculation edit_hidden clearfix"><span><?php echo $info_membre->immatriculation ?></span></p>
                                 <div class="immatriculation">
@@ -364,8 +364,8 @@
                     else{ ?>
                         <h3>Véhicule</h3>
                         <div class="vehicule">
-                            <div class="couleur-vehicule" >
-                                <p style="background-color:<?php echo $info_membre->couleur ?>">image voiture</p>
+                            <div class="couleur_vehicule" >
+                                <div class="img_vehicule" style="background-color:<?php echo $info_membre->couleur ?>"></div>
                             </div>
                             <p class="immatriculation clearfix"><span><?php echo $info_membre->immatriculation ?></span></p>
                         </div>
@@ -438,18 +438,45 @@
                      endforeach; ?>
                      ];
 
-                    $("#input_ville").autocomplete({
-                                    autoFocus: true,
-                                    source: villes,
-                                    select: function (event, ui) { $('#input_villeID').val(ui.item.id); } 
-                                });
                     $("#input_naissance").datepicker({
                                         autoSize: false,
+                                        maxDate: "-18Y",
                                         constrainInput: true, 
                                         changeMonth: true,
                                         changeYear: true
                                         },$.datepicker.regional[ "fr" ]
                                     );
+                                    
+                    var accentMap = {
+                        "á": "a",
+                        "é": "e",
+                        "è": "e",
+                        "ê": "e",
+                        "ë": "e",
+                        "ï": "i",
+                        "î": "i",
+                        "ö": "o",
+                        "ô": "o",
+                        "û": "u",
+                        "ü": "u"
+                    };
+                    var normalize = function( term ) {
+                        var ret = "";
+                        for ( var i = 0; i < term.length; i++ ) {
+                            ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+                        }
+                        return ret;
+                    };
+                    $( "#input_ville" ).autocomplete({
+                        source: function( request, response ) {
+                            var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+                            response( $.grep( villes, function( value ) {
+                                value = value.label || value.value || value;
+                                return matcher.test( value ) || matcher.test( normalize( value ) );
+                            }) );
+                        },
+                        select: function (event, ui) { $('#input_villeID').val(ui.item.id); }
+                    }); 
                 </script>
             </div>
         </div>
