@@ -42,12 +42,8 @@ class M_Annonce extends CI_Model{
             ON annonces.departID = depart.id
             INNER JOIN villes AS arrivee
             ON annonces.arriveeID = arrivee.id
-
-
-
             */
             
-           
             $query = $this->db->get();
             $nombre = $this->db->count_all_results();
             $resultat = $query->result();
@@ -61,5 +57,17 @@ class M_Annonce extends CI_Model{
             
             $query = $this->db->get();
             return $query->row();
+        }
+        
+        public function ajouter($data){
+            $this->db->insert('annonces',$data);
+        }
+        
+        public function villes(){
+            $this->db->select('*');
+            $this->db->from('villes');
+
+            $query = $this->db->get();
+            return $query->result();
         }
 }

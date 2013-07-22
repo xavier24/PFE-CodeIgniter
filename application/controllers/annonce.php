@@ -9,9 +9,7 @@ class Annonce extends CI_Controller {
         }
         
         public function lister(){
-            $dataList['villes'] = $this->M_Accueil->villes();
-			
-			$dataList['info_membre'] = $this->session->userdata('logged_in');
+            $dataList['user_data'] = $this->session->userdata('logged_in');
             $dataList['page'] = 'Accueil';
             $dataList['titre'] = 'liste des resultats';
             
@@ -51,11 +49,80 @@ class Annonce extends CI_Controller {
         }
 		
         public function ajouter(){
+                      
+            $dataList['villes'] = $this->M_Annonce->villes();
             $dataList['user_data'] = $this->session->userdata('logged_in');
             $dataList['page'] = 'Accueil';
             $dataList['titre'] = 'Publier une annonce';
                        
             $data['vue'] = $this->load->view('ajouter',$dataList,true);
             $this->load->view('layout',$data);			
+        }
+        
+        public function poster(){
+            
+            if(!$this->session->userdata('logged_in')){
+                $error['connecte'] = 'Veuillez vous connecter';
+                var_dump($error);
+            }
+            else{
+                $user_data = $this->session->userdata('logged_in');
+                $data['user_id'] = $user_data->user_id;
+
+                $champ = array(
+                            'conducteur',
+                            'departID',
+                            'arriveeID',
+                            'description_depart',
+                            'description_arrivee',
+                            'date',
+                            'heure',
+                            'flexibilite',
+                            'places'
+                        );
+                $champ_erreur = array(
+                                    'si vous êtes chauffeur ou passager lors',
+                                    'le départ',
+                                    'l\'arrivée',
+                                    'les infos sur le lieu de rendez-vous',
+                                    'les infos sur le lieu d\'arrivée',
+                                    'la date',
+                                    'l\'heure',
+                                    '',''
+                                );
+                for($i=0;$i<count($champ);$i++){
+                    if($this->input->post('input_'.$champ[$i]) != ""){
+                        $data[$champ[$i]] = $this->input->post('input_'.$champ[$i]);
+                    }
+                    else{
+                        //$error = true;
+                        $error[$champ[$i]] = 'Veuillez préciser '.$champ_erreur[$i].' du voyage';
+                    }
+                }
+                
+                list($day, $month, $year) = preg_split('/[-\.\/ ]/', $data['date']);
+                $data['date'] = $year.'-'.$month.'-'.$day;
+                
+                if($this->input->post('input_commentaire')){
+                    $data['commentaire'] = $this->input->post('input_commentaire');
+                }
+
+                if($this->input->post('input_regulier')){
+                    $data['regulier'] = $this->input->post('input_regulier');
+                }
+                else{
+                    $data['regulier'] = 0;
+                }
+                if($this->input->post('input_retour')){
+                    $data['retour'] = $this->input->post('input_retour');
+                }
+                else{
+                    $data['retour'] = 0;
+                }
+
+                //var_dump($error);
+                var_dump($data);
+                $this->M_Annonce->ajouter($data);
+            }
         }
 }

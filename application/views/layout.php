@@ -33,9 +33,11 @@
             <script type="text/javascript" src="<?php echo base_url(); ?>web/js/html5shiv.js"></script>
             <script type="text/javascript" src="<?php echo base_url(); ?>web/js/css3-mediaqueries.js"></script>
 	<![endif]-->
-        <script src="http://maps.google.com/maps/api/js?sensor=false&region=BE&language=fr" type="text/javascript"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3bDuQVr6LId7sm9l83B9yQYHUPDtgqxs&sensor=false&language=fr&region=BE" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>web/js/jquery.googlemap.js"></script>
         <script src="<?php echo base_url(); ?>web/js/jquery-ui-1.10.3.custom.js"></script>
         <script src="<?php echo base_url(); ?>web/js/jquery.ui.datepicker-fr.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/jquery-ui-timepicker-addon.js"></script>
         <script src="<?php echo base_url(); ?>web/js/colorPicker.js"></script>
         <script src="<?php echo base_url(); ?>web/js/plugins.js"></script>
         <script src="<?php echo base_url(); ?>web/js/main.js"></script>
