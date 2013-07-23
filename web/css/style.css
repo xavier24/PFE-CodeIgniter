@@ -308,6 +308,9 @@ a:hover, a:active, a:focus{
     max-height: 250px;
     overflow: auto;   
 }
+.clear{
+    clear: both;
+}
 /* ==========================================================================
    Nav styles
    ========================================================================== */
@@ -1125,6 +1128,110 @@ textarea.profil_modif{
 .annonce .places{
     color:#666;
     -font-weight:bold;
+}
+/* ==========================================================================
+   AJOUTER ANNONCE styles
+   ========================================================================== */
+.depart, .arrivee{
+    border: 2px dashed #065f9d;
+    background-color: #97B9D8;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px;
+}
+.input{
+    -float: left;
+    clear:both;
+}
+.depart input, .arrivee input{
+    background-color: #688DAD;
+    border: medium none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #fff;
+    -webkit-box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #fff;
+    box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #fff;
+    margin-bottom: 15px;
+    width: 80%;
+    color:white;
+    font-weight: bold;
+}
+.depart input[placeholder], .arrivee input[placeholder]{
+    -color:#333;
+}
+.ico-depart{
+    background: url(../images/elements.png) no-repeat scroll -250px -50px transparent;
+    height: 33px;
+    width: 15px;
+    float: left;
+}
+.ico-arrivee{
+    background: url(../images/elements.png) no-repeat scroll -275px -50px transparent;
+    height: 33px;
+    width: 15px;
+    float: left;
+}
+.ajouter_annonce .description{
+    -float:left;
+    -width: 100%;
+}
+.ajouter_annonce .description label{
+    font-size: 0.75em;
+    color: #000;
+    float: left;
+}
+.ajouter_annonce .description textarea{
+    clear:both;
+    width: 80%;
+    height: 50px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 1px 1px 0 #555 inset, 1px 1px 0 #fff;
+    -webkit-box-shadow: 1px 1px 0 #555 inset, 1px 1px 0 #fff;
+    box-shadow: 1px 1px 0 #555 inset, 1px 1px 0 #fff;
+    background-color: #B0C4DE;
+    color:#333;
+}
+.ajouter_annonce .date_heure{
+    border: 2px dashed #E9751A;
+    background-color: #F4C77A;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    
+}
+.ajouter_annonce .date, .ajouter_annonce .heure{
+    padding:10px;
+    width: 50%;
+}
+.ajouter_annonce .date input, .ajouter_annonce .heure input{
+    margin-top: 20px;
+    font-weight: bold;
+    color:#000;
+    text-align: center;
+    width: 60%;
+    -moz-box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
+    -webkit-box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
+    box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
+}
+.ico-date{
+    background: url(../images/elements.png) no-repeat scroll 0px -370px transparent;
+    height: 112px;
+    width: 115px;
+    float: left;
+}
+.ico-heure{
+    background: url(../images/elements.png) no-repeat scroll -115px -375px transparent;
+    height: 112px;
+    width: 115px;
+    float: left;
+}
+#map{
+    width:100%;
+    height:300px;
 }
 /* ==========================================================================
    Footer styles

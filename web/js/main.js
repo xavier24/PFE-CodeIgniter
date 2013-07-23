@@ -5,6 +5,12 @@
 	"use strict";
 
 	// --- global vars
+        var slideCompte,
+            edit,
+            editPhoto,
+            autreLang,
+            inputEtape,
+            moreEtape;
 	
 	// --- methods
 	var loginForm = function(){
@@ -51,18 +57,26 @@
             //$("#img_confort").css("background-position", (5-input_confort)*-20+"px 0");
         };
 	
+        var addEtape = function(){
+            inputEtape.clone().appendTo(".etapes");
+        }
+        
 	$( function () {
 
 		// --- onload routines
-		var slideCompte = $('.slide_compte');
-		var edit = $(".edit");
-                var editPhoto = $(".edit_photo");
-                var autreLang = $("#lang_autre_lang");
+		slideCompte = $('.slide_compte');
+		edit = $(".edit");
+                editPhoto = $(".edit_photo");
+                autreLang = $("#lang_autre_lang");
+                inputEtape = $(".input_etape");
+                moreEtape = $("#more_etape");
+                
+                console.log(inputEtape);
                 
                 slideCompte.on('click',loginForm);
                 edit.on("click", editProfil);
                 editPhoto.on('click',uploadPhoto);
-                
+                moreEtape.on('click',addEtape);
                 if(autreLang){
                     autreLangTextearea();
                 }

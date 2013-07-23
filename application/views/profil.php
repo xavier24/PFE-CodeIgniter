@@ -319,11 +319,16 @@
                                 <p class="marque edit_hidden"><?php echo $info_membre->vehicule ? $info_membre->vehicule : 'inconnu'; ?></p>
                                 <input class="marque profil_modif" name="input_vehicule" type="text" value="<?php echo $info_membre->vehicule; ?>" />
                                 <div class="consommation">
-                                    <p class="edit_hidden"><span class="icon-fuel"></span> <?php echo $info_membre->consommation ? $info_membre->consommation : '?'; ?>litres/100km</p>
+                                    <p class="edit_hidden"><span class="icon-fuel"></span> <?php echo $info_membre->consommation ? $info_membre->consommation : '?'; ?> litres/100km</p>
                                     <label class="profil_modif icon-fuel">
                                         <select name="input_consommation">
                                             <?php for($i=0;$i<21;$i++){
-                                                echo '<option value="'.$i.'">'.$i.'</option>';
+                                                if($i== $info_membre->consommation){
+                                                    echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
+                                                }
+                                                else{
+                                                    echo '<option value="'.$i.'">'.$i.'</option>';
+                                                }
                                             } ?>
                                         </select>    
                                     litres/100km
@@ -371,7 +376,7 @@
                         </div>
                         <div class="info_vehicule">
                             <p class="marque"><?php echo $info_membre->vehicule ?></p>
-                            <p class="consommation"><span class="icon-fuel"></span> <?php echo '10' ?>litres/100km</p>
+                            <p class="consommation"><span class="icon-fuel"></span> <?php echo '10' ?> litres/100km</p>
                             <p class="confort">Confort&nbsp;:
                             <?php
                             for($i=1;$i<6;$i++){

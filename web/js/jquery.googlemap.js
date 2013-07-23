@@ -236,17 +236,19 @@ $(function() {
                 if (status == google.maps.GeocoderStatus.OK) {
 
                     var request = {
-                        origin: params.start[0]+","+params.start[1],
+                        origin: new google.maps.LatLng(params.start[0], params.start[1]),
                         destination: results[0].geometry.location,
                         waypoints: wayptsArray,
                         optimizeWaypoints: params.optimizeWaypoints,
                         travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                        unitSystem: google.maps.DirectionsUnitSystem.METRIC,
                         region: "fr"
                     };
 
                     direction.route(request, function(response, status) {
                         if (status == google.maps.DirectionsStatus.OK) {
                             way.setDirections(response);
+                            console.log("modif");
                         } else {
                             alert("Address not found");
                         }
@@ -263,11 +265,26 @@ $(function() {
                 waypoints: wayptsArray,
                 optimizeWaypoints: params.optimizeWaypoints,
                 travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                unitSystem: google.maps.DirectionsUnitSystem.METRIC,
                 region: "fr"
             };
             direction.route(request, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     way.setDirections(response);
+                    var reponse = response;
+                    var distance = response.routes[0].legs[0].distance.text; 
+                    var time_taken = response.routes[0].legs[0].duration.text; 
+                    var calc_distance = response.routes[0].legs[0].distance.value;
+                    console.log(distance+", "+time_taken+", "+calc_distance);
+                    var coordonnees = reponse.routes[0].overview_path;
+                    //var coordArray = new Array();
+                    for($i=0;$i<coordonnees.length;$i++){
+                       //coordArray[$i]["lat"]= coordonnees[$i].jb;
+                       //coordArray[$i]["lng"]= coordonnees[$i].kb;
+                       //console.log(coordonnees[$i].jb+","+coordonnees[$i].kb);
+                    }
+                    var coordString = JSON.stringify(coordonnees);
+                    $("#input_coord").val(coordString);
                 } else {
                     alert("Address not found");
                 }

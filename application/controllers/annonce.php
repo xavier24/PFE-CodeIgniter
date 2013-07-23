@@ -99,10 +99,10 @@ class Annonce extends CI_Controller {
                         $error[$champ[$i]] = 'Veuillez préciser '.$champ_erreur[$i].' du voyage';
                     }
                 }
-                
-                list($day, $month, $year) = preg_split('/[-\.\/ ]/', $data['date']);
-                $data['date'] = $year.'-'.$month.'-'.$day;
-                
+                if($data['date']){
+                    list($day, $month, $year) = preg_split('/[-\.\/ ]/', $data['date']);
+                    $data['date'] = $year.'-'.$month.'-'.$day;
+                }
                 if($this->input->post('input_commentaire')){
                     $data['commentaire'] = $this->input->post('input_commentaire');
                 }
@@ -119,10 +119,16 @@ class Annonce extends CI_Controller {
                 else{
                     $data['retour'] = 0;
                 }
+                if($this->input->post('input_coord')){
+                    $coord = $this->input->post('input_coord');
+                    $jsonCoord = json_decode($coord);
+                    $dataCoord = $jsonCoord;
+                }
 
                 //var_dump($error);
-                var_dump($data);
-                $this->M_Annonce->ajouter($data);
+                //var_dump($data);
+                //var_dump($dataCoord[0]->jb);
+                $this->M_Annonce->ajouter($data,$dataCoord);
             }
         }
 }

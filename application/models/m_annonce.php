@@ -59,8 +59,18 @@ class M_Annonce extends CI_Model{
             return $query->row();
         }
         
-        public function ajouter($data){
+        public function ajouter($data,$dataCoord){
             $this->db->insert('annonces',$data);
+            $id = $this->db->insert_id();
+            $coord = array();
+            for($i=0;$i<count($dataCoord);$i++){
+                $coord[$i] = array(
+                    'id_annonce' => $id,
+                    'lat' => $dataCoord[$i]->jb, 
+                    'lng' => $dataCoord[$i]->kb
+                );
+            }
+            $this->db->insert_batch('annonces_coord',$coord);
         }
         
         public function villes(){
