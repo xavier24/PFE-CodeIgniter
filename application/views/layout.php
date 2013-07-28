@@ -40,10 +40,11 @@
         <script src="<?php echo base_url(); ?>web/js/jquery-ui-timepicker-addon.js"></script>
         <script src="<?php echo base_url(); ?>web/js/colorPicker.js"></script>
         <script src="<?php echo base_url(); ?>web/js/plugins.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/appel.googlemap.js"></script>
         <script src="<?php echo base_url(); ?>web/js/main.js"></script>
         
     </head>
-    <body>
+    <body <?php if(isset($body)){echo 'class="'.$body.'"';} ?> >
         <div id="fb-root"></div>
         <!--<script>
             (function(d, s, id) {

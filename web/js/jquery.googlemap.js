@@ -2,7 +2,7 @@ $(function() {
     /*
      * Initialisation de la Map
      */
-
+ 
     $.fn.googleMap = function(params) {
         params = $.extend( {
                 zoom: 10,
@@ -217,15 +217,6 @@ $(function() {
             provideTripAlternatives: true
         });
         
-        var waypts = params.waypoints;
-        var wayptsArray =[];
-        for (var i = 0; i < waypts.length; i++) {
-            wayptsArray.push({
-                  location:waypts[i],
-                  stopover:true
-            });
-        }
-        
         if(typeof params.end != "object") {
             geocoder = new google.maps.Geocoder();
             geocoder.geocode({
@@ -238,7 +229,7 @@ $(function() {
                     var request = {
                         origin: new google.maps.LatLng(params.start[0], params.start[1]),
                         destination: results[0].geometry.location,
-                        waypoints: wayptsArray,
+                        waypoints: params.waypoints,
                         optimizeWaypoints: params.optimizeWaypoints,
                         travelMode: google.maps.DirectionsTravelMode.DRIVING,
                         unitSystem: google.maps.DirectionsUnitSystem.METRIC,
@@ -248,7 +239,6 @@ $(function() {
                     direction.route(request, function(response, status) {
                         if (status == google.maps.DirectionsStatus.OK) {
                             way.setDirections(response);
-                            console.log("modif");
                         } else {
                             alert("Address not found");
                         }
@@ -262,7 +252,7 @@ $(function() {
             var request = {
                 origin: new google.maps.LatLng(params.start[0], params.start[1]),
                 destination: new google.maps.LatLng(params.end[0], params.end[1]),
-                waypoints: wayptsArray,
+                waypoints: params.waypoints,
                 optimizeWaypoints: params.optimizeWaypoints,
                 travelMode: google.maps.DirectionsTravelMode.DRIVING,
                 unitSystem: google.maps.DirectionsUnitSystem.METRIC,
@@ -271,26 +261,33 @@ $(function() {
             direction.route(request, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     way.setDirections(response);
-                    var reponse = response;
-                    var distance = response.routes[0].legs[0].distance.text; 
-                    var time_taken = response.routes[0].legs[0].duration.text; 
-                    var calc_distance = response.routes[0].legs[0].distance.value;
-                    console.log(distance+", "+time_taken+", "+calc_distance);
-                    var coordonnees = reponse.routes[0].overview_path;
-                    //var coordArray = new Array();
-                    for($i=0;$i<coordonnees.length;$i++){
-                       //coordArray[$i]["lat"]= coordonnees[$i].jb;
-                       //coordArray[$i]["lng"]= coordonnees[$i].kb;
-                       //console.log(coordonnees[$i].jb+","+coordonnees[$i].kb);
+                    var route = response.routes[0];
+                    var distance = 0,
+                        time_taken = 0,
+                        calc_distance = 0;
+                    for(var i=0; i<route.legs.length; i++){
+                        distance += route.legs[i].distance.value; 
+                        time_taken += route.legs[i].duration.value; 
+                        calc_distance += route.legs[i].distance.value; 
                     }
-                    var coordString = JSON.stringify(coordonnees);
+                    distance = Math.round(distance/1000);
+                    var heures= Math.floor(time_taken / 3600);
+                    var minutes= Math.round((time_taken /60) % 60);
+                    var time =heures+" heure "+minutes+" minutes";
+                    var coordString = JSON.stringify(route.overview_path);
+                    
                     $("#input_coord").val(coordString);
+                    $("#distance").text(distance);
+                    $("#input_distance").val(calc_distance);
+                    $("#duree").text(time);
+                    $("#input_distance").click();
+                    $("#input_distance").keyup();
                 } else {
                     alert("Address not found");
                 }
             });
         }
-
-        return this;
+       return this;
     }
+    
 });

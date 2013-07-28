@@ -59,25 +59,36 @@ class M_Annonce extends CI_Model{
             return $query->row();
         }
         
-        public function ajouter($data,$dataCoord){
+        public function ajouter($data,$dataCoord,$etapes){
             $this->db->insert('annonces',$data);
-            $id = $this->db->insert_id();
-            $coord = array();
-            for($i=0;$i<count($dataCoord);$i++){
-                $coord[$i] = array(
-                    'id_annonce' => $id,
-                    'lat' => $dataCoord[$i]->jb, 
-                    'lng' => $dataCoord[$i]->kb
-                );
+            $id = $this->db->insert_id();//recupere l'id de l'annonce ajoutée
+            
+            if($dataCoord){
+                $coord = array();
+                for($i=0;$i<count($dataCoord);$i++){
+                    $coord[$i] = array(
+                        'annonceID' => $id,
+                        'lat' => $dataCoord[$i]->jb, 
+                        'lng' => $dataCoord[$i]->kb
+                    );
+                }
+                $this->db->insert_batch('parcours',$coord);
             }
-            $this->db->insert_batch('annonces_coord',$coord);
+            if($etapes){
+                for($i=0;$i<count($etapes);$i++){
+                    $etapes[$i]["annonceID"] = $id;
+                }
+                $this->db->insert_batch('etapes',$etapes);
+            }
+            
+            redirect('annonce/fiche/'.$id);
         }
-        
+        /*
         public function villes(){
             $this->db->select('*');
             $this->db->from('villes');
 
             $query = $this->db->get();
             return $query->result();
-        }
+        }*/
 }

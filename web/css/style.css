@@ -284,6 +284,9 @@ body{
 header{
     padding-top:20px;
 }
+h1{
+   font-size:1.75em; 
+}
 h2{
     font-weight: bold;
     font-size:1.25em;
@@ -303,6 +306,9 @@ a:hover, a:active, a:focus{
 }
 .orange{
     color:darkorange;
+}
+.gris{
+    color:#666;
 }
 .ui-autocomplete{
     max-height: 250px;
@@ -593,6 +599,30 @@ button{
 	background-position: top center;
 	background-repeat: no-repeat;
 }
+.bouton_gris{
+	background: #777; /* Old browsers */
+	background: -moz-linear-gradient(top,  #777 0%, #444 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#777), color-stop(100%,#444)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #777 0%,#444 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #777 0%,#444 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #777 0%,#444 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #777 0%,#444 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#777777', endColorstr='#444444',GradientType=0 ); /* IE6-9 */
+	background-position: top center;
+	background-repeat: no-repeat;
+}
+.bouton_gris:active{
+	background: #333; /* Old browsers */
+	background: -moz-linear-gradient(top,  #333 0%, #222 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333), color-stop(100%,#222)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #333 0%,#222 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #333 0%,#222 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #333 0%,#222 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #333 0%,#222 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#222222',GradientType=0 ); /* IE6-9 */
+	background-position: top center;
+	background-repeat: no-repeat;
+}
 .bouton_bleu{
 	background: #182939; /* Old browsers */
 	background: -moz-linear-gradient(top,  #182939 0%, #0f1720 100%); /* FF3.6+ */
@@ -656,6 +686,32 @@ button{
 	-moz-box-shadow:inset -1px 1px 4px #ae6b0c, inset 1px -1px 0 #f3dd97;
 	-webkit-box-shadow:inset -1px 1px 4px #ae6b0c, inset 1px -1px 0 #f3dd97;
 	box-shadow:inset -1px 1px 4px #ae6b0c, inset 1px -1px 0 #f3dd97;
+}
+.btn button.gris,.button.gris{
+	background: #ccc; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ccc 0%, #aaa 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ccc), color-stop(100%,#aaa)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ccc 0%,#aaa 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ccc 0%,#aaa 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ccc 0%,#aaa 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ccc 0%,#aaa 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#aaaaaa',GradientType=0 ); /* IE6-9 */
+	background-position: top center;
+	background-repeat: no-repeat;
+	color:#666;
+	-moz-box-shadow:inset 0 1px 0 #efefef;
+	-webkit-box-shadow:inset 0 1px 0 #efefef;
+	box-shadow:inset 0 1px 0px #efefef;
+}
+.btn button.gris:hover, .btn button.gris:focus, .btn .button.gris:hover, .btn .button.gris:focus{
+	-moz-box-shadow:0 0px 3px rgba(0,0,0,0.7),inset 0 0 10px #888, inset 0 1px 0 #888;
+	-webkit-box-shadow:0 0px 3px rgba(0,0,0,0.7),inset 0 0 10px #888, inset 0 1px 0 #888;
+	box-shadow:0 0px 3px rgba(0,0,0,0.7),inset 0 0 10px #888, inset 0 1px 0 #888;
+}
+.btn button.gris:active, .btn .button.gris:active{
+	-moz-box-shadow:inset -1px 1px 4px #888, inset 1px -1px 0 #777;
+	-webkit-box-shadow:inset -1px 1px 4px #888, inset 1px -1px 0 #777;
+	box-shadow:inset -1px 1px 4px #888, inset 1px -1px 0 #777;
 }
 .btn button.bleu,.button.bleu{
 	background: #294764; /* Old browsers */
@@ -1063,7 +1119,7 @@ textarea.profil_modif{
     font-weight: bold;
     margin-bottom: 5px;
 }
-.info_vehicule .consommation{
+.info_vehicule .consommation, .info_vehicule .places{
     font-size: 0.875em;
 }
 .info_vehicule .consommation input{
@@ -1132,20 +1188,57 @@ textarea.profil_modif{
 /* ==========================================================================
    AJOUTER ANNONCE styles
    ========================================================================== */
-.depart, .arrivee{
-    border: 2px dashed #065f9d;
-    background-color: #97B9D8;
+.ajouter_annonce .choix_conducteur{
+    margin-bottom: 30px;
+}
+.ajouter_annonce .choix_conducteur .select{
+    border:1px solid black;
+}
+.ico-passager, .ico-passager-conducteur, .ico-conducteur{
+    display:block;
+    background: url(../images/elements.png) no-repeat scroll -255px -155px transparent;
+    height: 70px;
+    width: 62px;
+}
+.ico-passager{
+    -background-position: -255px -155px;
+    width: 35px;
+}
+.ico-passager-conducteur{
+    margin:0 auto;
+    background-position: -257px -229px;
+}
+.ico-conducteur{
+    float:right;
+    background-position: -150px -300px;
+    width:36px;
+}
+.ajouter_annonce .depart, .ajouter_annonce .arrivee{
+    border: 2px solid #091E32;
+    -border: 1px solid #065f9d;
+    background: #2E5071; /* Old browsers */
+    background: -moz-linear-gradient(top,  #2E5071 0%, #1E344A 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2E5071), color-stop(100%,#1E344A)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #2E5071 0%,#1E344A 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #2E5071 0%,#1E344A 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #2E5071 0%,#1E344A 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #2E5071 0%,#1E344A 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2E5071', endColorstr='#1E344A',GradientType=0 ); /* IE6-9 */
+    background-position: top center;
+    background-repeat: no-repeat;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 30px;
 }
-.input{
+.ajouter_annonce .input{
     -float: left;
-    clear:both;
+    -clear:both;
+    padding-top:7px;
 }
-.depart input, .arrivee input{
-    background-color: #688DAD;
+.ajouter_annonce .depart input, .ajouter_annonce .arrivee input{
+    background-color: #192E42;
     border: medium none;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1154,23 +1247,25 @@ textarea.profil_modif{
     -webkit-box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #fff;
     box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #fff;
     margin-bottom: 15px;
-    width: 80%;
+    width: 50%;
     color:white;
+    margin-left: 10px;
+    
     font-weight: bold;
 }
 .depart input[placeholder], .arrivee input[placeholder]{
     -color:#333;
 }
 .ico-depart{
-    background: url(../images/elements.png) no-repeat scroll -250px -50px transparent;
-    height: 33px;
-    width: 15px;
+    background: url(../images/elements.png) no-repeat scroll -323px -102px transparent;
+    height: 45px;
+    width: 18px;
     float: left;
 }
 .ico-arrivee{
-    background: url(../images/elements.png) no-repeat scroll -275px -50px transparent;
-    height: 33px;
-    width: 15px;
+    background: url(../images/elements.png) no-repeat scroll -293px -102px transparent;
+    height: 45px;
+    width: 18px;
     float: left;
 }
 .ajouter_annonce .description{
@@ -1179,7 +1274,7 @@ textarea.profil_modif{
 }
 .ajouter_annonce .description label{
     font-size: 0.75em;
-    color: #000;
+    color: #fff;
     float: left;
 }
 .ajouter_annonce .description textarea{
@@ -1189,26 +1284,108 @@ textarea.profil_modif{
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    -moz-box-shadow: 1px 1px 0 #555 inset, 1px 1px 0 #fff;
-    -webkit-box-shadow: 1px 1px 0 #555 inset, 1px 1px 0 #fff;
-    box-shadow: 1px 1px 0 #555 inset, 1px 1px 0 #fff;
-    background-color: #B0C4DE;
+    -moz-box-shadow: 1px 1px 0 #000 inset, 1px 1px 0 #fff;
+    -webkit-box-shadow: 1px 1px 0 #000 inset, 1px 1px 0 #fff;
+    box-shadow: 1px 1px 0 #000 inset, 1px 1px 0 #fff;
+    background-color: #758DA5;
     color:#333;
 }
+.ajouter_annonce .etapes{
+    margin-bottom: 10px;
+}
+.ajouter_annonce .etape{
+    padding-top: 6px;
+    margin-left: 6px;
+    margin-bottom: 10px;
+    float:left;
+}
+.ajouter_annonce .etape_inputs{
+    -position: relative;
+}
+.ajouter_annonce .etape_inputs input{
+    margin-top: -6px;
+    padding-right: 27px;
+    -moz-box-shadow: 1px 1px 0 #999 inset, 1px 1px 0 #fff;
+    -webkit-box-shadow: 1px 1px 0 #999 inset, 1px 1px 0 #fff;
+    box-shadow: 1px 1px 0 #999 inset, 1px 1px 0 #fff;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    color:#333;
+    width: 130px;
+}
+.ajouter_annonce .min_step{
+    color: crimson;
+    cursor: pointer;
+    float: right;
+    margin-top: -26px;
+    margin-left: -26px;
+    position: relative;
+}
+#more_step{
+    color:#0471D7;
+    cursor: pointer;
+}
+.ajouter_annonce .min_step:hover, .ajouter_annonce .min_step:active{
+    color:#AD0D2B;
+}
+#more_step:hover, #more_step:active{
+    color:#0156A5;
+}
+.ajouter_annonce .etape .stop label{
+    font-size: 0.75em;
+    margin-top: 5px ;
+    margin-left: 25px;
+    float:left;
+}
+.ajouter_annonce .etape .stop input{
+    margin-left: 5px;
+}
+.ajouter_annonce .etape .input_duree{
+    color: #000;
+    width:20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 2px 2px 2px 2px;
+    -moz-box-shadow: 1px 1px 0 #999999 inset, 1px 1px 0 #FFFFFF;
+    -webkit-box-shadow: 1px 1px 0 #999999 inset, 1px 1px 0 #FFFFFF;
+    box-shadow: 1px 1px 0 #999999 inset, 1px 1px 0 #FFFFFF;
+}
+#recalculer_trajet{
+    margin-bottom: 30px;
+}
 .ajouter_annonce .date_heure{
-    border: 2px dashed #E9751A;
-    background-color: #F4C77A;
+    border: 2px solid #EDA52A;
+    background: #FDD661 ; /* Old browsers */
+    background: -moz-linear-gradient(top,  #FDD661 0%, #FDBD4C 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FDD661), color-stop(100%,#FDBD4C)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #FDD661 0%,#FDBD4C 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FDD661', endColorstr='#FDBD4C',GradientType=0 ); /* IE6-9 */
+    background-position: top center;
+    background-repeat: no-repeat;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    margin-bottom: 30px;
     
 }
-.ajouter_annonce .date, .ajouter_annonce .heure{
-    padding:10px;
-    width: 50%;
+.ajouter_annonce .date,.ajouter_annonce .flexibilite, .ajouter_annonce .heure, .ajouter_annonce .places{
+    padding:10px 5%;
+    width: 40%;
+    float: left;
+}
+.ajouter_annonce .date label, .ajouter_annonce .heure label{
+    text-align: center;
+    width: 100%;
+    height: 115px;
+    display: block;
 }
 .ajouter_annonce .date input, .ajouter_annonce .heure input{
-    margin-top: 20px;
+    margin: 20px auto 0;
+    display: block;
     font-weight: bold;
     color:#000;
     text-align: center;
@@ -1217,21 +1394,134 @@ textarea.profil_modif{
     -webkit-box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
     box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
 }
+.ajouter_annonce .select_flexible, .ajouter_annonce .select_place{
+    text-align: center;
+    margin-top: 23px;
+    line-height: 2.2em;
+}
+.ajouter_annonce .select_flexible select, .ajouter_annonce .select_place select{
+    padding:8px;
+    font-weight:bold;
+}
 .ico-date{
     background: url(../images/elements.png) no-repeat scroll 0px -370px transparent;
     height: 112px;
     width: 115px;
-    float: left;
+    display: block;
+    margin: 0 auto;
+}
+.ico-flexible{
+    background: url(../images/elements.png) no-repeat scroll -210px -300px transparent;
+    height: 60px;
+    width: 115px;
+    display: block;
+    margin: 30px auto 42px;
+}
+.ico-place{
+    background: url(../images/elements.png) no-repeat scroll -230px -370px transparent;
+    height: 112px;
+    width: 115px;
+    display: block;
+    margin: 0 auto;
 }
 .ico-heure{
     background: url(../images/elements.png) no-repeat scroll -115px -375px transparent;
     height: 112px;
     width: 115px;
-    float: left;
+    display: block;
+    margin: 0 auto;
+}
+.ajouter_annonce .btn_check{
+    float:left;
+    margin: 30px 20px 0;
+    
+}
+.regulier{
+    display: none;
+    margin-top:20px;
+}
+.regulier table{
+    margin: 0 auto;
+}
+.regulier table thead td{
+    background-color: #2D4F6F;
+    color:white;
+    text-align: center;
+}
+.regulier table thead td:first-child{
+    background-color: transparent;
+}
+.regulier table tbody td:first-child{
+    font-size: 0.875em;
+    font-weight: bold;
+    text-align: right;
+    background-color: #2D4F6F;
+    color:white;
+    padding: 5px 5px 5px 10px;
+}
+.regulier table .table_retour{
+    display:none;
+}
+.regulier table input{
+    width: 40px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.ajouter_annonce .commentaire{
+    margin-top: 20px;
+}
+#input_commentaire{
+    height: 100px;
+    width: 100%;
+    clear:both;
+    -moz-box-shadow: 1px 1px 0 #777777 inset, 1px 1px 0 #FFFFFF;
+    -webkit-box-shadow: 1px 1px 0 #777777 inset, 1px 1px 0 #FFFFFF;
+    box-shadow: 1px 1px 0 #777777 inset, 1px 1px 0 #FFFFFF;
+    color: #000;
+}
+.ajouter_annonce .calculateur{
+    border: 2px solid #EDA52A;
+    background: #FDD661 ; /* Old browsers */
+    background: -moz-linear-gradient(top,  #FDD661 0%, #FDBD4C 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FDD661), color-stop(100%,#FDBD4C)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #FDD661 0%,#FDBD4C 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FDD661', endColorstr='#FDBD4C',GradientType=0 ); /* IE6-9 */
+    background-position: top center;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    width: 70%;
+    padding:10px 20px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.ajouter_annonce .calculateur p, .ajouter_annonce .calculateur label{
+    font-size: 0.875em;
+}
+.ajouter_annonce .calculateur p span{
+    font-weight:bold;
+}
+.ajouter_annonce .calculateur input{
+    color: #333;
+    font-weight:bold;
+}
+#input_carbu,#input_prix_choisi{
+    width: 30px;
+    text-align: right;
 }
 #map{
     width:100%;
     height:300px;
+}
+#way{
+    font-size: 0.875em;
+    margin-top:-10px;
+    height: 310px;
+    overflow: auto;
 }
 /* ==========================================================================
    Footer styles

@@ -71,7 +71,7 @@ class User extends CI_Controller {
             $data['info_membre']->naissance = $day.'/'.$month.'/'.$year;
         
     //APPEL FUNCTION age: convertir date naissance -> age
-        $data['info_membre']->age = $this->age($date);
+            $data['info_membre']->age = $this->age($date);
         }
     //Si profil = user connecté
         if($idUser == $user_id){
@@ -100,6 +100,7 @@ class User extends CI_Controller {
         }
         //var_dump($data['info_membre']);
         $data['page'] = 'Profil';
+        $data['body'] = "profil";
         $dataLayout['vue'] = $this->load->view('profil',$data,true);
         $this->load->view('layout',$dataLayout);
     }
@@ -123,7 +124,7 @@ class User extends CI_Controller {
                 $data['naissance'] = $year.'-'.$month.'-'.$day;                
         }
         
-        $champ_modif = array('username','villeID','description','fumeur','bagage','musique','discussion','animaux','vehicule','immatriculation','confort','consommation');
+        $champ_modif = array('username','villeID','description','fumeur','bagage','musique','discussion','animaux','vehicule','immatriculation','confort','consommation','places');
         for($i=0;$i<count($champ_modif);$i++){
             if($this->input->post('input_'.$champ_modif[$i]) != ""){
                 $data[$champ_modif[$i]] = $this->input->post('input_'.$champ_modif[$i]);

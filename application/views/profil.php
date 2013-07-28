@@ -115,7 +115,7 @@
                                 <textarea id="input_autre_lang" name="autre_lang" class=""><?php echo $info_membre->autre_lang ?></textarea>
                             </div>
                         </div>
-                        <p>J'ai <span class="orange"><?php echo $info_membre->voyage ?></span> voyage(s) à mon actif</p>
+                        <p>J'ai <span class="orange"><?php echo $info_membre->trajet ?></span> voyage(s) à mon actif</p>
                         <div class="date_inscription">
                             <p>Inscription le <?php echo $info_membre->created_at ?></p>
                             <p>Dernière visite le <?php echo $info_membre->connected_at ?></p>
@@ -176,7 +176,7 @@
                            else{
                                echo '<p>Elle habite à '.$info_membre->ville.' ('.$info_membre->province.'- '.$info_membre->pays.')</p>';
                                echo '<p>Elle parle </p>';
-                               echo '<p>Elle a <span class="orange">'.$info_membre->voyage.'</span> voyage(s) à son actif</p>';
+                               echo '<p>Elle a <span class="orange">'.$info_membre->trajet.'</span> voyage(s) à son actif</p>';
                            } ?>
                         </div>
                         <div class="date_inscription">
@@ -322,7 +322,7 @@
                                     <p class="edit_hidden"><span class="icon-fuel"></span> <?php echo $info_membre->consommation ? $info_membre->consommation : '?'; ?> litres/100km</p>
                                     <label class="profil_modif icon-fuel">
                                         <select name="input_consommation">
-                                            <?php for($i=0;$i<21;$i++){
+                                            <?php for($i=0;$i<20.5;$i+=0.5){
                                                 if($i== $info_membre->consommation){
                                                     echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
                                                 }
@@ -333,6 +333,20 @@
                                         </select>    
                                     litres/100km
                                     </label>
+                                </div>
+                                <div class="places">
+                                    <span class="edit_hidden"><?php echo $info_membre->places; ?></span>
+                                    <select id="input_places" class="profil_modif" name="input_places">
+                                        <?php for($i=1;$i<8;$i++){ 
+                                            if($i== $info_membre->places){
+                                                echo'<option value="'.$i.'" selected="selected">'.$i.'</option>';
+                                            }
+                                            else{
+                                                echo'<option value="'.$i.'">'.$i.'</option>';
+                                            }
+                                        } ?>
+                                    </select>
+                                    <span>place(s)</span>
                                 </div>
                                 <div class="confort">
                                 <span>Confort&nbsp;:</span>
@@ -424,15 +438,13 @@
                     </div>
                 </div>
                 <script type="text/javascript">
-                    jQuery(document).ready(function($) {
-                        $('#colorPicker').colorPicker({
+                    $('#colorPicker').colorPicker({
                             pickerDefault: "ffffff", 
                             colors: ["000000","444444","999999","DDDDDD", "FFFFFF","D3BD8C", "940107",
                                     "F80403","FF9707","FCFF00","AAFF00","03C403","016D00",
                                     "009DA0","00BBFF","1262D1","003B7F","9400FF","D800B1"], 
                             transparency: true, 
                             showHexField: false
-                        });
                     });
                 </script>
                 <script type="text/javascript">
@@ -442,7 +454,6 @@
                          echo '{"label":"'.$ville->fr_FR.' ('.$ville->code_postal.')'.'", "id":'.$ville->id.'},';
                      endforeach; ?>
                      ];
-
                     $("#input_naissance").datepicker({
                                         autoSize: false,
                                         maxDate: "-18Y",
@@ -452,19 +463,7 @@
                                         },$.datepicker.regional[ "fr" ]
                                     );
                                     
-                    var accentMap = {
-                        "á": "a",
-                        "é": "e",
-                        "è": "e",
-                        "ê": "e",
-                        "ë": "e",
-                        "ï": "i",
-                        "î": "i",
-                        "ö": "o",
-                        "ô": "o",
-                        "û": "u",
-                        "ü": "u"
-                    };
+                    var accentMap = {"á": "a", "é": "e", "è": "e", "ê": "e", "ë": "e", "ï": "i", "î": "i", "ö": "o", "ô": "o", "û": "u", "ü": "u" };
                     var normalize = function( term ) {
                         var ret = "";
                         for ( var i = 0; i < term.length; i++ ) {

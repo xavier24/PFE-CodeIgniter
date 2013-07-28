@@ -5,21 +5,69 @@
 	"use strict";
 
 	// --- global vars
-        var slideCompte,
-            edit,
-            editPhoto,
-            autreLang,
-            inputEtape,
-            moreEtape;
-	
+        var baseUrl = location.origin, 
+            $slideCompte,
+            $edit,
+            $editPhoto,
+            $autreLang,
+            $etapes,
+            $inputEtape,
+            $new_inputEtape,
+            $count_inputEtape,
+            $moreStep,
+            $input_confort;
+    
 	// --- methods
-	var loginForm = function(){
-            $(this).parent().next().children('.slideBlock').slideToggle();
-            $(this).parent().parent().toggleClass('ouvert');
+    //INITIALISE SELON PAGE
+        
+        var controlSession = function(){
+            
+            $.ajax({
+                url:baseUrl+'/PFE-CodeIgniter/ajax/dataSession',
+                type:'POST',
+                success: function($data){
+                var connect;
+                    if($.parseJSON($data)){
+                        console.log("connecter");
+                        //console.log($data);
+                        connect = true;
+                    }
+                    else{
+                        console.log("non connecter");
+                        //console.log($data);
+                        connect = false;
+                    }
+                initialise(connect);
+                }
+            });
+        }
+        
+        var initialise = function(connect){
+            
+            if($("body").hasClass('ajouter_annonce')){ //AJOUTER ANNONCE
+                
+                //recuperer valeur slide conducteur pour ajouter la class
+                if(connect){
+                    var $value = $( "#input_conducteur" ).val();
+                    $(".choix_conducteur"+$value).addClass('select');
+                }
+                else{
+                    $('.nav_compte').find('.slideBlock').slideToggle();
+                    $('.nav_compte').toggleClass('ouvert');
+                }
+                
+            }
         }
         
         
-        var editProfil = function(){
+    //MENU    
+	var loginForm = function(){ //slide connexion menu (portable)
+            $(this).parent().next().children('.slideBlock').slideToggle();
+            $(this).parent().parent().toggleClass('ouvert');
+        }//loginForm
+        
+     //PROFIL   
+        var editProfil = function(){ //editer profil
             $(this).parent().parent().find('.profil_modif').toggle();
             $(this).toggleClass('editor');
             if($(this).hasClass('editor')){
@@ -31,61 +79,129 @@
             $(this).parent().parent().find(".edit_hidden").toggle();
             
             $(this).parent().parent().find(".colorPicker-picker").toggle();
-	};
+	};//editProfil
         
-        var uploadPhoto = function(){
+        var uploadPhoto = function(){ //modifier photo profil
             $('#photo').click();
             $('#photo').on('change',function(){
                 $('#upload_photo form').submit();
             });
-        };
+        };//uploadPhoto
         
-        var autreLangTextearea = function(){
+        var autreLangTextearea = function(){ // autre langue profil
             if($(this).is(':checked')){
                 $("#input_autre_lang").show();
             }
             else{
                 $("#input_autre_lang").hide();
             }
-        };
+        };//autreLangTextearea
+                
+    //AJOUTER ANNONCE
+        var addStep = function(){ //ajouter etape annonce
+            $count_inputEtape = $etapes.find('.etape');
+            if($count_inputEtape.length < 5){
+                $new_inputEtape = $inputEtape.clone();
+                $new_inputEtape.find('input').val("");
+                $new_inputEtape.appendTo($etapes);
+                $('.nb_etape').empty().append($count_inputEtape.length+1);
+                countStep();
+            }
+        };//addStep
         
-        var modifConfort = function(){
-            console.log("a");
-            //var for_confort = $(this).attr('for');
-           // var input_confort = $('#'+ for_confort).val();
-            //console.log(input_confort);
-            //$("#img_confort").css("background-position", (5-input_confort)*-20+"px 0");
-        };
-	
-        var addEtape = function(){
-            inputEtape.clone().appendTo(".etapes");
-        }
+        var removeStep = function(){ //supprimer etape annonce
+            $count_inputEtape = $etapes.find('.etape');
+            if($count_inputEtape.length > 1){
+                $(this).parent().parent().remove();
+                $('.nb_etape').empty().append($count_inputEtape.length-1);
+                countStep();
+            }
+            else{
+                $(this).parent().find('input').val("");
+            }
+        };//removeStep
         
-	$( function () {
+        var countStep = function(){
+            $count_inputEtape = $etapes.find('.etape');
+            var i = 0;
+            $count_inputEtape.each(function(){
+                $(this).find('.input_etape').attr('name','input_etape_'+i);
+                $(this).find('.input_etapeID').attr('name','input_etapeID_'+i);
+                $(this).find('.input_etape_lat').attr('name','input_etape_lat_'+i);
+                $(this).find('.input_etape_lng').attr('name','input_etape_lng_'+i);
+                $(this).find('.input_stop').attr('name','input_stop_'+i);
+                $(this).find('.input_duree').attr('name','input_duree_'+i);
+                i++;
+            });
+        }//countStep
+        
+        var btnCheck = function($this,$check){ //bouton checkbox annonce
+            if($this.next().is(':checked') && !$check){
+                $this.removeClass('bouton_orange').addClass('bouton_gris');
+                $this.find('.button').removeClass('orange').addClass('gris');
+                if($this.next().hasClass('show_calendar')){
+                    $(".calendar").toggle();
+                }
+                if($this.next().hasClass('show_retour')){
+                    $(".table_retour").toggle();
+                }
+            }
+            else{
+                $this.addClass('bouton_orange').removeClass('bouton_gris');
+                $this.find('.button').addClass('orange').removeClass('gris');
+                if($this.next().hasClass('show_calendar')){
+                    $(".calendar").toggle();
+                }
+                if($this.next().hasClass('show_retour')){
+                    $(".table_retour").toggle();
+                }
+            }
+            
+        };//btnCheck
+        
+        $( function () {
 
-		// --- onload routines
-		slideCompte = $('.slide_compte');
-		edit = $(".edit");
-                editPhoto = $(".edit_photo");
-                autreLang = $("#lang_autre_lang");
-                inputEtape = $(".input_etape");
-                moreEtape = $("#more_etape");
+            // --- onload routines
+		$slideCompte = $('.slide_compte');
+		$edit = $(".edit");
+                $editPhoto = $(".edit_photo");
+                $autreLang = $("#lang_autre_lang");
+                $input_confort = $("input[name='confort']");
+                $etapes = $(".etapes");
+                $inputEtape = $etapes.find('.etape').first().clone();
+                $moreStep = $("#more_step");
                 
-                console.log(inputEtape);
+            // --- events
+                $slideCompte.on('click',loginForm);
+                $edit.on("click", editProfil);
+                $editPhoto.on('click',uploadPhoto);
+                $moreStep.on('click',addStep);
+                $autreLang.on('click',autreLangTextearea);
+                $input_confort.select(function(){modifConfort()});
+                $(document).on('click',".min_step",removeStep);
                 
-                slideCompte.on('click',loginForm);
-                edit.on("click", editProfil);
-                editPhoto.on('click',uploadPhoto);
-                moreEtape.on('click',addEtape);
-                if(autreLang){
+                if($("#input_retour").is(':checked')){
+                   btnCheck($("#input_retour").prev(),"isCheck");
+                }
+                if($("#input_regulier").is(':checked')){
+                   btnCheck($("#input_regulier").prev(),"isCheck");
+                }
+                $(".btn_check label").on('click',function(){
+                    btnCheck($(this))
+                });
+                
+                
+            // --- execute
+                //initialise();
+                controlSession();
+                if($autreLang){
                     autreLangTextearea();
                 }
-                autreLang.on('click',autreLangTextearea);
                 
-                var input_confort = $("input[name='confort']");
-                input_confort.select(function(){modifConfort()});
-	} );
-
+            // --- Appel function externe
+                
+        } );
+        
 }( jQuery ) );
 
 
