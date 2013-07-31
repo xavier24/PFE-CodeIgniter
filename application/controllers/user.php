@@ -44,6 +44,8 @@ class User extends CI_Controller {
     }
 //RECUPERER INFO USER SELECTIONNE
     public function profil(){
+    $this->load->model('M_Date');
+        
     //recuperer l'id de l'url (ID PROFIL)
         $idUser = $this->uri->segment(3,0);
         if(!$idUser){
@@ -71,7 +73,8 @@ class User extends CI_Controller {
             $data['info_membre']->naissance = $day.'/'.$month.'/'.$year;
         
     //APPEL FUNCTION age: convertir date naissance -> age
-            $data['info_membre']->age = $this->age($date);
+            $data['info_membre']->age = $this->M_Date->age($date);
+            //var_dump($date);
         }
     //Si profil = user connecté
         if($idUser == $user_id){
@@ -86,7 +89,7 @@ class User extends CI_Controller {
         }
         else{
             $data['user_connect'] = false;
-            $data['titre'] = 'Profil de'.$data['info_membre']->username;
+            $data['titre'] = 'Profil de '.$data['info_membre']->username;
         }
     
     //RECUPERE TRAJET USER
@@ -96,7 +99,7 @@ class User extends CI_Controller {
     //APPEL FUNCTION dateLongue: convertir date AA/MM/JJ (ANNONCES) -> Jour date mois année  
         $annonces_lenght = count($data['annonces']);
         for($i=0;$i<$annonces_lenght;$i++){
-            $data['annonces'][$i]->date = $this->dateLongue($data['annonces'][$i]->date,'no','no');
+            $data['annonces'][$i]->date = $this->M_Date->dateLongue($data['annonces'][$i]->date,'no','no');
         }
         //var_dump($data['info_membre']);
         $data['page'] = 'Profil';
@@ -292,47 +295,5 @@ class User extends CI_Controller {
         }
         
     }
-//CALCULER AGE   
-    public function age($date){
-        // Date d'aujourd'hui 
-        $jour = date("d",time()); 
-        $mois = date("m",time()); 
-        $annee = date("Y",time()); 
-        // Détermination de l'âge 
-        $age = explode("-", $date); 
-        if ($jour >= $age[2] and $mois = $age[1] or $mois > $age[1]){ 
-            $age = $annee - $age[0]; 
-        } 
-        else { 
-            $age = $annee - $age[0] - 1; 
-        }
-        return $age;
-    }
-//Convertir une date US vers une date en français affichant le jour de la semaine
-    public function dateLongue($date,$annee = 'yes',$heure = 'yes'){
-        // Configure le script en français
-        setlocale (LC_TIME, 'fr_FR','fra');
-        //Définit le décalage horaire par défaut de toutes les fonctions date/heure  
-        date_default_timezone_set("Europe/Paris");
-        //Definit l'encodage interne
-        mb_internal_encoding("UTF-8");
 
-        if($annee == 'yes'){
-            if($heure == 'yes'){
-                $strDate = mb_convert_encoding('%A %d %B %Y à %Hh%M','ISO-8859-9','UTF-8');  
-            }
-            else{
-                $strDate = mb_convert_encoding('%A %d %B %Y','ISO-8859-9','UTF-8');    
-            }
-        }
-        else {
-            if($heure == 'yes'){
-                $strDate = mb_convert_encoding('%A %d %B à %Hh%M','ISO-8859-9','UTF-8');  
-            }
-            else{
-                $strDate = mb_convert_encoding('%A %d %B','ISO-8859-9','UTF-8');    
-            }
-        }
-        return iconv("ISO-8859-9","UTF-8",strftime($strDate ,strtotime($date))); 
-    }
 }
