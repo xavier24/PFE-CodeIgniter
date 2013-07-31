@@ -6,7 +6,14 @@ class User extends CI_Controller {
         parent::__construct();
         $this->load->model('M_User');
         $this->load->helper('date');
+        
+        if( $this->session->userdata('lang') ){
+            $this->lang->is_loaded = array();
+            $this->lang->language = array();
+            $this->lang->load('trad',$this->session->userdata('lang'));
+        }
     }
+    
     public function index(){
         redirect('accueil');    
     }
@@ -85,11 +92,11 @@ class User extends CI_Controller {
         //recuperation des villes pour modification profil
             $data['villes'] = $this->M_User->villes();
             $data['user_data'] = $data['info_membre'];
-            $data['titre'] = 'Mon profil';
+            $data['titre'] = lang('mon_profil');
         }
         else{
             $data['user_connect'] = false;
-            $data['titre'] = 'Profil de '.$data['info_membre']->username;
+            $data['titre'] = lang('profil_de').' '.$data['info_membre']->username;
         }
     
     //RECUPERE TRAJET USER
@@ -102,20 +109,20 @@ class User extends CI_Controller {
             $data['annonces'][$i]->date = $this->M_Date->dateLongue($data['annonces'][$i]->date,'no','no');
         }
         //var_dump($data['info_membre']);
-        $data['page'] = 'Profil';
+        $data['page'] = lang('profil');
         $data['body'] = "profil";
         $dataLayout['vue'] = $this->load->view('profil',$data,true);
         $this->load->view('layout',$dataLayout);
     }
 	//recupere les annonces de l'utilisateur selectionn�
     
-    public function lister(){
-        $dataList['page'] = 'Profil';
+    /*public function lister(){
+        $dataList['page'] = lang('profil');
         $dataList['titre'] = 'liste des annonces de l\'utilisateur';
         //$dataList['annonces'] = $this->M_Annonce->lister();
         $data['vue'] = $this->load->view('user',$dataList,true);
         $this->load->view('layout',$data);
-    }
+    }*/
 
 
     public function modifier(){
@@ -192,7 +199,7 @@ class User extends CI_Controller {
             else{
                 $oldPicture = FALSE;
             }
-            //$this->thumb('web/images/membre/tmp/'.$filedata['file_name'],$config['file_name'],$oldPicture);
+            
             $this->crop('web/images/membre/tmp/'.$filedata['file_name'],$config['file_name'],$oldPicture);
         }
     }

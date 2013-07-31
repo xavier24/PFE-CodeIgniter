@@ -61,24 +61,9 @@
                 <h1>Car-People</h1>
                 <img src="<?php echo base_url(); ?>web/images/voyageur.png" class="voyageur"/>-->
                 <?php include('include/menu.php');?>
+                <?php include('include/lang.php');?>
             </header>
-            
-            <!--    
-            <?php echo form_open('hook_lang/choix_lang',array('method'=>'post')); ?>
-            <div>
-                <?php $data = array(
-                        'name' => 'button',
-                        'id' => 'button',
-                        'value' => 'true',
-                        'type' => 'check',
-                        'content' => 'francais'
-                    );
-                echo form_button($data);?>
-                <p><a>Français</a></p><p><a>English</a></p>
-            </div>
-            <?php echo form_close(); ?>
-            -->
-            
+                                    
             <?php echo $vue ?>
             <div class="push"></div>
         </div>   

@@ -28,7 +28,15 @@ class M_Date extends CI_Model {
     public function dateLongue($date,$annee = 'yes',$heure = 'yes'){ //donner 1987-08-17,si afficher année, si afficher heure => retourne le 17 aout,1987,l'heure
         
         // Configure le script en français
-        setlocale (LC_TIME, 'fr_FR','fra');
+        if($this->session->userdata('lang') == "en"){
+            setlocale (LC_TIME, 'en_EN');
+        }
+        else if($this->session->userdata('lang') == "nl"){
+            setlocale (LC_TIME, 'nl_NL');
+        }
+        else{
+            setlocale (LC_TIME, 'fr_FR','fra');
+        }
         //Définit le décalage horaire par défaut de toutes les fonctions date/heure  
         date_default_timezone_set("Europe/Paris");
         //Definit l'encodage interne

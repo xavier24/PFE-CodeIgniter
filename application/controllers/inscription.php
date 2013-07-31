@@ -2,6 +2,16 @@
 
 class inscription extends CI_Controller {
     
+    public function __construct(){
+        parent::__construct();
+        
+        if( $this->session->userdata('lang') ){
+            $this->lang->is_loaded = array();
+            $this->lang->language = array();
+            $this->lang->load('trad',$this->session->userdata('lang'));
+        }
+    }
+    
     public function index(){
         //recuperation id user (si existe = connecté)
         if($this->session->userdata('logged_in')){

@@ -7,6 +7,7 @@
 	// --- global vars
         var baseUrl = location.origin, 
             $slideCompte,
+            $lang,
             $edit,
             $editPhoto,
             $autreLang,
@@ -16,7 +17,7 @@
             $count_inputEtape,
             $moreStep,
             $input_confort;
-    
+            
 	// --- methods
     //INITIALISE SELON PAGE
         
@@ -62,7 +63,20 @@
             $(this).parent().parent().toggleClass('ouvert');
         }//loginForm
         
-     //PROFIL   
+    //CHANGER LANGUE
+        var changeLang = function(e){
+            e.preventDefault();
+            console.log($(this).attr("id"));
+            $.ajax({
+                    url:baseUrl+'/PFE-CodeIgniter/ajax/lang/'+$(this).attr("id"),
+                    type:'POST',
+                    success: function($data){
+                        location.reload();
+                    }
+            });
+        }//changeLang
+        
+    //PROFIL   
         var editProfil = function(){ //editer profil
             $(this).parent().parent().find('.profil_modif').toggle();
             $(this).toggleClass('editor');
@@ -160,7 +174,8 @@
 
             // --- onload routines
 		$slideCompte = $('.slide_compte');
-		$edit = $(".edit");
+		$lang = $('.btn_lang');
+                $edit = $(".edit");
                 $editPhoto = $(".edit_photo");
                 $autreLang = $("#lang_autre_lang");
                 $input_confort = $("input[name='confort']");
@@ -170,6 +185,7 @@
                 
             // --- events
                 $slideCompte.on('click',loginForm);
+                $lang.on('click',changeLang);
                 $edit.on("click", editProfil);
                 $editPhoto.on('click',uploadPhoto);
                 $moreStep.on('click',addStep);
