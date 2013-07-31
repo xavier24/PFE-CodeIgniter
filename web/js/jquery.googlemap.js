@@ -2,7 +2,6 @@ $(function() {
     /*
      * Initialisation de la Map
      */
- 
     $.fn.googleMap = function(params) {
         params = $.extend( {
                 zoom: 10,
@@ -28,9 +27,9 @@ $(function() {
         this.each(function() {
 
             var map = new google.maps.Map(this, {
-                    zoom: params.zoom,
-            center: new google.maps.LatLng(params.coords[0], params.coords[1]),
-            mapTypeId: params.type
+                zoom: params.zoom,
+                center: new google.maps.LatLng(params.coords[0], params.coords[1]),
+                mapTypeId: params.type
             });
 
             $(this).data('googleMap',    map);
@@ -194,7 +193,7 @@ $(function() {
 	}
 	
     /*
-     * GÃ©nÃ©rer un itinÃ©raire
+     * Générer un itinéraire
      */
     $.fn.addWay = function(params) {
         params = $.extend( {
@@ -275,13 +274,17 @@ $(function() {
                     var minutes= Math.round((time_taken /60) % 60);
                     var time =heures+" heure "+minutes+" minutes";
                     var coordString = JSON.stringify(route.overview_path);
+                    var etapesString = JSON.stringify(params.waypoints);
+                    //var heure_depart = $("#input_heure_depart").val();
                     
                     $("#input_coord").val(coordString);
                     $("#distance").text(distance);
                     $("#input_distance").val(calc_distance);
                     $("#duree").text(time);
-                    $("#input_distance").click();
-                    $("#input_distance").keyup();
+                    $("#input_duree").val(time_taken);
+                    $("#input_etapes").val(etapesString);
+                    //$("#input_distance").click();
+                    //$("#input_distance").keyup();
                 } else {
                     alert("Address not found");
                 }

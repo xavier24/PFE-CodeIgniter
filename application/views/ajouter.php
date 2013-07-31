@@ -271,7 +271,9 @@
                         
                         <input id="input_consomme" type="hidden" name="input_consomme" value="<?php echo $user_data->consommation; ?>"/>
                         <input id="input_distance" type="hidden" name="input_distance" />
+                        <input id="input_duree" type="hidden" name="input_duree" />
                         <input id="input_prix_conseil" type="hidden" name="input_prix_conseil" value="<?php echo isset($donnee['prix_conseil']) ? $donnee['prix_conseil'] : "" ; ?>" />
+                        
                         <div id="recalculer_prix" class="btn clearfix">
                             <div class="bouton_contour bouton_gris">
                                 <span class="button gris">
@@ -287,7 +289,8 @@
             
             
             <div>
-                <input id="input_coord" type="text" name="input_coord" <?php echo isset($donnee['parcours']) ? 'value="'.$donnee['parcours'].'"' : "" ; ?>/>
+                <input id="input_etapes" type="text" name="input_etape" />
+                <input id="input_coord" type="text" name="input_coord" />
             </div>
             
         </div>
@@ -312,38 +315,40 @@
         
     </div>
     <script type="text/javascript">
-        $( "#slider_conducteur" ).slider({
-                value:$( "#input_conducteur" ).val(),
-                min: 0,
-                max: 2,
-                step: 1,
-                slide: function( event, ui ) {
-                    var $oldvalue = $( "#input_conducteur" ).val();
-                    $( "#input_conducteur" ).val(ui.value );
-                    $(".choix_conducteur"+$oldvalue).removeClass('select');
-                    $(".choix_conducteur"+ui.value).addClass('select');
-                }
-            });
-        $("#input_date").datepicker({
-                autoSize: true,
-                minDate: 0,
-                constrainInput: true
-                },$.datepicker.regional[ "fr" ]
-            );
-        $('.input_heure').timepicker({
-                minuteGrid: 10,
-                currentText: 'Maintenant',
-                closeText: 'Valider',
-                amNames: ['AM', 'A'],
-                pmNames: ['PM', 'P'],
-                timeFormat: 'HH:mm',
-                timeSuffix: '',
-                timeOnlyTitle: 'Choissez l\'heure',
-                timeText: 'Temps',
-                hourText: 'Heure',
-                minuteText: 'Minute',
-                timezoneText: 'Time Zone'
-            });
+        $(function(){
+            $( "#slider_conducteur" ).slider({
+                    value:$( "#input_conducteur" ).val(),
+                    min: 0,
+                    max: 2,
+                    step: 1,
+                    slide: function( event, ui ) {
+                        var $oldvalue = $( "#input_conducteur" ).val();
+                        $( "#input_conducteur" ).val(ui.value );
+                        $(".choix_conducteur"+$oldvalue).removeClass('select');
+                        $(".choix_conducteur"+ui.value).addClass('select');
+                    }
+                });
+            $("#input_date").datepicker({
+                    autoSize: true,
+                    minDate: 0,
+                    constrainInput: true
+                    },$.datepicker.regional[ "fr" ]
+                );
+            $('.input_heure').timepicker({
+                    minuteGrid: 10,
+                    currentText: 'Maintenant',
+                    closeText: 'Valider',
+                    amNames: ['AM', 'A'],
+                    pmNames: ['PM', 'P'],
+                    timeFormat: 'HH:mm',
+                    timeSuffix: '',
+                    timeOnlyTitle: 'Choissez l\'heure',
+                    timeText: 'Temps',
+                    hourText: 'Heure',
+                    minuteText: 'Minute',
+                    timezoneText: 'Time Zone'
+                });
+        });
     </script>
     
 </section>

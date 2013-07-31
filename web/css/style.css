@@ -295,6 +295,9 @@ h3{
     margin-top:5px;
     margin-bottom: 10px;
 }
+h5{
+    color:#617E96;
+}
 a:hover, a:active, a:focus{
 	color:#faba10 !important;
 }
@@ -1075,12 +1078,12 @@ textarea.profil_modif{
 .preferences .pref_animaux2{
     background-position:-200px -250px ;
 }
-.profil .vehicule{
+.vehicule{
     width: 125px;
     float:left;
     margin-right: 10px;
 }
-.profil .couleur_vehicule{
+.couleur_vehicule{
     margin-bottom: 15px;
 }
 .profil .couleur_vehicule .img_vehicule{
@@ -1088,11 +1091,11 @@ textarea.profil_modif{
     height:50px;
     width: 122px;
 }
-.profil .immatriculation {
+.immatriculation {
     text-align: center;
     margin-top: 5px;
 }
-.profil .immatriculation span, .profil .immatriculation input{
+.immatriculation span, .immatriculation input{
     border:1px solid #E51F12;
     padding:2px 5px;
     -display:block;
@@ -1168,20 +1171,20 @@ textarea.profil_modif{
 .profil .annonce:last-child{
     border-bottom:0 none;
 }
-.annonce_heure{
+.profil .annonce_heure{
     -float:right;
 }
-.heure_estime{
+.profil .heure_estime{
     font-size:0.75em;
     line-height:1.9em;
     font-weight: normal;
 }
-.annonce .destination{
+.profil .annonce .destination{
     clear: both;
     text-transform: uppercase;
     margin: 10px 0 3px;
 }
-.annonce .places{
+.profil .annonce .places{
     color:#666;
     -font-weight:bold;
 }
@@ -1522,6 +1525,159 @@ textarea.profil_modif{
     margin-top:-10px;
     height: 310px;
     overflow: auto;
+}
+/* ==========================================================================
+   Annonce styles
+   ========================================================================== */
+.annonce .places{
+    font-weight: bold;
+}
+.annonce .depart, .annonce .arrivee{
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:10px;
+}
+.annonce .depart h4, .annonce .arrivee h4{
+    color:#294765;
+    font-weight: bold;
+}
+.annonce .direction{
+    font-size: 3em;
+    text-align: center;
+}
+.annonce .commentaire{
+    margin-top: 40px;
+}
+.annonce .regulier{
+    display: block;
+    margin-top: 40px;
+}
+.annonce .regulier table{
+    margin: 0;
+}
+.annonce .regulier tbody td{
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+    padding: 7px 5px;
+    background-color: white;
+    border: 1px solid #7F9DB9;
+    text-align: center;
+}
+.annonce .regulier tbody td:first-child{
+    width: auto;
+    padding-top:7px; 
+}
+.annonce .regulier td.heure{
+    background-color:#f99501;
+    color:white;
+}
+.annonce .regulier p span{
+    font-weight: bold;
+}
+.annonce .annonce_profil{
+    border-left: 1px solid #d0d0d0;
+}
+.annonce .annonce_profil>div{
+    padding: 10px 0px 20px 30px;
+    border-left: 1px solid #fff;
+}
+.annonce .annonce_profil .photo, .annonce .annonce_profil .info_profil{
+    float:left;
+}
+.annonce .annonce_profil .photo{
+    margin-right: 20px;
+}
+.annonce_profil .identite {
+    float: left;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+.annonce_profil .naissance {
+    float: left;
+    line-height: 1.75em;
+    margin-bottom: 5px;
+}
+.annonce_profil .habite{
+    clear: both;
+}
+.annonce_profil .preferences{
+    margin-top: 10px;
+    margin-left:90px;
+    margin-bottom: 10px;
+}
+.annonce_profil .preferences span {
+    background: url("../images/elements.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 30px;
+    margin: 1px;
+    width: 30px;
+}
+.annonce_profil .preferences .pref_fumeur0{
+    background-position:0px -500px ;
+}
+.annonce_profil .preferences .pref_fumeur1{
+    background-position:0px -530px ;
+}
+.annonce_profil .preferences .pref_fumeur2{
+    background-position:0px -560px ;
+}
+.annonce_profil .preferences .pref_musique0{
+    background-position:-30px -500px ;
+}
+.annonce_profil .preferences .pref_musique1{
+    background-position:-30px -530px ;
+}
+.annonce_profil .preferences .pref_musique2{
+    background-position:-30px -560px ;
+}
+.annonce_profil .preferences .pref_bagage0{
+    background-position:-60px -500px ;
+}
+.annonce_profil .preferences .pref_bagage1{
+    background-position:-60px -530px ;
+}
+.annonce_profil .preferences .pref_bagage2{
+    background-position:-60px -560px ;
+}
+.annonce_profil .preferences .pref_discussion0{
+    background-position:-90px -500px ;
+}
+.annonce_profil .preferences .pref_discussion1{
+    background-position:-90px -530px ;
+}
+.annonce_profil .preferences .pref_discussion2{
+    background-position:-90px -560px ;
+}
+.annonce_profil .preferences .pref_animaux0{
+    background-position:-120px -500px ;
+}
+.annonce_profil .preferences .pref_animaux1{
+    background-position:-120px -530px ;
+}
+.annonce_profil .preferences .pref_animaux2{
+    background-position:-120px -560px ;
+}
+.annonce_profil .vehicule{
+    width:75px;
+    margin-right: 15px;
+}
+.annonce_profil .couleur_vehicule .img_vehicule{
+    background: url(../images/elements.png) no-repeat scroll 0px -591px transparent;
+    height:30px;
+    width: 74px;
+}
+.annonce_profil .info_vehicule{
+    float:left;
+}
+.annonce_profil form{
+    margin-top: 30px;
+}
+.annonce .carte{
+    margin-top: 80px;
 }
 /* ==========================================================================
    Footer styles

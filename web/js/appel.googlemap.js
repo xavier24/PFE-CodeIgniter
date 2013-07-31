@@ -24,9 +24,8 @@
             };
             
             var init = function(){
-                if($('#ajouter_annonce')){ //AJOUTER ANNONCE
-                    
-                    maps();
+                if($("body").hasClass('ajouter_annonce')){ //AJOUTER ANNONCE
+                    initialiseMaps();
                     ajouterMaps();
                 }
             }
@@ -52,7 +51,7 @@
                                                             $('#input_depart_lng').val(ui.item.lng);
                                                             depart_lat = ui.item.lat;
                                                             depart_lng = ui.item.lng;
-                                                            maps();
+                                                            initialiseMaps();
                                                     }
                         });
 
@@ -70,7 +69,7 @@
                                                         $('#input_arrivee_lng').val(ui.item.lng);
                                                         arrivee_lat = ui.item.lat;
                                                         arrivee_lng = ui.item.lng;
-                                                        maps();
+                                                        initialiseMaps();
                                                     }
                         });
 
@@ -86,7 +85,7 @@
                                 select: function (event, ui) {  $(this).parent().find('.input_etapeID').val(ui.item.id);
                                                             $(this).parent().find('.input_etape_lat').val(ui.item.lat);
                                                             $(this).parent().find('.input_etape_lng').val(ui.item.lng);
-                                                            maps();
+                                                            initialiseMaps();
                                                         }
                             });
                         });
@@ -95,40 +94,41 @@
                 });
                     
             }
-                        
-            var maps = function(){
-            
+            var initialiseMaps = function(){
                 if(depart_lat && depart_lng && arrivee_lat && arrivee_lng){
-
                     var etape = $(".etape");
                     var etapes = new Array();
                     var Waypoints = true;
                     etape.each(function(){
                        if($(this).find('.input_etape').val() != ""){
-                            var value = $(this).find('.input_etape').val();
+                            var lat = $(this).find('.input_etape_lat').val();
+                            var lng = $(this).find('.input_etape_lng').val();
                             var stop = false;
                             if($(this).find(".input_stop").is(':checked')){
                                 stop = true;
                             }
-                            etapes.push({location:value,stopover:stop});
+                            etapes.push({location:lat+","+lng,stopover:stop});
                        }
                     });
                     if(etapes.length == 0){
                         Waypoints = false;
                     }
-                    $("#map").googleMap();
-                    $("#map").addWay({
-                        start: [depart_lat, depart_lng], // Adresse postale du départ (obligatoire)
-                        waypoints: etapes,
-                        optimizeWaypoints: Waypoints,
-                        end:  [arrivee_lat, arrivee_lng], // Coordonnées GPS ou adresse postale d'arrivée (obligatoire)
-                        route : 'way', // ID du bloc dans lequel injecter le détail de l'itinéraire (optionnel)
-                        langage : 'french' // Langue du détail de l'itinéraire (optionnel, en anglais)
-                    }) ;
-                    
-                    calculPrix();
+                                       
+                    maps(depart_lat,depart_lng,etapes,Waypoints,arrivee_lat,arrivee_lng);
                 }
-
+            }            
+            var maps = function(depart_lat,depart_lng,etapes,Waypoints,arrivee_lat,arrivee_lng){
+                $("#map").googleMap();
+                $("#map").addWay({
+                    start: [depart_lat, depart_lng], // Adresse postale du départ (obligatoire)
+                    waypoints: etapes,
+                    optimizeWaypoints: Waypoints,
+                    end:  [arrivee_lat, arrivee_lng], // Coordonnées GPS ou adresse postale d'arrivée (obligatoire)
+                    route : 'way', // ID du bloc dans lequel injecter le détail de l'itinéraire (optionnel)
+                    langage : 'french' // Langue du détail de l'itinéraire (optionnel, en anglais)
+                }) ;
+                    
+                calculPrix();
             }
             
             var calculPrix = function(){
@@ -139,7 +139,6 @@
                 if(places<3){
                     places = 3;
                 }
-                console.log(places);
                 var calcPrix = distance/100000*consomme*carbu/places;
                 var prix = Math.round(calcPrix);
                 $("#prix").text(prix+"€");
@@ -160,7 +159,7 @@
                 input_place = $("#input_places");
              
             // --- events
-                $("#recalculer_trajet").on('click',maps);    
+                $("#recalculer_trajet").on('click',initialiseMaps);    
                 input_place.on("change",calculPrix);
                 $("#recalculer_prix").on('click',calculPrix);
                 input_distance.on('change',calculPrix); 

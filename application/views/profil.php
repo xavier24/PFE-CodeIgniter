@@ -25,8 +25,8 @@
                     if($error['upload']){
                         echo '<p>erreur :'.$error['upload'].'</p>';
                     }
-                    echo '</div>';
                     echo form_close();
+                    echo '</div>';
                 }
             ?>
             </div>
@@ -158,8 +158,7 @@
                         ?>    
                             <?php if(!$info_membre->sexe){
                                 echo '<p class="habite">Il habite à <span class="ville_habite">'.$info_membre->ville.'</span> ('.$info_membre->province.'- '.$info_membre->pays.')</p>';
-                                echo '<div class="langue_parle">';
-                                echo '<p>Il parle ';
+                                echo '<div class="langue_parle"><p>Il parle ';
                                 echo '<span class="langue">';
                                 for($i=0;$i<count($codeLang);$i++){
                                     if($info_membre->$codeLang[$i]){
@@ -171,12 +170,23 @@
                                     }
                                 }
                                 echo '</span></p></div>';
-                                echo '<p>Il a <span class="orange">'.$info_membre->voyage.'</span> voyage(s) à son actif</p>';
+                                echo '<p>Il a <span class="orange">'.$info_membre->trajet.'</span> voyage(s) à son actif</p>';
                            }
                            else{
-                               echo '<p>Elle habite à '.$info_membre->ville.' ('.$info_membre->province.'- '.$info_membre->pays.')</p>';
-                               echo '<p>Elle parle </p>';
-                               echo '<p>Elle a <span class="orange">'.$info_membre->trajet.'</span> voyage(s) à son actif</p>';
+                                echo '<p class="habite">Elle habite à <span class="ville_habite">'.$info_membre->ville.'</span> ('.$info_membre->province.'- '.$info_membre->pays.')</p>';
+                                echo '<div class="langue_parle"><p>Elle parle ';
+                                echo '<span class="langue">';
+                                for($i=0;$i<count($codeLang);$i++){
+                                    if($info_membre->$codeLang[$i]){
+                                        if($lang2){
+                                            echo', ';
+                                        }
+                                        echo $afficheLang[$i];
+                                        $lang2 += 1;
+                                    }
+                                }
+                                echo '</span></p></div>';
+                                echo '<p>Elle a <span class="orange">'.$info_membre->trajet.'</span> voyage(s) à son actif</p>';
                            } ?>
                         </div>
                         <div class="date_inscription">
@@ -419,7 +429,7 @@
                             foreach($annonces as $annonce): ?>
                                 <div class="annonce">
                                     <h4>
-                                        <a class="bleu" href="<?php echo base_url().'annonce/voir/'.$annonce->id ?>">
+                                        <a class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
                                             <span class="annonce_date"><?php echo $annonce->date ?></span>
                                             <span class="annonce_heure"><?php echo $annonce->heure ?><span class="heure_estime">&nbsp;(heure&nbsp;estimée)</span></span>
                                         </a>
@@ -438,49 +448,53 @@
                     </div>
                 </div>
                 <script type="text/javascript">
-                    $('#colorPicker').colorPicker({
-                            pickerDefault: "ffffff", 
-                            colors: ["000000","444444","999999","DDDDDD", "FFFFFF","D3BD8C", "940107",
-                                    "F80403","FF9707","FCFF00","AAFF00","03C403","016D00",
-                                    "009DA0","00BBFF","1262D1","003B7F","9400FF","D800B1"], 
-                            transparency: true, 
-                            showHexField: false
+                    $(function(){
+                        $('#colorPicker').colorPicker({
+                                pickerDefault: "ffffff", 
+                                colors: ["000000","444444","999999","DDDDDD", "FFFFFF","D3BD8C", "940107",
+                                        "F80403","FF9707","FCFF00","AAFF00","03C403","016D00",
+                                        "009DA0","00BBFF","1262D1","003B7F","9400FF","D800B1"], 
+                                transparency: true, 
+                                showHexField: false
+                        });
                     });
                 </script>
                 <script type="text/javascript">
-                    var villes =[
-                     <?php 
-                     foreach ($villes as $ville) : 
-                         echo '{"label":"'.$ville->fr_FR.' ('.$ville->code_postal.')'.'", "id":'.$ville->id.'},';
-                     endforeach; ?>
-                     ];
-                    $("#input_naissance").datepicker({
-                                        autoSize: false,
-                                        maxDate: "-18Y",
-                                        constrainInput: true, 
-                                        changeMonth: true,
-                                        changeYear: true
-                                        },$.datepicker.regional[ "fr" ]
-                                    );
-                                    
-                    var accentMap = {"á": "a", "é": "e", "è": "e", "ê": "e", "ë": "e", "ï": "i", "î": "i", "ö": "o", "ô": "o", "û": "u", "ü": "u" };
-                    var normalize = function( term ) {
-                        var ret = "";
-                        for ( var i = 0; i < term.length; i++ ) {
-                            ret += accentMap[ term.charAt(i) ] || term.charAt(i);
-                        }
-                        return ret;
-                    };
-                    $( "#input_ville" ).autocomplete({
-                        source: function( request, response ) {
-                            var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
-                            response( $.grep( villes, function( value ) {
-                                value = value.label || value.value || value;
-                                return matcher.test( value ) || matcher.test( normalize( value ) );
-                            }) );
-                        },
-                        select: function (event, ui) { $('#input_villeID').val(ui.item.id); }
-                    }); 
+                    $(function(){
+                        var villes =[
+                         <?php 
+                         foreach ($villes as $ville) : 
+                             echo '{"label":"'.$ville->fr_FR.' ('.$ville->code_postal.')'.'", "id":'.$ville->id.'},';
+                         endforeach; ?>
+                         ];
+                        $("#input_naissance").datepicker({
+                                            autoSize: false,
+                                            maxDate: "-18Y",
+                                            constrainInput: true, 
+                                            changeMonth: true,
+                                            changeYear: true
+                                            },$.datepicker.regional[ "fr" ]
+                                        );
+
+                        var accentMap = {"á": "a", "é": "e", "è": "e", "ê": "e", "ë": "e", "ï": "i", "î": "i", "ö": "o", "ô": "o", "û": "u", "ü": "u" };
+                        var normalize = function( term ) {
+                            var ret = "";
+                            for ( var i = 0; i < term.length; i++ ) {
+                                ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+                            }
+                            return ret;
+                        };
+                        $( "#input_ville" ).autocomplete({
+                            source: function( request, response ) {
+                                var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+                                response( $.grep( villes, function( value ) {
+                                    value = value.label || value.value || value;
+                                    return matcher.test( value ) || matcher.test( normalize( value ) );
+                                }) );
+                            },
+                            select: function (event, ui) { $('#input_villeID').val(ui.item.id); }
+                        });
+                    });
                 </script>
             </div>
         </div>

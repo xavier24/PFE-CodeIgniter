@@ -5,7 +5,7 @@ class Annonce extends CI_Controller {
         function __construct(){
             parent::__construct();
             $this->load->model('M_Annonce');
-            $this->load->model('M_Accueil');
+            //$this->load->model('M_Accueil');
         }
         
         public function lister(){
@@ -39,17 +39,51 @@ class Annonce extends CI_Controller {
             $this->load->view('layout',$data);
         }
         
-        public function voir(){
+        public function fiche(){
+            $this->load->model('M_Date');
+            
             $idAnnonce = $this->uri->segment(3);
-            $dataAnnonce['annonce'] = $this->M_Annonce->voir($idAnnonce);
-            $dataLayout['vue'] = $this->load->view('voir',$dataAnnonce,true);
-            $dataLayout['titre'] = "Annonce  ".$dataAnnonce['annonce']->depart."-".$dataAnnonce['annonce']->arrivee;
-
+        //user_data    
+            if($this->session->userdata('logged_in')){
+                $dataList['user_data'] = $this->session->userdata('logged_in');
+            }
+        //annonce
+            $dataList['annonce'] = $this->M_Annonce->voir($idAnnonce);
+            $dataList['annonce']->calendar = json_decode($dataList['annonce']->calendar) ;
+            if(! $dataList['annonce']->etapes){
+                $dataList['annonce']->etapes = "[]";
+            }
+            
+            $dataList['annonce']->date= $this->M_Date->dateLongue($dataList['annonce']->date,'no','no');
+            //var_dump($dataList['annonce']->etapes);
+        
+        //etapes    
+            $dataList['etapes'] = $this->M_Annonce->get_etapes($dataList['annonce']->id);
+            //var_dump($dataList['etapes']);
+        
+        //info_membre
+            if(!isset($dataList['user_data']->user_id) || $dataList['user_data']->user_id != $dataList['annonce']->user_id){
+                $dataList['info_membre'] = $this->M_Annonce->getUserInfo('user_id',$dataList['annonce']->user_id);
+            }
+            else{
+                $dataList['info_membre'] = $dataList['user_data'];
+            }
+                        
+            if(isset($dataList['info_membre']->naissance)){
+                //APPEL FUNCTION age: convertir date naissance -> age
+                $date = $dataList['info_membre']->naissance;
+                $dataList['info_membre']->age = $this->M_Date->age($date);
+            }
+                                   
+            //var_dump($dataList);
+            $dataList['body'] = "annonce"; 
+            $dataLayout['vue'] = $this->load->view('fiche',$dataList,true);
+            $dataLayout['titre'] = "Annonce  ".$dataList['annonce']->d_fr_FR."- ".$dataList['annonce']->a_fr_FR;
+            
             $this->load->view('layout',$dataLayout);
         }
 		
         public function ajouter(){
-            
             
         //recuperer si il y a message d'erreur
             $champError = array('departID','arriveeID','date','heure','prix_conseil');
@@ -126,9 +160,9 @@ class Annonce extends CI_Controller {
                     $error = true;
                     $data_error["date"]='la date';
                 }
-            
+                
             //autres infos    
-                $champ = array('conducteur','description_depart','description_arrivee','flexibilite','places');
+                $champ = array('conducteur','description_depart','description_arrivee','flexibilite','places','etapes');
                 
                 for($i=0;$i<count($champ);$i++){
                     if($this->input->post('input_'.$champ[$i]) != ""){
@@ -162,11 +196,10 @@ class Annonce extends CI_Controller {
                                 $retour[$i] = "";
                             }
                         } 
-                        $data['calendar'] = $calendar_allee.',"retour":{"l":"'.$retour[0].'","m":"'.$retour[1].'","me":"'.$retour[2].'","j":"'.$retour[3].'","v":"'.$retour[4].'","s":"'.$retour[5].'","d":"'.$retour[6].'"}}]';                
+                        $data['calendar'] = $calendar_allee.',"retour":{"l":"'.$retour[0].'","m":"'.$retour[1].'","me":"'.$retour[2].'","j":"'.$retour[3].'","v":"'.$retour[4].'","s":"'.$retour[5].'","d":"'.$retour[6].'"}';                
                     }
-                    else{
-                        $data['calendar'] = $calendar_allee.'}]';  
-                    }
+                    
+                    $data['calendar'] = $calendar_allee.'}]';
                 }
                 else{
                     $data['regulier'] = 0;
@@ -199,16 +232,24 @@ class Annonce extends CI_Controller {
             
             //etapes
                 $etape=$etapes=$recupEtapes=array();
+                $etape_time = 0;
                 for($i=0;$i<5;$i++){
                     if($this->input->post('input_etape_'.$i)){
+                        var_dump("etape");
                         $etape["villeID"]=intval($this->input->post('input_etapeID_'.$i));
                         $etape["stop"]=intval($this->input->post('input_stop_'.$i));
                         $etape["duree"]=intval($this->input->post('input_duree_'.$i));
                         array_push($etapes,$etape);
+                        
                         $etape['ville']= $this->input->post('input_etape_'.$i);
                         $etape['lat']= $this->input->post('input_etape_lat_'.$i);
                         $etape['lng']= $this->input->post('input_etape_lng_'.$i);
                         array_push($recupEtapes,$etape);
+                        
+                        if($etape["stop"]){
+                            $etape_time += $etape["duree"];
+                        }
+                        
                         $etape=array();
                     }
                 }
@@ -216,6 +257,21 @@ class Annonce extends CI_Controller {
                 if(count($etapes) == 0){
                     $etapes = false;
                 }                
+            
+            //Calcul heure arrivée trajet
+                if(isset($data['heure'])){
+                    $dataRecup["duree"] = intval($this->input->post('input_duree'));
+                    
+                    list($heures,$minutes) = preg_split('/[:]/', $data['heure']);
+                    $minutes += ($heures*60)+ $etape_time + $dataRecup["duree"];
+                    
+                    $tot_heure = floor($minutes/60);
+                    $tot_min = $minutes - $tot_heure;
+                    $heure_arrivee = $tot_heure.":".$tot_min;
+                    
+                    $data['heure_arrivee'] = $heure_arrivee;
+                }
+                
                 
             //Recuperation donnée
                 if(isset($error)){
@@ -262,7 +318,6 @@ class Annonce extends CI_Controller {
                 }
                 else {
                     $this->M_Annonce->ajouter($data,$dataCoord,$etapes);
-                    //redirect('annonce/fiche/');
                 }
             }
         }

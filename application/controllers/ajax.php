@@ -9,8 +9,8 @@ class Ajax extends CI_Controller {
         
         function villes(){
             $dataList['villes'] = $this->M_Ajax->lister();
+               
             $data = array();
-            
             foreach ($dataList['villes'] as $ville) { 
                 array_push($data,array("label"=>$ville->fr_FR.'('.$ville->code_postal.')',
                                     "id"=>$ville->id, 

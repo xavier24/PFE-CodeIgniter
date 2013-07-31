@@ -28,13 +28,9 @@
                 success: function($data){
                 var connect;
                     if($.parseJSON($data)){
-                        console.log("connecter");
-                        //console.log($data);
                         connect = true;
                     }
                     else{
-                        console.log("non connecter");
-                        //console.log($data);
                         connect = false;
                     }
                 initialise(connect);
@@ -103,6 +99,7 @@
             if($count_inputEtape.length < 5){
                 $new_inputEtape = $inputEtape.clone();
                 $new_inputEtape.find('input').val("");
+                $new_inputEtape.find('.input_stop').val("1");
                 $new_inputEtape.appendTo($etapes);
                 $('.nb_etape').empty().append($count_inputEtape.length+1);
                 countStep();
