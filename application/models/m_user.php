@@ -11,16 +11,17 @@ class M_User extends CI_Model{
     }
 //recupere les infos de l'utilisateur connecté/selectionné
     public function getUserInfo($champ,$data){
-        $this->db->select('users.*, villes.fr_FR AS ville, villes.province, villes.latitude, villes.longitude');
+        $this->db->select('users.*, villes.fr AS ville_fr, villes.nl AS ville_nl, villes.provinceID, villes.latitude, villes.longitude, province.fr AS province_fr, province.nl AS province_nl');
         $this->db->from('users');
         $this->db->join('villes','villes.id = users.villeID');
+        $this->db->join('province','province.provinceID = villes.provinceID');
         $this->db->where($champ,$data);
         $query = $this->db->get();
         return $query->row();
     }
 //recupere les annonces de l'utilisateur selectionné
     public function trajet($idUser){
-        $this->db->select('annonces.*, depart.fr_FR AS ville_depart, arrivee.fr_FR AS ville_arrivee');
+        $this->db->select('annonces.*, depart.fr AS ville_depart_fr, depart.nl AS ville_depart_nl, arrivee.fr AS ville_arrivee_fr, , arrivee.nl AS ville_arrivee_nl');
         $this->db->from('annonces');
         $this->db->join('villes AS depart','depart.id = annonces.departID');
         $this->db->join('villes AS arrivee','arrivee.id = annonces.arriveeID');
@@ -36,13 +37,6 @@ class M_User extends CI_Model{
         $this->db->update('users',$data);
     }
            
-    public function villes(){
-        $this->db->select('*');
-        $this->db->from('villes');
-
-        $query = $this->db->get();
-        return $query->result();
-    }
 }
 
             /*$this->db->select('annonces.*, users.*,

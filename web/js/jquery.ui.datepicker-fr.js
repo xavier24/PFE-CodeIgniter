@@ -21,5 +21,40 @@ jQuery(function($){
 		isRTL: false,
 		showMonthAfterYear: false,
 		yearSuffix: ''};
-	$.datepicker.setDefaults($.datepicker.regional['fr']);
+        
+        $.timepicker.regional['fr'] = {
+		currentText: 'Maintenant',
+                closeText: 'Valider',
+                timeOnlyTitle: 'Choisissez l\'heure',
+                timeText: 'Temps',
+                hourText: 'Heure',
+                minuteText: 'Minute'};
+        
+        $.datepicker.regional['nl'] = {
+		closeText: 'Sluiten',
+		prevText: 'Vorig',
+		nextText: 'Volgend',
+		currentText: 'Vandaag',
+		monthNames: ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'],
+		monthNamesShort: ['Janu.','Febr.','Maart','April','Mei','Juni',
+		'Juli','Aug.','Sept.','Okt.','Nov.','Dec.'],
+		dayNames: ['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'],
+		dayNamesShort: ['Zon.','Maa.','Din.','Woe.','Don.','Vri.','Zat.'],
+		dayNamesMin: ['Z','M','D','W','D','V','Z'],
+		weekHeader: 'Week',
+		dateFormat: 'dd/mm/yy',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: ''};
+            
+        $.timepicker.regional['nl'] = {
+		currentText: 'Nu',
+                closeText: 'Voorleggen',
+                timeOnlyTitle: 'Kies de tijd',
+                timeText: 'Tijd',
+                hourText: 'Uur',
+                minuteText: 'Minuut'};
+            
+	//$.datepicker.setDefaults($.datepicker.regional['fr']);
 });

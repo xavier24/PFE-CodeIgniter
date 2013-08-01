@@ -52,6 +52,7 @@ class Annonce extends CI_Controller {
             if($this->session->userdata('logged_in')){
                 $dataList['user_data'] = $this->session->userdata('logged_in');
             }
+            
         //annonce
             $dataList['annonce'] = $this->M_Annonce->voir($idAnnonce);
             $dataList['annonce']->calendar = json_decode($dataList['annonce']->calendar) ;
@@ -69,6 +70,7 @@ class Annonce extends CI_Controller {
         //info_membre
             if(!isset($dataList['user_data']->user_id) || $dataList['user_data']->user_id != $dataList['annonce']->user_id){
                 $dataList['info_membre'] = $this->M_Annonce->getUserInfo('user_id',$dataList['annonce']->user_id);
+                var_dump($dataList['info_membre']);
             }
             else{
                 $dataList['info_membre'] = $dataList['user_data'];
@@ -79,11 +81,22 @@ class Annonce extends CI_Controller {
                 $date = $dataList['info_membre']->naissance;
                 $dataList['info_membre']->age = $this->M_Date->age($date);
             }
-                                   
+            
+            if($this->session->userdata('lang')){ 
+                $dataList['lang'] = $this->session->userdata('lang');
+            }
+            else{
+                $dataList['lang'] = 'fr';
+            }
+            $dataList['d_lang'] = "d_".$dataList['lang'];
+            $dataList['a_lang'] = "a_".$dataList['lang'];
+            $dataList['ville_lang'] = "ville_".$dataList['lang'];
+            $dataList['province_lang'] = "province_".$dataList['lang'];
+            
             //var_dump($dataList);
             $dataList['body'] = "annonce"; 
             $dataLayout['vue'] = $this->load->view('fiche',$dataList,true);
-            $dataLayout['titre'] = "Annonce  ".$dataList['annonce']->d_fr_FR."- ".$dataList['annonce']->a_fr_FR;
+            $dataLayout['titre'] = "Annonce  ".$dataList['annonce']->$dataList['d_lang']."- ".$dataList['annonce']->$dataList['a_lang'];
             
             $this->load->view('layout',$dataLayout);
         }
@@ -122,6 +135,14 @@ class Annonce extends CI_Controller {
             }
             if(isset($dataList['donnee']['calendar'])){
                 $dataList['donnee']['calendar'] = json_decode($dataList['donnee']['calendar']);
+            }
+            
+            if($this->session->userdata('lang')){ 
+                $dataList['lang'] = $this->session->userdata('lang');
+                //$dataList['lang'] = 'fr';
+            }
+            else{
+                $dataList['lang'] = 'fr';
             }
             
             $dataList['user_data'] = $this->session->userdata('logged_in');

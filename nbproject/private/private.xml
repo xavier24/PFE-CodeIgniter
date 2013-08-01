@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
         <file>
             <url>application/views/ajouter.php</url>
             <bookmark id="1">
                 <name/>
                 <line>157</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>application/controllers/annonce.php</url>
+            <bookmark id="2">
+                <name/>
+                <line>68</line>
                 <key/>
             </bookmark>
         </file>

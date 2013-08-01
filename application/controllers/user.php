@@ -8,9 +8,10 @@ class User extends CI_Controller {
         $this->load->helper('date');
         
         if( $this->session->userdata('lang') ){
+            $lang = $this->session->userdata('lang');
             $this->lang->is_loaded = array();
             $this->lang->language = array();
-            $this->lang->load('trad',$this->session->userdata('lang'));
+            $this->lang->load('trad',$lang);
         }
     }
     
@@ -49,6 +50,7 @@ class User extends CI_Controller {
         $this->session->unset_userdata('logged_in');
         redirect('accueil');
     }
+    
 //RECUPERER INFO USER SELECTIONNE
     public function profil(){
     $this->load->model('M_Date');
@@ -90,7 +92,9 @@ class User extends CI_Controller {
         //mise en session des info user
             $this->session->set_userdata('logged_in',$data['info_membre']);
         //recuperation des villes pour modification profil
-            $data['villes'] = $this->M_User->villes();
+            $this->load->model('M_Ajax');
+            $data['villes'] = $this->M_Ajax->lister();
+            
             $data['user_data'] = $data['info_membre'];
             $data['titre'] = lang('mon_profil');
         }
@@ -98,7 +102,7 @@ class User extends CI_Controller {
             $data['user_connect'] = false;
             $data['titre'] = lang('profil_de').' '.$data['info_membre']->username;
         }
-    
+        
     //RECUPERE TRAJET USER
         $data['annonces'] = $this->M_User->trajet($idUser);
         //var_dump($data['annonces']);
@@ -108,23 +112,26 @@ class User extends CI_Controller {
         for($i=0;$i<$annonces_lenght;$i++){
             $data['annonces'][$i]->date = $this->M_Date->dateLongue($data['annonces'][$i]->date,'no','no');
         }
-        //var_dump($data['info_membre']);
+        
+    //RECUPERATIO LANGUE CHOISI
+        if( $this->session->userdata('lang') ){
+            $data['lang'] = $this->session->userdata('lang');
+        }
+        else{
+            $data['lang'] = 'fr';
+        }
+        $data['ville_lang'] = 'ville_'.$data['lang'];
+        $data['ville_depart_lang'] = 'ville_depart_'.$data['lang'];
+        $data['ville_arrivee_lang'] = 'ville_arrivee_'.$data['lang'];
+        $data['province_lang'] = "province_".$data['lang'];
+        
+        //var_dump($data['annonces']);
         $data['page'] = lang('profil');
         $data['body'] = "profil";
         $dataLayout['vue'] = $this->load->view('profil',$data,true);
         $this->load->view('layout',$dataLayout);
     }
-	//recupere les annonces de l'utilisateur selectionn�
-    
-    /*public function lister(){
-        $dataList['page'] = lang('profil');
-        $dataList['titre'] = 'liste des annonces de l\'utilisateur';
-        //$dataList['annonces'] = $this->M_Annonce->lister();
-        $data['vue'] = $this->load->view('user',$dataList,true);
-        $this->load->view('layout',$data);
-    }*/
-
-
+	
     public function modifier(){
         $user_data = $this->session->userdata('logged_in');
         

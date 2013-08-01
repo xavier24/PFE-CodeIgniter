@@ -77,8 +77,8 @@
                             <label for="input_naissance" class="profil_modif"><span class="icone-datepicker"></span><span class="hidden">Modifier votre date de naissance</span></label>
                         </div>
                         <div class="habite">
-                            <label for="ville">J'habite à <span class="edit_hidden ville_habite"><?php echo $info_membre->ville ?></span></label>
-                            <input id="input_ville" name="input_ville" type="text" class="profil_modif" value="<?php echo $info_membre->ville ?>" />
+                            <label for="ville">J'habite à <span class="edit_hidden ville_habite"><?php echo isset($info_membre->$ville_lang)? $info_membre->$ville_lang : $info_membre->ville_fr ?></span></label>
+                            <input id="input_ville" name="input_ville" type="text" class="profil_modif" value="<?php echo isset($info_membre->$ville_lang)? $info_membre->$ville_lang : $info_membre->ville_fr ?>" />
                             <input id="input_villeID" name="input_villeID" type="hidden" />
                         </div>
                         <div class="langue_parle">
@@ -157,7 +157,11 @@
                          $lang2 = 0;
                         ?>    
                             <?php if(!$info_membre->sexe){
-                                echo '<p class="habite">Il habite à <span class="ville_habite">'.$info_membre->ville.'</span> ('.$info_membre->province.'- '.$info_membre->pays.')</p>';
+                                echo '<p class="habite">Il habite à <span class="ville_habite">';
+                                echo isset($info_membre->$ville_lang)? $info_membre->$ville_lang : $info_membre->ville_fr ;
+                                echo '</span> (';
+                                echo isset($info_membre->$province_lang)? $info_membre->$province_lang : $info_membre->province_fr;
+                                echo ')</p>';
                                 echo '<div class="langue_parle"><p>Il parle ';
                                 echo '<span class="langue">';
                                 for($i=0;$i<count($codeLang);$i++){
@@ -173,7 +177,11 @@
                                 echo '<p>Il a <span class="orange">'.$info_membre->trajet.'</span> voyage(s) à son actif</p>';
                            }
                            else{
-                                echo '<p class="habite">Elle habite à <span class="ville_habite">'.$info_membre->ville.'</span> ('.$info_membre->province.'- '.$info_membre->pays.')</p>';
+                                echo '<p class="habite">Elle habite à <span class="ville_habite">';
+                                echo isset($info_membre->$ville_lang)? $info_membre->$ville_lang : $info_membre->ville_fr ;
+                                echo '</span> (';
+                                echo isset($info_membre->$province_lang)? $info_membre->$province_lang : $info_membre->province_fr;
+                                echo ')</p>';
                                 echo '<div class="langue_parle"><p>Elle parle ';
                                 echo '<span class="langue">';
                                 for($i=0;$i<count($codeLang);$i++){
@@ -434,7 +442,7 @@
                                             <span class="annonce_heure"><?php echo $annonce->heure ?><span class="heure_estime">&nbsp;(heure&nbsp;estimée)</span></span>
                                         </a>
                                     </h4>
-                                    <p class="destination"><span class="ville"><?php echo $annonce->ville_depart.'</span><span class="icon-right-thin"> </span><span class="ville">'.$annonce->ville_arrivee ?></span></p>
+                                    <p class="destination"><span class="ville"><?php echo $annonce->$ville_depart_lang ? $annonce->$ville_depart_lang : $annonce->ville_depart_fr ?></span><span class="icon-right-thin"> </span><span class="ville"><?php echo $annonce->$ville_arrivee_lang ? $annonce->$ville_arrivee_lang : $annonce->ville_arrivee_fr ?></span></p>
                                     <p class="places"><?php echo $annonce->places ?> place(s) disponible(s)</p>
                                 </div>
                             <?php endforeach; 
@@ -461,19 +469,15 @@
                 </script>
                 <script type="text/javascript">
                     $(function(){
-                        var villes =[
-                         <?php 
-                         foreach ($villes as $ville) : 
-                             echo '{"label":"'.$ville->fr_FR.' ('.$ville->code_postal.')'.'", "id":'.$ville->id.'},';
-                         endforeach; ?>
-                         ];
+                        var villes =<?php echo $villes ?> ;
+                        
                         $("#input_naissance").datepicker({
                                             autoSize: false,
                                             maxDate: "-18Y",
                                             constrainInput: true, 
                                             changeMonth: true,
                                             changeYear: true
-                                            },$.datepicker.regional[ "fr" ]
+                                            },$.datepicker.setDefaults($.datepicker.regional["<?php echo $lang ?>"])
                                         );
 
                         var accentMap = {"á": "a", "é": "e", "è": "e", "ê": "e", "ë": "e", "ï": "i", "î": "i", "ö": "o", "ô": "o", "û": "u", "ü": "u" };

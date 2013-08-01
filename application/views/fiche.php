@@ -9,11 +9,11 @@
         </div>
         <div class="row-fluid">
             <div class="span8">
-                <h2 class="bleu"><?php echo $annonce->d_fr_FR.' - '.$annonce->a_fr_FR ?><span><?php echo $annonce->date." ".$annonce->heure ?></span></h2>
+                <h2 class="bleu"><?php echo isset($annonce->$d_lang)? $annonce->$d_lang : $annonce->d_fr ?> - <?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?><span><?php echo $annonce->date." ".$annonce->heure ?></span></h2>
                 <p class="places orange"><?php echo $annonce->places ?> place(s) disponible(s)</p>
                 <div class="row-fluid">
                     <div class="span4 depart">
-                        <h4><?php echo $annonce->d_fr_FR; ?></h4>
+                        <h4><?php echo isset($annonce->$d_lang)? $annonce->$d_lang : $annonce->d_fr ?></h4>
                         <h5><?php echo $annonce->date." à ".$annonce->heure ?></h5>
                         <p>Lieu de rendez-vous&nbsp;:</p>
                         <p><?php echo $annonce->description_depart ? $annonce->description_depart : "Non précisé"?></p>
@@ -22,7 +22,7 @@
                         <span class="icon-right-thin"></span>
                     </div>
                     <div class="span4 arrivee">
-                        <h4><?php echo $annonce->a_fr_FR ?></h4>
+                        <h4><?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?></h4>
                         <h5>heure estimée</h5>
                         <p>Lieu de destination&nbsp;:</p>
                         <p><?php echo $annonce->description_arrivee ? $annonce->description_arrivee : "Non précisé" ?></p>
@@ -138,7 +138,11 @@
                                     $lang2 = 0;
 
                                 if(!$info_membre->sexe){
-                                    echo '<p class="habite">Il habite à <span class="ville_habite">'.$info_membre->ville.'</span> ('.$info_membre->province.')</p>';
+                                    echo '<p class="habite">Il habite à <span class="ville_habite">';
+                                    echo isset($info_membre->$ville_lang)? $info_membre->$ville_lang : $info_membre->ville_fr;
+                                    echo '</span> (';
+                                    echo isset($info_membre->$province_lang)? $info_membre->$province_lang : $info_membre->province_fr;
+                                    echo ')</p>';
                                     echo '<div class="langue_parle"><p>Il parle ';
                                     echo '<span class="langue">';
                                     for($i=0;$i<count($codeLang);$i++){
@@ -154,7 +158,11 @@
                                     echo '<p>Il a <span class="orange">'.$info_membre->trajet.'</span> voyage(s) à son actif</p>';
                                 }
                                 else{
-                                    echo '<p class="habite">Elle habite à <span class="ville_habite">'.$info_membre->ville.'</span> ('.$info_membre->province.'- '.$info_membre->pays.')</p>';
+                                    echo '<p class="habite">Elle habite à <span class="ville_habite">';
+                                    echo isset($info_membre->$ville_lang)? $info_membre->$ville_lang : $info_membre->ville_fr;
+                                    echo '</span> (';
+                                    echo isset($info_membre->$province_lang)? $info_membre->$province_lang : $info_membre->province_fr;
+                                    echo ')</p>';
                                     echo '<div class="langue_parle"><p>Elle parle ';
                                     echo '<span class="langue">';
                                     for($i=0;$i<count($codeLang);$i++){
@@ -231,14 +239,14 @@
                     <p><span class="icon-address"></span></p>
                     <p><?php echo $annonce->heure ?></p>
                     <input id="input_heure_depart" type="hidden" value="<?php echo $annonce->heure ?>" />
-                    <p>Départ <?php echo $annonce->d_fr_FR.' direction '.$annonce->a_fr_FR ?></p>
+                    <p>Départ <?php echo isset($annonce->$d_lang)? $annonce->$d_lang : $annonce->d_fr ?> direction <?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?></p>
                 </div>
                 <?php if($etapes){
                     for($i=0;$i<count($etapes);$i++){ 
                         if($etapes[$i]->stop){?>
                         <div>
                             <p><span class="icon-location"></span></p>
-                            <p><?php echo $etapes[$i]->fr_FR ?><span>(+<?php echo $etapes[$i]->duree ?>min)</span></p>
+                            <p><?php echo isset($etapes[$i]->$lang)? $etapes[$i]->$lang : $etapes[$i]->fr ?><span>(+<?php echo $etapes[$i]->duree ?>min)</span></p>
                         </div>
                 <?php   }
                     }                       
@@ -247,7 +255,7 @@
                 <div>
                     <p><span class="icon-flag"></span></p>
                     <p><?php echo $annonce->heure_arrivee ?></p>
-                    <p>Arrivée <?php echo $annonce->a_fr_FR ?></p>
+                    <p>Arrivée <?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?></p>
                 </div>
             </div>
         </div>

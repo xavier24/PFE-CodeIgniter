@@ -9,19 +9,31 @@ class M_Date extends CI_Model {
         
         //CALCULER AGE   
     public function age($date){ // donner 1987-08-17 => retourne 17/08/1987
-        
         // Date d'aujourd'hui 
         $jour = date("d",time()); 
         $mois = date("m",time()); 
-        $annee = date("Y",time()); 
+        $annee = date("Y",time());
+        
         // Détermination de l'âge 
-        $age = explode("-", $date); 
-        if ($jour >= $age[2] and $mois = $age[1] or $mois > $age[1]){ 
-            $age = $annee - $age[0]; 
-        } 
-        else { 
-            $age = $annee - $age[0] - 1; 
+        $age = explode("-", $date);
+        if(count($age)<2){
+            $age = explode("/", $date);    
+            if ($jour >= $age[0] and $mois = $age[1] or $mois > $age[1]){ 
+                $age = $annee - $age[2]; 
+            } 
+            else { 
+                $age = $annee - $age[2] - 1; 
+            }
         }
+        else{
+            if ($jour >= $age[2] and $mois = $age[1] or $mois > $age[1]){ 
+                $age = $annee - $age[0]; 
+            } 
+            else { 
+                $age = $annee - $age[0] - 1; 
+            }
+        }
+        
         return $age;
     }
 //Convertir une date US vers une date en français affichant le jour de la semaine
@@ -32,7 +44,7 @@ class M_Date extends CI_Model {
             setlocale (LC_TIME, 'en_EN');
         }
         else if($this->session->userdata('lang') == "nl"){
-            setlocale (LC_TIME, 'nl_NL');
+            setlocale (LC_TIME, 'nl_NL','nld_nld');
         }
         else{
             setlocale (LC_TIME, 'fr_FR','fra');

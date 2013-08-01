@@ -152,7 +152,7 @@
                     <div class="heure clearfix">
                         <h2 class="hidden-desktop"><?php echo lang("heure") ?></h2>
                         <label for="input_heure"><span class="ico-heure"></span></label>
-                        <input id="input_heure" class="input_heure" <?php if(isset($donnee['heure'])){echo 'value="'.$donnee['heure'].'"'; } ?> type="text" value="" name="input_heure" placeholder="<?php lang("hhmm") ?>" />
+                        <input id="input_heure" class="input_heure" <?php if(isset($donnee['heure'])){echo 'value="'.$donnee['heure'].'"'; } ?> type="text" value="" name="input_heure" placeholder="<?php echo lang("hhmm") ?>" />
                     </div>
                     <div class="places clearfix">
                         <h2 class="hidden-desktop"><?php echo lang("places") ?></h2>
@@ -264,7 +264,7 @@
                         <p><?php echo lang("consommation") ?>&nbsp;: <span><?php echo $user_data->consommation; ?></span> l/100km</p>
                         <label><?php echo lang("prix_carbu") ?>&nbsp;:<input id="input_carbu" type="text" name="input_carbu" value="<?php echo isset($donnee['carbu']) ? $donnee['carbu'] : 1.5 ; ?>"/>€/L</label>
                         <p><?php echo lang("distance") ?>&nbsp;: <span id="distance">?</span> km</p>
-                        <p><?php echo lang("durée") ?>&nbsp;: <span id="duree">?</span></p>
+                        <p><?php echo lang("duree") ?>&nbsp;: <span id="duree">?</span></p>
                         <p><?php echo lang("prix_conseil") ?>&nbsp;:<span id="prix"><?php echo isset($donnee['prix_conseil']) ? $donnee['prix_conseil'] : lang("creer_itineraire") ; ?></span></p>
                         <p><?php echo lang("prix_choisi") ?>&nbsp;:<input id="input_prix" type="text" name="input_prix" value="<?php echo isset($donnee['prix']) ? $donnee['prix'] : "0" ; ?>" />€</p>
                         
@@ -284,13 +284,9 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
-            
             <div>
-                <input id="input_etapes" type="text" name="input_etape" />
-                <input id="input_coord" type="text" name="input_coord" />
+                <input id="input_etapes" type="hidden" name="input_etape" />
+                <input id="input_coord" type="hidden" name="input_coord" />
             </div>
             
         </div>
@@ -331,22 +327,17 @@
                     autoSize: true,
                     minDate: 0,
                     constrainInput: true
-                    },$.datepicker.regional[ "fr" ]
+                    },$.datepicker.setDefaults($.datepicker.regional["<?php echo $lang ?>"])
                 );
             $('.input_heure').timepicker({
                     minuteGrid: 10,
-                    currentText: 'Maintenant',
-                    closeText: 'Valider',
                     amNames: ['AM', 'A'],
                     pmNames: ['PM', 'P'],
                     timeFormat: 'HH:mm',
                     timeSuffix: '',
-                    timeOnlyTitle: 'Choissez l\'heure',
-                    timeText: 'Temps',
-                    hourText: 'Heure',
-                    minuteText: 'Minute',
                     timezoneText: 'Time Zone'
-                });
+                    },$.timepicker.setDefaults($.timepicker.regional["<?php echo $lang ?>"])
+                );
         });
     </script>
     
