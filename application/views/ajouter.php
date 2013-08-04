@@ -7,8 +7,12 @@
         else{?>
         <?php echo form_open('annonce/poster',array('method'=>'post')); ?>
         <?php if($error){
-            echo'<div class="error"><p>'.lang("veuillez_preciser").' '.$error.' '.lang("du_voyage").'</p></div>';
-        }?>
+            echo '<div class="error"><p>'.lang("veuillez_preciser").' '.$error.' '.lang("du_voyage").'</p></div>';
+        }
+        if($error_retour){
+            echo '<div class="error"><p>'.lang("veuillez_preciser").' '.$error_retour.' '.lang("du_voyage").'</p></div>';
+        }
+        ?>
         <div id="recherche" class="formulaire">
             <h2><?php echo lang("je_suis") ?></h2>
             <div class="clearfix row-fluid">
@@ -127,7 +131,11 @@
                     <div class="date clearfix">
                         <h2 class="hidden-desktop"><?php echo lang("date") ?></h2>
                         <label for="input_date"><span class="ico-date"></span></label>
-                        <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="champ" type="date" placeholder="<?php echo lang("jjmmaaaa") ?>" />
+                        <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="input_date input_datepicker" type="date" placeholder="<?php echo lang("jjmmaaaa") ?>" />
+                        <div class="">
+                            <h4 class="input_date_retour">Date de retour</h4>
+                            <input id="input_date_retour" class="input_date_retour input_datepicker" <?php if(isset($donnee['date_retour'])){echo 'value="'.$donnee['date_retour'].'"'; } ?> type="text" value="" name="input_date_retour" placeholder="<?php echo lang("jjmmaaaa") ?>" />
+                        </div>
                     </div>
                     <div class="flexibilite clearfix">
                         <h2 class="hidden-desktop"><?php echo lang("flexibilite") ?></h2>
@@ -146,13 +154,26 @@
                             </select>
                             <span><?php echo lang("jour(s)") ?></span>
                         </div>
+                        <div class="btn clearfix btn_check">
+                            <label class="bouton_contour bouton_gris" for="input_retour">
+                                <span class="button gris">
+                                    <span class="icon-loop-alt-1"></span>
+                                    <?php echo lang("a-r") ?>
+                                </span>
+                            </label>
+                            <input id="input_retour" class="hidden show_retour" type="checkbox" name="input_retour" value="1" <?php if($donnee['retour']){ echo 'checked="checked"';} ?>/>
+                        </div>
                     </div>
                 </div>
                 <div class="span6">
                     <div class="heure clearfix">
                         <h2 class="hidden-desktop"><?php echo lang("heure") ?></h2>
                         <label for="input_heure"><span class="ico-heure"></span></label>
-                        <input id="input_heure" class="input_heure" <?php if(isset($donnee['heure'])){echo 'value="'.$donnee['heure'].'"'; } ?> type="text" value="" name="input_heure" placeholder="<?php echo lang("hhmm") ?>" />
+                        <input id="input_heure" class="input_heure input_timepicker" <?php if(isset($donnee['heure'])){echo 'value="'.$donnee['heure'].'"'; } ?> type="text" value="" name="input_heure" placeholder="<?php echo lang("hhmm") ?>" />
+                        <div class="clearfix">
+                            <h4 class="input_heure_retour">heure de retour</h4>
+                            <input id="input_heure_retour" class="input_heure_retour input_timepicker" <?php if(isset($donnee['heure_retour'])){echo 'value="'.$donnee['heure_retour'].'"'; } ?> type="text" value="" name="input_heure_retour" placeholder="<?php echo lang("hhmm") ?>" />
+                        </div>
                     </div>
                     <div class="places clearfix">
                         <h2 class="hidden-desktop"><?php echo lang("places") ?></h2>
@@ -186,15 +207,6 @@
             <div class="row-fluid">
                 <div class="span6">
                     <div class="clearfix">
-                        <div class="btn clearfix btn_check">
-                            <label class="bouton_contour bouton_gris" for="input_retour">
-                                <span class="button gris">
-                                    <span class="icon-loop-alt-1"></span>
-                                    <?php echo lang("a-r") ?>
-                                </span>
-                            </label>
-                            <input id="input_retour" class="hidden show_retour" type="checkbox" name="input_retour" value="1" <?php if($donnee['retour']){ echo 'checked="checked"';} ?>/>
-                        </div>
                         <div class="btn clearfix btn_check">
                             <label class="bouton_contour bouton_gris" for="input_regulier">
                                 <span class="button gris">
@@ -288,7 +300,6 @@
                 <input id="input_etapes" type="hidden" name="input_etape" />
                 <input id="input_coord" type="hidden" name="input_coord" />
             </div>
-            
         </div>
         <div id="publier" class="btn clearfix">
             <div class="bouton_contour bouton_gris">
@@ -323,13 +334,13 @@
                         $(".choix_conducteur"+ui.value).addClass('select');
                     }
                 });
-            $("#input_date").datepicker({
+            $(".input_datepicker").datepicker({
                     autoSize: true,
                     minDate: 0,
                     constrainInput: true
                     },$.datepicker.setDefaults($.datepicker.regional["<?php echo $lang ?>"])
                 );
-            $('.input_heure').timepicker({
+            $('.input_timepicker').timepicker({
                     minuteGrid: 10,
                     amNames: ['AM', 'A'],
                     pmNames: ['PM', 'P'],

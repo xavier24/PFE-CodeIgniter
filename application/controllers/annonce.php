@@ -37,7 +37,7 @@ class Annonce extends CI_Controller {
                     // }
                 }
             };
-            var_dump($dataList['annonces']); 
+            //var_dump($dataList['annonces']); 
             
             
             $data['vue'] = $this->load->view('lister',$dataList,true);
@@ -61,6 +61,7 @@ class Annonce extends CI_Controller {
             }
             
             $dataList['annonce']->date= $this->M_Date->dateLongue($dataList['annonce']->date,'no','no');
+            $dataList['annonce']->date_retour= $this->M_Date->dateLongue($dataList['annonce']->date_retour,'no','no');
             //var_dump($dataList['annonce']->etapes);
         
         //etapes    
@@ -70,7 +71,7 @@ class Annonce extends CI_Controller {
         //info_membre
             if(!isset($dataList['user_data']->user_id) || $dataList['user_data']->user_id != $dataList['annonce']->user_id){
                 $dataList['info_membre'] = $this->M_Annonce->getUserInfo('user_id',$dataList['annonce']->user_id);
-                var_dump($dataList['info_membre']);
+                //var_dump($dataList['info_membre']);
             }
             else{
                 $dataList['info_membre'] = $dataList['user_data'];
@@ -112,6 +113,7 @@ class Annonce extends CI_Controller {
         //recuperer les données saisis pour les remettre		
             $dataList['donnee']=false;
             $dataList['error']=false;
+            $dataList['error_retour'] = false;
             if($this->session->userdata('dataRecup')){
                 $dataList['donnee'] = $this->session->userdata('dataRecup');
                 $this->session->unset_userdata('dataRecup');
@@ -126,11 +128,15 @@ class Annonce extends CI_Controller {
                     for($i=0;$i<count($champError);$i++){
                         if(isset($error[$champError[$i]])){
                             if($i!=0){
-                                $dataList['error']=$dataList['error'].', ';
+                                $dataList['error'].=', ';
                             }
-                            $dataList['error']=$dataList['error'].$error[$champError[$i]];
+                            $dataList['error'].=$error[$champError[$i]];
                         }
                     }
+                
+                if(isset($error['date_retour'])){
+                    $dataList['error_retour'] = $error['date_retour'];
+                }
                 //var_dump($dataList['error']);
             }
             if(isset($dataList['donnee']['calendar'])){
@@ -181,20 +187,37 @@ class Annonce extends CI_Controller {
                         list($day, $month, $year) = preg_split('/[-\.\/ ]/', $dataRecup['date']);
                         $data['date'] = $year.'-'.$month.'-'.$day;
                     }
+                    
+                    if($this->input->post('input_date_retour') ){
+                        $dataRecup['date_retour'] = $this->input->post('input_date_retour');
+                        if(isset($dataRecup['date_retour'])){
+                            list($day, $month, $year) = preg_split('/[-\.\/ ]/', $dataRecup['date_retour']);
+                            $data['date_retour'] = $year.'-'.$month.'-'.$day;
+
+                            if($data['date_retour'] < $data['date']){
+                                $error = true;
+                                $data_error["date_retour"]='une date de retour ultérieure à la date';
+                            }
+                        }
+                    }
+                    else{
+                        $data['date_retour'] = $data['date'];
+                    }
                 }
                 else{
                     $error = true;
                     $data_error["date"]='la date';
                 }
-                
+                                
             //autres infos    
-                $champ = array('conducteur','description_depart','description_arrivee','flexibilite','places','etapes');
+                $champ = array('conducteur','description_depart','description_arrivee','flexibilite','places','etapes','heure_retour');
                 
                 for($i=0;$i<count($champ);$i++){
                     if($this->input->post('input_'.$champ[$i]) != ""){
                         $data[$champ[$i]] = $this->input->post('input_'.$champ[$i]);
                     }
                 }
+                
                 
                 if($this->input->post('input_commentaire')){
                     $data['commentaire'] = $this->input->post('input_commentaire');
@@ -261,7 +284,7 @@ class Annonce extends CI_Controller {
                 $etape_time = 0;
                 for($i=0;$i<5;$i++){
                     if($this->input->post('input_etape_'.$i)){
-                        var_dump("etape");
+                        //var_dump("etape");
                         $etape["villeID"]=intval($this->input->post('input_etapeID_'.$i));
                         $etape["stop"]=intval($this->input->post('input_stop_'.$i));
                         $etape["duree"]=intval($this->input->post('input_duree_'.$i));
@@ -292,7 +315,7 @@ class Annonce extends CI_Controller {
                     $minutes += ($heures*60)+ $etape_time + $dataRecup["duree"];
                     
                     $tot_heure = floor($minutes/60);
-                    $tot_min = $minutes - $tot_heure;
+                    $tot_min = $minutes - ($tot_heure*60);
                     $heure_arrivee = $tot_heure.":".$tot_min;
                     
                     $data['heure_arrivee'] = $heure_arrivee;
@@ -320,6 +343,7 @@ class Annonce extends CI_Controller {
                         'description_arrivee',
                         'flexibilite',
                         'heure',
+                        'heure_retour',
                         'places',
                         'retour',
                         'regulier',
@@ -327,6 +351,7 @@ class Annonce extends CI_Controller {
                         'commentaire',
                         'prix_conseil',
                         'prix'
+                        
                     );
 
                     for($i=0;$i<count($champDonnee);$i++){
@@ -336,11 +361,12 @@ class Annonce extends CI_Controller {
                     }
 
                     $dataRecup['etapes'] = $recupEtapes;
-                    
-                    //var_dump($dataRecup);
+                    var_dump($data);
+                    var_dump($dataRecup);
+                    var_dump($data_error);
                     $this->session->set_userdata('dataRecup',$dataRecup);
                     $this->session->set_userdata('dataError',$data_error);
-                    redirect('annonce/ajouter');
+                    //redirect('annonce/ajouter');
                 }
                 else {
                     $this->M_Annonce->ajouter($data,$dataCoord,$etapes);

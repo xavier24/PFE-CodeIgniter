@@ -19,11 +19,20 @@
                         <p><?php echo $annonce->description_depart ? $annonce->description_depart : "Non précisé"?></p>
                     </div>
                     <div class="span2 direction">
-                        <span class="icon-right-thin"></span>
+                        <?php if($annonce->retour){
+                            echo '<span class="icon-loop-alt-1"></span>';
+                            if( $annonce->date == $annonce->date_retour){
+                                echo '<h4>Retour</h4>';
+                                echo $annonce->heure_retour ? '<p>'.$annonce->heure_retour.'</p>': '<p>?</p>'  ; 
+                            }
+                        }
+                        else{
+                            echo '<span class="icon-right-thin"></span>';
+                        }?>
                     </div>
                     <div class="span4 arrivee">
                         <h4><?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?></h4>
-                        <h5>heure estimée</h5>
+                        <h5><?php echo $annonce->heure_arrivee ?> (heure estimée)</h5>
                         <p>Lieu de destination&nbsp;:</p>
                         <p><?php echo $annonce->description_arrivee ? $annonce->description_arrivee : "Non précisé" ?></p>
                     </div>
@@ -45,6 +54,12 @@
                     </div>
                 </div>
                 <div class="row-fluid">
+                    <?php if( $annonce->date != $annonce->date_retour){ ?>
+                    <div class="retour">
+                       <h5>Retour</h5>
+                       <p><?php echo $annonce->date_retour." à ".$annonce->heure_retour ?></p> 
+                    </div>
+                    <?php } ?>
                     <div class="commentaire">
                         <h5>Commentaire</h5>
                         <p><?php echo $annonce->commentaire ? $annonce->commentaire : "Pas de commentaire" ?></p>
@@ -68,7 +83,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="table_allee">
+                                <tr>
                                     <td>Allée</td>
                                     <?php if(isset($annonce->calendar['0']->allee)){
                                         for($i=0;$i<count($day);$i++){
@@ -86,7 +101,7 @@
                                         }
                                     }?>
                                 </tr>
-                                <tr class="table_retour">
+                                <tr>
                                     <td>Retour</td>
                                     <?php if(isset($annonce->calendar['0']->retour)){
                                         for($i=0;$i<count($day);$i++){
