@@ -51,7 +51,7 @@ class M_Annonce extends CI_Model{
         }
     //recupere les infos de l'utilisateur connecté/selectionné
         public function getUserInfo($champ,$data){
-            $this->db->select('users.*, villes.fr AS ville, villes.provinceID, villes.latitude, villes.longitude');
+            $this->db->select('users.*, villes.fr AS ville_fr, villes.nl AS ville_nl, villes.fr AS province_fr,villes.nl AS province_nl, villes.latitude, villes.longitude');
             $this->db->from('users');
             $this->db->join('villes','villes.id = users.villeID');
             $this->db->join('province','province.provinceID = villes.provinceID');
@@ -95,7 +95,7 @@ class M_Annonce extends CI_Model{
             
             if($dataCoord){
                 $coord = array();
-                for($i=0;$i<count($dataCoord);$i++){
+                for($i=0;$i<count($dataCoord);$i+=2){
                     $coord[$i] = array(
                         'annonceID' => $id,
                         'lat' => $dataCoord[$i]->jb, 

@@ -945,11 +945,17 @@ textarea.profil_modif{
     float:right;
     margin: -4px 0 0 3px;
 }
-.editor{
+.annuler{
     color:#D1400A;
+    text-decoration: underline;
 }
-.editor .icon_modifier{
+.icon_annuler{
     background: url(../images/elements.png) no-repeat scroll -200px -100px transparent;
+    display: block;
+    height: 20px;
+    width: 20px;
+    float:right;
+    margin: -4px 0 0 3px;
 }
 .modifier{
     float:right;
@@ -1380,15 +1386,13 @@ textarea.profil_modif{
     width: 40%;
     float: left;
 }
-.ajouter_annonce .date label, .ajouter_annonce .heure label{
+.ajouter_annonce .date>label, .ajouter_annonce .heure>label{
     text-align: center;
     width: 100%;
     height: 115px;
     display: block;
 }
 .ajouter_annonce .date input, .ajouter_annonce .heure input{
-    margin: 20px auto 0;
-    display: block;
     font-weight: bold;
     color:#000;
     text-align: center;
@@ -1396,6 +1400,13 @@ textarea.profil_modif{
     -moz-box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
     -webkit-box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
     box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
+}
+.ajouter_annonce .date .input_date, .ajouter_annonce .heure .input_heure{
+    margin: 20px auto 0;
+    display: block;
+}
+.ajouter_annonce .date .input_date_retour, .ajouter_annonce .heure .input_heure_retour{
+    display: none;
 }
 .ajouter_annonce .select_flexible, .ajouter_annonce .select_place{
     text-align: center;
@@ -1435,8 +1446,8 @@ textarea.profil_modif{
     margin: 0 auto;
 }
 .ajouter_annonce .btn_check{
-    float:left;
-    margin: 30px 20px 0;
+    -float:left;
+    -margin: 30px 20px 0;
     
 }
 .regulier{
@@ -1544,15 +1555,18 @@ textarea.profil_modif{
     font-weight: bold;
 }
 .annonce .direction{
-    font-size: 3em;
     text-align: center;
 }
-.annonce .commentaire{
-    margin-top: 40px;
+.annonce .direction span{
+    font-size: 3em;
+}
+.annonce .retour, .annonce .commentaire{
+    margin-top: 30px;
 }
 .annonce .regulier{
     display: block;
     margin-top: 40px;
+    line-height: 1.8em;
 }
 .annonce .regulier table{
     margin: 0;

@@ -80,8 +80,9 @@ $lang = array(
     
 //RECHERCHE    
     
-//SCRIPT    
-    
+//SCRIPT
+    "modifier" => "Modifier",
+    "annuler" => "Annuler",
 //CONTROLEUR USER
     "profil_de" => "Profil de",
     "profil" => "Profil",

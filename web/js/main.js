@@ -79,15 +79,7 @@
     //PROFIL   
         var editProfil = function(){ //editer profil
             $(this).parent().parent().find('.profil_modif').toggle();
-            $(this).toggleClass('editor');
-            if($(this).hasClass('editor')){
-                $(this).find('span:first-child').text("Annuler");
-            }
-            else{
-                $(this).find('span:first-child').text("Modifier");
-            }
             $(this).parent().parent().find(".edit_hidden").toggle();
-            
             $(this).parent().parent().find(".colorPicker-picker").toggle();
 	};//editProfil
         
@@ -150,22 +142,19 @@
             if($this.next().is(':checked') && !$check){
                 $this.removeClass('bouton_orange').addClass('bouton_gris');
                 $this.find('.button').removeClass('orange').addClass('gris');
-                if($this.next().hasClass('show_calendar')){
-                    $(".calendar").toggle();
-                }
-                if($this.next().hasClass('show_retour')){
-                    $(".table_retour").toggle();
-                }
             }
             else{
                 $this.addClass('bouton_orange').removeClass('bouton_gris');
                 $this.find('.button').addClass('orange').removeClass('gris');
-                if($this.next().hasClass('show_calendar')){
-                    $(".calendar").toggle();
-                }
-                if($this.next().hasClass('show_retour')){
-                    $(".table_retour").toggle();
-                }
+            }
+            
+            if($this.next().hasClass('show_calendar')){
+                $(".calendar").toggle();
+            }
+            if($this.next().hasClass('show_retour')){
+                $(".table_retour").toggle();
+                $(".input_heure_retour").toggle();
+                $(".input_date_retour").toggle();
             }
             
         };//btnCheck

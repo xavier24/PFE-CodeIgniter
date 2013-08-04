@@ -123,7 +123,7 @@
                     </form>
                     <?php echo form_open('user/modifier',array('method'=>'post')); ?>
                         <div class="edit_button clearfix">
-                            <p class="edit"><span>Modifier</span><span class="icon_modifier"></span></p>
+                            <p class="edit"><span class="edit_hidden"><?php echo lang('modifier') ?></span><span class="edit_hidden icon_modifier"></span><span class="annuler profil_modif"><?php echo lang('annuler') ?></span><span class="profil_modif icon_annuler"></span></p>
                             <div class="modifier profil_modif">
                                 <?php echo form_button($data_submit) ?>
                             </div>  
