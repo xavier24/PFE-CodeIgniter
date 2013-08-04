@@ -62,11 +62,11 @@
             $(this).parent().next().children('.slideBlock').slideToggle();
             $(this).parent().parent().toggleClass('ouvert');
         }//loginForm
-        
+    
     //CHANGER LANGUE
         var changeLang = function(e){
             e.preventDefault();
-            console.log($(this).attr("id"));
+            //console.log($(this).attr("id"));
             $.ajax({
                     url:baseUrl+'/PFE-CodeIgniter/ajax/lang/'+$(this).attr("id"),
                     type:'POST',
@@ -163,7 +163,7 @@
 
             // --- onload routines
 		$slideCompte = $('.slide_compte');
-		$lang = $('.btn_lang');
+                $lang = $('.btn_lang');
                 $edit = $(".edit");
                 $editPhoto = $(".edit_photo");
                 $autreLang = $("#lang_autre_lang");

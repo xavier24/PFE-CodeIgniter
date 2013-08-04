@@ -1,6 +1,6 @@
 <!-- PAS CONNECTE -->
 <?php if(!$this->session->userdata('logged_in')){
-        echo form_open('user/login',array('method'=>'post','class'=>'connex'));
+        echo form_open('user/login',array('method'=>'post','class'=>'connex','id'=>'login_form'));
             echo '<div class="slideBlock">';
                 echo form_fieldset();
 
@@ -12,7 +12,7 @@
                     echo form_input($emailInput);
                     echo form_label(lang('password'),'mdp',$attributes_mdp);
                     echo form_password($mdpInput);
-
+                    echo '<input id="current_url" name="current_url" type="hidden" value="'.current_url().'"/>';
                 echo form_fieldset_close();
                 echo '<div class="souvenir_moi">';
                     $input_souvenir = array('name'=>'souvenir', 'id'=>'souvenir');

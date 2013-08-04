@@ -12,7 +12,7 @@ class Ajax extends CI_Controller {
                 $this->lang->load('trad',$this->session->userdata('lang'));
             }
         }
-        
+    //CHANGER LANGUE    
         public function lang(){
             
             $lang= end($this->uri->segments);
@@ -20,13 +20,13 @@ class Ajax extends CI_Controller {
                         
             echo($lang);
         }
-        
+    //RECUPERER VILLES    
         function villes(){
             $villes = $this->M_Ajax->lister();
             
             echo $villes;
         }
-        
+    //RECUPERER SI CONNECTE    
         function dataSession(){
             $dataSession = $this->session->userdata('logged_in');
             

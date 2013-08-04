@@ -83,6 +83,7 @@ $lang = array(
 //SCRIPT
     "modifier" => "Modifier",
     "annuler" => "Annuler",
+    "enregister" => "Enregistrer",
 //CONTROLEUR USER
     "profil_de" => "Profil de",
     "profil" => "Profil",

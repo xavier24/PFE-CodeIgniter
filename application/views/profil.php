@@ -1,9 +1,5 @@
 <?php
-    $input_nom = array('id'=>'nom', 'name'=>'nom', 'type'=>'text', 'value'=>$info_membre->nom, 'class'=>'profil_input');
-    $input_email = array('id'=>'email', 'name'=>'email', 'type'=>'email', 'value'=>$info_membre->email, 'class'=>'profil_input');
-    
-    $data_user_id = array('id'=>'user_id', 'name'=>'user_id', 'type'=>'hidden', 'value'=>$info_membre->user_id);
-    $data_submit = array('class' => 'button', 'type' => 'check', 'value' => 'true', 'content' => 'Enregister<span class="bouton_modif"></span>');
+    $data_submit = array('class' => 'button', 'type' => 'check', 'value' => 'true', 'content' => lang('enregister').'<span class="bouton_modif"></span>');
 ?>
 <div class="content">
     <div class="row-fluid profil">
@@ -455,6 +451,7 @@
                 
                     </div>
                 </div>
+                <?php if($user_connect){ ?>
                 <script type="text/javascript">
                     $(function(){
                         $('#colorPicker').colorPicker({
@@ -500,6 +497,7 @@
                         });
                     });
                 </script>
+                <?php } ?>
             </div>
         </div>
     </div>

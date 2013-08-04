@@ -18,6 +18,7 @@ class User extends CI_Controller {
     public function index(){
         redirect('accueil');    
     }
+    
 //CONNEXION
     public function login(){
         //$this->load->model('M_User');
@@ -25,12 +26,12 @@ class User extends CI_Controller {
 
         $data['mdp'] = $this->encrypt->sha1($this->input->post('mdp'));
         $data['email'] = $this->input->post('email');
-                
+        $current_url = $this->input->post('current_url');        
         if($this->M_User->verifier($data)){
                 $user_data = $this->M_User->getUserInfo('email',$data['email']);
                 $this->session->set_userdata('logged_in',$user_data);
                 $this->lastConnex();
-                redirect('accueil');
+                redirect($current_url);
         }
         else{
                 //redirect('error/mauvais_identifiant');
@@ -44,11 +45,13 @@ class User extends CI_Controller {
         $data['connected_at'] = date("Y-m-d H:i:s");
         $this->M_User->modifier($data,$user_data->user_id);
     }
+ 
 //DECONNEXION
     public function deconnecter(){
+        $current_url = $this->input->post('current_url');   
         $this->lastConnex();
         $this->session->unset_userdata('logged_in');
-        redirect('accueil');
+        redirect($current_url);
     }
     
 //RECUPERER INFO USER SELECTIONNE
