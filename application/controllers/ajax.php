@@ -23,12 +23,19 @@ class Ajax extends CI_Controller {
     //RECUPERER VILLES    
         function villes(){
             $villes = $this->M_Ajax->lister();
-            
+                        
             echo $villes;
         }
     //RECUPERER SI CONNECTE    
         function dataSession(){
-            $dataSession = $this->session->userdata('logged_in');
+            if(get_cookie('logged_in')){
+                $dataCookie = get_cookie('logged_in');
+                $dataSession = json_decode($dataCookie);
+            }
+            else{
+                $dataSession = $this->session->userdata('logged_in');
+            }
+            
             
             echo json_encode($dataSession);
         }

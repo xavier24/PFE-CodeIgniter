@@ -4,7 +4,7 @@ class inscription extends CI_Controller {
     
     public function __construct(){
         parent::__construct();
-        
+        $this->load->model('M_Ajax');
         if( $this->session->userdata('lang') ){
             $this->lang->is_loaded = array();
             $this->lang->language = array();
@@ -13,8 +13,9 @@ class inscription extends CI_Controller {
     }
     
     public function index(){
-        //recuperation id user (si existe = connecté)
-        if($this->session->userdata('logged_in')){
+        
+        $user_data = $this->M_Ajax->get_cookie_session_data();
+        if($user_data){
             redirect('accueil');
         }
         else{
@@ -94,7 +95,9 @@ class inscription extends CI_Controller {
         else{
             $this->M_Inscription->inscrire($data);
             $user_data = $this->M_Inscription->getIdMembre($data['email']);
-            $this->session->set_userdata('logged_in',$user_data);
+            
+            $this->M_Ajax->set_cookie_session_data('logged_in',$user_data);
+            
             var_dump($user_data);
             //$this->confirmEmail();
             redirect('user/profil/'.$user_data->user_id);

@@ -5,6 +5,7 @@ class User extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('M_User');
+        $this->load->model('M_Ajax');
         $this->load->helper('date');
         
         if( $this->session->userdata('lang') ){
@@ -26,22 +27,22 @@ class User extends CI_Controller {
 
         $data['mdp'] = $this->encrypt->sha1($this->input->post('mdp'));
         $data['email'] = $this->input->post('email');
-        $current_url = $this->input->post('current_url');        
+        $current_url = $this->input->post('current_url');
+        $souvenir = $this->input->post('souvenir');
         if($this->M_User->verifier($data)){
-                $user_data = $this->M_User->getUserInfo('email',$data['email']);
-                $this->session->set_userdata('logged_in',$user_data);
-                $this->lastConnex();
-                redirect($current_url);
+            $user_data = $this->M_User->getUserInfo('email',$data['email']);
+            $this->M_Ajax->set_cookie_session_data('logged_in',$user_data,$souvenir);
+            $this->lastConnex($user_data);
+            redirect($current_url);
         }
         else{
-                //redirect('error/mauvais_identifiant');
-                var_dump("non");
+            //redirect('error/mauvais_identifiant');
+            var_dump("non");
         }
     }
 //DATE DERNIERE CONNEXION
-    public function lastConnex(){
+    public function lastConnex($user_data){
         date_default_timezone_set("Europe/Paris");
-        $user_data = $this->session->userdata('logged_in');
         $data['connected_at'] = date("Y-m-d H:i:s");
         $this->M_User->modifier($data,$user_data->user_id);
     }
@@ -49,8 +50,15 @@ class User extends CI_Controller {
 //DECONNEXION
     public function deconnecter(){
         $current_url = $this->input->post('current_url');   
-        $this->lastConnex();
-        $this->session->unset_userdata('logged_in');
+        
+        $user_data = $this->M_Ajax->get_cookie_session_data();
+        
+        if($user_data){
+            delete_cookie('logged_in');
+            $this->session->unset_userdata('logged_in');
+        }
+        $this->lastConnex($user_data);
+        
         redirect($current_url);
     }
     
@@ -59,22 +67,23 @@ class User extends CI_Controller {
     $this->load->model('M_Date');
         
     //recuperer l'id de l'url (ID PROFIL)
-        $idUser = $this->uri->segment(3,0);
-        if(!$idUser){
+        $id_segment = $this->uri->segment(3,0);
+        if(!$id_segment){
            redirect('accueil'); 
         }
     //recuperation id user connecté (ID CONNECTE)
         $user_id = false;
-        
-        if($this->session->userdata('logged_in')){
-            $data['user_data'] = $this->session->userdata('logged_in');
-            $user_id = $data['user_data']->user_id;
+        $data['user_data'] = $this->M_Ajax->get_cookie_session_data();
+        if($data['user_data']){
+           $user_id = $data['user_data']->user_id; 
         }
+        
+        //var_dump($data['user_data']);
     //recuperation si message d'erreur
         $data['error']['upload'] = $this->session->flashdata('upload_error');
     
     //recuperation info du profil demandé -> db
-        $data['info_membre'] = $this->M_User->getUserInfo('user_id',$idUser);
+        $data['info_membre'] = $this->M_User->getUserInfo('user_id',$id_segment);
         if(!$data['info_membre']){
             redirect('accueil');
         }
@@ -89,13 +98,12 @@ class User extends CI_Controller {
             //var_dump($date);
         }
     //Si profil = user connecté
-        if($idUser == $user_id){
+        if($id_segment == $user_id){
         //utiliser pour savoir si c le profil = profil user
             $data['user_connect'] = true;
         //mise en session des info user
-            $this->session->set_userdata('logged_in',$data['info_membre']);
+            $this->M_Ajax->set_cookie_session_data('logged_in',$data['info_membre']);
         //recuperation des villes pour modification profil
-            $this->load->model('M_Ajax');
             $data['villes'] = $this->M_Ajax->lister();
             
             $data['user_data'] = $data['info_membre'];
@@ -107,7 +115,7 @@ class User extends CI_Controller {
         }
         
     //RECUPERE TRAJET USER
-        $data['annonces'] = $this->M_User->trajet($idUser);
+        $data['annonces'] = $this->M_User->trajet($id_segment);
         //var_dump($data['annonces']);
     
     //APPEL FUNCTION dateLongue: convertir date AA/MM/JJ (ANNONCES) -> Jour date mois année  
@@ -116,7 +124,7 @@ class User extends CI_Controller {
             $data['annonces'][$i]->date = $this->M_Date->dateLongue($data['annonces'][$i]->date,'no','no');
         }
         
-    //RECUPERATIO LANGUE CHOISI
+    //RECUPERATION LANGUE CHOISIE
         if( $this->session->userdata('lang') ){
             $data['lang'] = $this->session->userdata('lang');
         }
@@ -136,7 +144,8 @@ class User extends CI_Controller {
     }
 	
     public function modifier(){
-        $user_data = $this->session->userdata('logged_in');
+        
+        $user_data = $this->M_Ajax->get_cookie_session_data();
         
         if($this->input->post('input_naissance')){
                 $date = $this->input->post('input_naissance');
@@ -175,7 +184,8 @@ class User extends CI_Controller {
     }
     public function upload(){
         //recupere les données sessions
-        $user_data = $this->session->userdata('logged_in');
+        $user_data = $this->M_Ajax->get_cookie_session_data();
+        $user_id = $user_data->user_id;
         
         //donne les parametres de upload
         $titre = time().rand(1000,9999);
@@ -210,10 +220,10 @@ class User extends CI_Controller {
                 $oldPicture = FALSE;
             }
             
-            $this->crop('web/images/membre/tmp/'.$filedata['file_name'],$config['file_name'],$oldPicture);
+            $this->crop('web/images/membre/tmp/'.$filedata['file_name'],$config['file_name'],$oldPicture,$user_id);
         }
     }
-    public function crop($source,$titre,$oldPicture){
+    public function crop($source,$titre,$oldPicture,$user_id){
         //dimension image uploader
         list($original_width, $original_height, $file_type, $attr) = getimagesize($source);
         
@@ -246,10 +256,9 @@ class User extends CI_Controller {
         //supprime l'image uploader
         unlink($source);
         //fonction redimension et thumb
-        $this->thumb('./web/images/membre/tmp/crop_'.$titre, $width, $titre, $oldPicture);
+        $this->thumb('./web/images/membre/tmp/crop_'.$titre, $width, $titre, $oldPicture,$user_id);
     }
-    public function thumb($source,$crop_size,$titre,$oldPicture){
-        $user_data = $this->session->userdata('logged_in');
+    public function thumb($source,$crop_size,$titre,$oldPicture,$user_id){
         
         //paramettre resize
         $width = 140;
@@ -297,7 +306,7 @@ class User extends CI_Controller {
                 echo 'deleted old successfully';
                 if(unlink('./web/images/membre/thumb/thumb_'.$oldPicture)) {
                     echo 'deleted old thumb successfully';
-                    redirect('user/profil/'.$user_data->user_id);
+                    redirect('user/profil/'.$user_id);
                 }
                 else {
                     echo 'errors occured (old thumb)';
@@ -308,7 +317,7 @@ class User extends CI_Controller {
            }
         }
         else {
-            redirect('user/profil/'.$user_data->user_id);
+            redirect('user/profil/'.$user_id);
         }
         
     }

@@ -17,7 +17,7 @@ class Accueil extends CI_Controller {
         
 	public function index(){
          
-            $dataList['user_data'] = $this->session->userdata('logged_in');
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
             
             //$dataList['annonces'] = $this->M_Accueil->lister();
             $this->load->model('M_Ajax');
@@ -37,7 +37,7 @@ class Accueil extends CI_Controller {
 	}
         
         public function recherche(){
-            $dataList['user_data'] = $this->session->userdata('logged_in');
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
             //$dataList['villes'] = $this->M_Ajax->lister();
             
         //infos requises

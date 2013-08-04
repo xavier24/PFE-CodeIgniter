@@ -1,5 +1,5 @@
 <!-- PAS CONNECTE -->
-<?php if(!$this->session->userdata('logged_in')){
+<?php if(!$this->session->userdata('logged_in') && !get_cookie('logged_in')){
         echo form_open('user/login',array('method'=>'post','class'=>'connex','id'=>'login_form'));
             echo '<div class="slideBlock">';
                 echo form_fieldset();
@@ -15,7 +15,7 @@
                     echo '<input id="current_url" name="current_url" type="hidden" value="'.current_url().'"/>';
                 echo form_fieldset_close();
                 echo '<div class="souvenir_moi">';
-                    $input_souvenir = array('name'=>'souvenir', 'id'=>'souvenir');
+                    $input_souvenir = array('name'=>'souvenir', 'id'=>'souvenir', 'value'=>true);
                     echo form_checkbox($input_souvenir);
                     echo form_label(lang('souvenir_moi'),'souvenir');
                 echo '</div>';

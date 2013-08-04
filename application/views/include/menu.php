@@ -14,12 +14,12 @@
         </li>
         <li>
             <?php 
-            echo (!$this->session->userdata('logged_in'))?  
+            echo (!$this->session->userdata('logged_in') && !get_cookie('logged_in'))?  
                 '<a href="'.base_url().'inscription">
                     <span class="visible-desktop">'.lang('inscription').'</span>
                     <span class="hidden-desktop nav_register"></span>
                 </a>': 
-                '<a href="'.base_url().'user/profil/'.$this->session->userdata('logged_in')->user_id.'">
+                '<a href="'.base_url().'user/profil/'.$user_data->user_id.'">
                     <span class="visible-desktop">'.lang('mon_profil').'</span>
                     <span class="hidden-desktop nav_register"></span>
                 </a>' 
@@ -37,7 +37,7 @@
                 
                 
             
-                <?php if($this->session->userdata('logged_in')){
+                <?php if($this->session->userdata('logged_in') || get_cookie('logged_in')){
                     if($user_data->photo != ""){
                         echo '<span class="nav_pict_user slide_compte"><img src="'.base_url().'web/images/membre/thumb/thumb_'.$user_data->photo.'" width="40" height="40"/></span>';
                     }

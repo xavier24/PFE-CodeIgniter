@@ -5,6 +5,7 @@ class Annonce extends CI_Controller {
         function __construct(){
             parent::__construct();
             $this->load->model('M_Annonce');
+            $this->load->model('M_Ajax');
             
             if( $this->session->userdata('lang') ){
                 $this->lang->is_loaded = array();
@@ -14,7 +15,8 @@ class Annonce extends CI_Controller {
         }
         
         public function lister(){
-            $dataList['user_data'] = $this->session->userdata('logged_in');
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
+            
             $dataList['page'] = 'Accueil';
             $dataList['titre'] = 'liste des resultats';
             
@@ -49,10 +51,8 @@ class Annonce extends CI_Controller {
             
             $idAnnonce = $this->uri->segment(3);
         //user_data    
-            if($this->session->userdata('logged_in')){
-                $dataList['user_data'] = $this->session->userdata('logged_in');
-            }
-            
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
+                        
         //annonce
             $dataList['annonce'] = $this->M_Annonce->voir($idAnnonce);
             $dataList['annonce']->calendar = json_decode($dataList['annonce']->calendar) ;
@@ -151,7 +151,7 @@ class Annonce extends CI_Controller {
                 $dataList['lang'] = 'fr';
             }
             
-            $dataList['user_data'] = $this->session->userdata('logged_in');
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
             $dataList['page'] = 'Accueil';
             $dataList['titre'] = 'Publier une annonce';
             $dataList['body'] = "ajouter_annonce";           
@@ -161,13 +161,16 @@ class Annonce extends CI_Controller {
         }
         
         public function poster(){
-            if(!$this->session->userdata('logged_in')){
-                redirect('annonce/ajouter');
+            
+            $user_data = $this->M_Ajax->get_cookie_session_data();
+            
+            if($user_data){
+                $data['user_id'] = $user_data->user_id;
             }
             else{
-                $user_data = $this->session->userdata('logged_in');
-                $data['user_id'] = $user_data->user_id;
-                
+                redirect('annonce/ajouter');
+            }
+             
             //infos requises
                 $champRequis = array('departID','arriveeID','heure','prix_conseil');
                 $champRequis_erreur = array('le départ','l\'arrivée','l\'heure','le prix');
@@ -372,5 +375,4 @@ class Annonce extends CI_Controller {
                     $this->M_Annonce->ajouter($data,$dataCoord,$etapes);
                 }
             }
-        }
 }

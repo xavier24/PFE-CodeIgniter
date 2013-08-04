@@ -14,7 +14,8 @@ $lang = array(
 //CONNEXION
     "password" => "Mot de passe",
     "email" => "Adresse email",
-    "souvenir_moi" => "Se souvenir de moi",
+    //"souvenir_moi" => "Se souvenir de moi",
+    "souvenir_moi" => "Garder ma session active",
     "connexion" => "Connexion",
     "mdp_oublie" => "Mot de passe oublié",
     "pas_inscrit" => "Pas encore inscrit",
