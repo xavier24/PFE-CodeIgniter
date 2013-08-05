@@ -52,7 +52,7 @@ class Annonce extends CI_Controller {
             $idAnnonce = $this->uri->segment(3);
         //user_data    
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
-                        
+                      
         //annonce
             $dataList['annonce'] = $this->M_Annonce->voir($idAnnonce);
             $dataList['annonce']->calendar = json_decode($dataList['annonce']->calendar) ;
@@ -71,6 +71,7 @@ class Annonce extends CI_Controller {
         //info_membre
             if(!isset($dataList['user_data']->user_id) || $dataList['user_data']->user_id != $dataList['annonce']->user_id){
                 $dataList['info_membre'] = $this->M_Annonce->getUserInfo('user_id',$dataList['annonce']->user_id);
+                $dataList['not_user'] = true;
                 //var_dump($dataList['info_membre']);
             }
             else{
@@ -93,7 +94,6 @@ class Annonce extends CI_Controller {
             $dataList['a_lang'] = "a_".$dataList['lang'];
             $dataList['ville_lang'] = "ville_".$dataList['lang'];
             $dataList['province_lang'] = "province_".$dataList['lang'];
-            
             //var_dump($dataList);
             $dataList['body'] = "annonce"; 
             $dataLayout['vue'] = $this->load->view('fiche',$dataList,true);

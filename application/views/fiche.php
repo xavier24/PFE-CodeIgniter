@@ -224,7 +224,7 @@
                                 </p>
                             </div>
                         </div>
-                        <?php if( !isset($user_data)  || $annonce->user_id != $user_data->user_id){ ?>
+                        <?php if( isset($not_user) ){ ?>
                         <?php echo form_open('',array('method'=>'post')); ?> 
                             <div class="btn clearfix">
                                 <span class="bouton_contour bouton_bleu">

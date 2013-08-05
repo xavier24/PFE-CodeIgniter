@@ -61,4 +61,10 @@ class M_ajax extends CI_Model{
             
             return;
         }
+        
+        public function verifier_facebook($email){
+            $query = $this->db->get_where('users',array('email'=>$email) );
+            
+            return $query->num_rows();
+         }
 }

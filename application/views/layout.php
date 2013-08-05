@@ -35,6 +35,8 @@
 	<![endif]-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3bDuQVr6LId7sm9l83B9yQYHUPDtgqxs&sensor=false&language=fr&region=BE" type="text/javascript"></script>
         <script src="<?php echo base_url(); ?>web/js/jquery.googlemap.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/facebook_init.js"></script>
+        <!--<script src="//connect.facebook.net/fr_FR/all.js"></script>-->
         <script src="<?php echo base_url(); ?>web/js/jquery-ui-1.10.3.custom.js"></script>
         <script src="<?php echo base_url(); ?>web/js/jquery.ui.datepicker-fr.js"></script>
         <script src="<?php echo base_url(); ?>web/js/jquery-ui-timepicker-addon.js"></script>
@@ -46,15 +48,17 @@
     </head>
     <body <?php if(isset($body)){echo 'class="'.$body.'"';} ?> >
         <div id="fb-root"></div>
-        <!--<script>
-            (function(d, s, id) {
-                  var js, fjs = d.getElementsByTagName(s)[0];
-                  if (d.getElementById(id)) return;
-                  js = d.createElement(s); js.id = id;
-                  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-                  fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>-->
+        <!-- A SUPPRIMER SI TOUT LES TEST SONT OK SINON LIER SCRIPT DIRECT DANS HEAD
+        <script>
+          (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+                fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+        </script>--> 
+        
         <div class="wrapper">
             <header class="clearfix">
                 <!--<img src="<?php echo base_url(); ?>web/images/header.jpg"/>

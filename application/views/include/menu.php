@@ -35,23 +35,26 @@
             <div class="degrade_compte clearfix">
                 <span class="mon_compte slide_compte"><?php echo lang('mon_compte')?></span>
                 
-                
-            
-                <?php if($this->session->userdata('logged_in') || get_cookie('logged_in')){
+                    <?php if($this->session->userdata('logged_in') || get_cookie('logged_in')){
                     if($user_data->photo != ""){
                         echo '<span class="nav_pict_user slide_compte"><img src="'.base_url().'web/images/membre/thumb/thumb_'.$user_data->photo.'" width="40" height="40"/></span>';
                     }
                     else{
                         echo '<span class="nav_pict_user slide_compte"><img src="'.base_url().'web/images/membre/thumb/thumb_default.jpg" width="40" height="40"/></span>';
                     }
-                    echo form_open('user/deconnecter',array('method'=>'post'));
-                    echo '<input id="current_url" name="current_url" type="hidden" value="'.current_url().'"/>';?>
-                    <button class="logout" value="true" type="check"><?php echo lang('deconnexion')?></button>
-                   <?php echo form_close();                  
+                    if(isset($user_data->facebook)){
+                        echo '<div id="facebook_logout" class="">Logout facebook</div>';
+                    }
+                    else{
+                        echo form_open('user/deconnecter',array('method'=>'post'));
+                        echo '<input id="current_url" name="current_url" type="hidden" value="'.current_url().'"/>';
+                        echo '<button class="logout" value="true" type="check">'.lang('deconnexion').'</button>';
+                        echo form_close();
+                    }
                 }
                 else{
-                    echo '<span class="nav_user slide_compte"></span>
-                        <span class="nav_facebook"></span>';
+                    echo '<span class="nav_user slide_compte"></span>';
+                    echo '<span id="facebook_login" class="nav_facebook"></span>';
                 }?>
             </div>
             <?php include('connexion.php');?>
