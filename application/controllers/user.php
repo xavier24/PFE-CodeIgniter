@@ -36,8 +36,8 @@ class User extends CI_Controller {
             redirect($current_url);
         }
         else{
-            //redirect('error/mauvais_identifiant');
-            var_dump("non");
+            $this->session->set_flashdata('error_login','Votre identifiant ou mot de passe sont incorrects');
+            redirect('accueil');
         }
     }
 //DATE DERNIERE CONNEXION

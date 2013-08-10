@@ -91,6 +91,11 @@ class M_ajax extends CI_Model{
             return $query->num_rows();
         }
         
+        public function modifier($table,$data,$where,$where_val){
+            $this->db->where($where,$where_val);		
+            $this->db->update($table,$data);
+        }
+        
         public function formatFrenchPhoneNumber($phoneNumber, $international = false){
             //Supprimer tous les caractères qui ne sont pas des chiffres
             $phoneNumber = preg_replace('/[^0-9]+/', '', $phoneNumber);

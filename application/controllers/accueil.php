@@ -18,6 +18,7 @@ class Accueil extends CI_Controller {
 	public function index(){
          
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
+            $data['message']['error_login'] = $this->session->flashdata('error_login');
             
             //$dataList['annonces'] = $this->M_Accueil->lister();
             $this->load->model('M_Ajax');

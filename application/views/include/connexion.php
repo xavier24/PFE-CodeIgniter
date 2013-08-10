@@ -14,6 +14,9 @@
                     echo form_password($mdpInput);
                     echo '<input id="current_url" name="current_url" type="hidden" value="'.current_url().'"/>';
                 echo form_fieldset_close();
+                if($message['error_login']!=""){
+                    echo '<p class="erreur_inscription">'.$message['error_login'].'</p>';
+                }                
                 echo '<div class="souvenir_moi">';
                     $input_souvenir = array('name'=>'souvenir', 'id'=>'souvenir', 'value'=>true);
                     echo form_checkbox($input_souvenir);
