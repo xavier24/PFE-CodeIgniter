@@ -61,11 +61,8 @@
         
         <div class="wrapper">
             <header class="clearfix">
-                <!--<img src="<?php echo base_url(); ?>web/images/header.jpg"/>
-                <h1>Car-People</h1>
-                <img src="<?php echo base_url(); ?>web/images/voyageur.png" class="voyageur"/>-->
+                <?php include('include/banner.php');?>
                 <?php include('include/menu.php');?>
-                <?php include('include/lang.php');?>
             </header>
                                     
             <?php echo $vue ?>

@@ -15,27 +15,45 @@
               FB.api('/me', function(response) {
                   console.log(response);
                   $.ajax({
-                      url:location.origin+'/PFE-CodeIgniter/ajax/facebook_login/'+response.id,
+                      url:location.origin+'/PFE-CodeIgniter/ajax/facebook_login/',
                       type:'POST',
                       dataType: "json",
                       data: { email: response.email, id:response.id },
                       success: function($data){
                           console.log($data);
                           if($data){
-                              location.reload(); 
+                              //location.reload(); 
                           }
                           else{
                               window.location.replace(location.origin+'/PFE-CodeIgniter/inscription');
                           }
                       }
                   });
-              },{scope: 'email'});
+              },{scope: 'email,user_about_me,user_birthday'});
           }
-
+          
+          var facebookRegister = function(){
+              FB.api('/me', function(response) {
+                  console.log(response);
+                  $.ajax({
+                      url:location.origin+'/PFE-CodeIgniter/ajax/facebook_register/',
+                      type:'POST',
+                      dataType: "json",
+                      data: { email: response.email, id:response.id ,nom:response.last_name, prenom:response.first_name, sexe:response.gender, naissance:response.birthday},
+                      success: function($data){
+                          console.log($data);
+                          if($data){
+                            window.location.replace(location.origin+'/PFE-CodeIgniter/user/profil/'+$data);
+                          }
+                      }
+                  });
+              },{scope: 'email,user_about_me,user_birthday'});
+          }
+          
           $("#facebook_login").on('click',function(){
               FB.getLoginStatus(function(response) {
                   if (response.authResponse) {
-                      console.log("connexion autorisé");
+                      console.log(response);
                       facebookLogin();                  
                   } else {
                        //---- encore jamais donner autorisation
@@ -43,13 +61,13 @@
                        FB.login(function(response) {
                           if (response.authResponse){
                               //L'utilisateur a autorisé l'application
-                              console.log("autorisé");
+                              console.log(response);
                               facebookLogin();
                           } else {
                               //L'utilisateur n'a pas autorisé l'application
                               console.log("pas autorisé");
                           };
-                      }, {scope: 'email'});
+                      }, {scope: 'email,user_about_me,user_birthday'});
                   }
               });  
           });
@@ -73,6 +91,28 @@
                       });
                   }
               });
+          });
+          
+          $(".facebook_register>img").on('click',function(){
+              FB.getLoginStatus(function(response) {
+                  if (response.authResponse) {
+                      console.log("connexion autorisé");
+                      facebookRegister();                  
+                  } else {
+                       //---- encore jamais donner autorisation
+                       console.log("1er connexion ou pas connecté");
+                       FB.login(function(response) {
+                          if (response.authResponse){
+                              //L'utilisateur a autorisé l'application
+                              console.log("autorisé ou connecté");
+                              facebookRegister();
+                          } else {
+                              //L'utilisateur n'a pas autorisé l'application
+                              console.log("pas autorisé");
+                          };
+                      }, {scope: 'email,user_about_me,user_birthday'});
+                  }
+              }); 
           });
           
         };

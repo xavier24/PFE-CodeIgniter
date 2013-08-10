@@ -317,6 +317,16 @@ a:hover, a:active, a:focus{
     max-height: 250px;
     overflow: auto;   
 }
+input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus, input:invalid{
+	-moz-box-shadow: 1px 1px 0 #960D1D inset, 1px 1px 0 #CC1127 !important;
+        -webkit-box-shadow: 1px 1px 0 #960D1D inset, 1px 1px 0 #CC1127 !important;
+        box-shadow: 1px 1px 0 #960D1D inset, 1px 1px 0 #CC1127 !important;
+}
+.requis{
+    color:#960D1D;
+    font-weight: bold;
+    font-size: 1.4em;
+}
 .clear{
     clear: both;
 }
@@ -404,7 +414,7 @@ nav li{
 }
 nav li>a{
 	text-decoration:none;
-	color:#88a2b6;
+	color:#DDD;
 	text-shadow:1px 0 0 rgba(0,0,0,0.5);
 	display:block;
 	height:100%;
@@ -430,7 +440,7 @@ nav li.current>a{
 	-moz-box-shadow: inset 0 0 2px 1px rgba(0,0,0,0.5);
 	-webkit-box-shadow: inset 0 0 2px 1px rgba(0,0,0,0.5);
 	box-shadow: inset 0 0 2px 1px rgba(0,0,0,0.5);
-	color:#ccc;
+	-color:#ccc;
 }
 nav li>a:hover, nav li>a:active, nav li>a:focus {
 	background: #0573db; /* Old browsers */
@@ -492,7 +502,7 @@ nav li.nav_compte>div{
 	-moz-border-radius:5px 0 0 0px;
 	-webkit-border-radius:5px 0 0 0px;
 	border-radius:5px 0 0 0px;
-	color:#9b9b9b;
+	color:#DDD;
 	text-shadow:1px 0 0 rgba(0,0,0,0.5);
 	line-height:48px;
 }
@@ -537,6 +547,95 @@ nav li.nav_compte .slideBlock{
 	cursor:pointer;
 }
 /* ==========================================================================
+   Inscription styles
+   ========================================================================== */
+.inscription form{
+        background: #e0e0e0; /* Old browsers */
+	background: -moz-linear-gradient(top,  #e0e0e0 0%, #c0c0c0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e0e0e0), color-stop(100%,#c0c0c0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #e0e0e0 0%,#c0c0c0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #e0e0e0 0%,#c0c0c0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #e0e0e0 0%,#c0c0c0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #e0e0e0 0%,#c0c0c0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', endColorstr='#c0c0c0',GradientType=0 ); /* IE6-9 */
+	background-position: top center;
+	background-repeat: no-repeat;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	color:#333;
+        border:1px solid #265A84;
+        padding:30px;
+        margin-bottom: 20px;
+}
+.inscription h1{
+    font-size:2.8em;
+    margin-bottom:10px;
+    text-shadow: 0 -1px 0 #000000, 0 1px 0 #FFFFFF;
+    font-weight:normal;
+    color:#265A84;
+}
+.inscription h2{
+    margin-bottom:20px;
+    text-shadow: 0 -1px 0 #000000, 0 1px 0 #FFFFFF;
+}
+.methode_texte{
+    margin-bottom:10px;
+    color:#265A84;
+    font-weight: bold;
+}
+.methode1 .facebook_register{
+    text-align: center;
+    margin-top: 50px;
+    
+}
+.methode2{
+    margin-left: 6%;
+    border-left:1px solid #777;
+}
+.methode2>div{
+    padding-left: 6%;
+    border-left:1px solid #fff;
+}
+.inscription label{
+    width: 100%;
+    display: block;
+    margin-top: 15px;
+}
+.inscription .inscript_valid{
+    margin-top: 20px;
+}
+.inscription .inscript_valid label{
+    display: inline;
+    line-height: 2em;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+.inscript_valid .btn{
+    margin-top: 20px;
+}
+.inscript_valid .btn button{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.inscription input.champ{
+    background-color: #1A272A;
+    background-color: #eee;
+    border: medium none;
+    border-radius: 5px;
+    -moz-box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
+    -webkit-box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
+    box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
+    width: 280px;
+    color:#000;
+}
+.erreur_inscription{
+    color:darkred;
+    margin:0;
+    font-size: 0.75em;
+}
+
+/* ==========================================================================
    Formulaire styles
    ========================================================================== */
 textarea,
@@ -558,7 +657,7 @@ input[type="color"],
 	border:0 none;
 	padding:6px;
 	height:21px;
-	color:#DDD;
+	-color:#DDD;
 	font-family:Helvetica, Arial, sans-serif;
 }
 button{
@@ -753,7 +852,8 @@ button{
 	margin-bottom:15px;
 }
 .connex fieldset label{
-	color:#111;
+	color:#000;
+        text-shadow: 0 0 20px #AAA;
 	float:left;
 	width:25px;
 	height:25px;

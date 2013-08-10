@@ -65,7 +65,7 @@ class User extends CI_Controller {
 //RECUPERER INFO USER SELECTIONNE
     public function profil(){
     $this->load->model('M_Date');
-        
+    
     //recuperer l'id de l'url (ID PROFIL)
         $id_segment = $this->uri->segment(3,0);
         if(!$id_segment){
@@ -81,7 +81,7 @@ class User extends CI_Controller {
         //var_dump($data['user_data']);
     //recuperation si message d'erreur
         $data['error']['upload'] = $this->session->flashdata('upload_error');
-    
+        $data['error']['tel'] = $this->session->flashdata('error_tel');
     //recuperation info du profil demandé -> db
         $data['info_membre'] = $this->M_User->getUserInfo('user_id',$id_segment);
         if(!$data['info_membre']){
@@ -93,10 +93,15 @@ class User extends CI_Controller {
             list($year, $month, $day) = preg_split('/[-]/', $date);
             $data['info_membre']->naissance = $day.'/'.$month.'/'.$year;
         
-    //APPEL FUNCTION age: convertir date naissance -> age
+        //APPEL FUNCTION age: convertir date naissance -> age
             $data['info_membre']->age = $this->M_Date->age($date);
             //var_dump($date);
         }
+    $data['info_membre']->telConvert = "???";
+    if($data['info_membre']->tel!= ""){
+        //APPEL FUNCTION formatFrenchPhoneNumber: convertir tel 0123 45 67 89(false) ou +32 (0)123 45 67 89(true) 
+        $data['info_membre']->telConvert = $this->M_Ajax->formatFrenchPhoneNumber($data['info_membre']->tel,true);
+    }
     //Si profil = user connecté
         if($id_segment == $user_id){
         //utiliser pour savoir si c le profil = profil user
@@ -136,7 +141,7 @@ class User extends CI_Controller {
         $data['ville_arrivee_lang'] = 'ville_arrivee_'.$data['lang'];
         $data['province_lang'] = "province_".$data['lang'];
         
-        //var_dump($data['annonces']);
+        //var_dump($data['error']);
         $data['page'] = lang('profil');
         $data['body'] = "profil";
         $dataLayout['vue'] = $this->load->view('profil',$data,true);
@@ -177,6 +182,19 @@ class User extends CI_Controller {
         if($this->input->post('colorPicker')){
             $data['couleur'] = $this->input->post('colorPicker');
         }
+        
+        if($this->input->post('input_tel')){
+            $phoneNumber = preg_replace('/[^0-9]+/', '', $this->input->post('input_tel'));
+            $lengthNumber = strlen($phoneNumber);
+            if($lengthNumber ==10){
+                $data['tel'] = $phoneNumber;
+            }
+            else{
+                $this->session->set_flashdata('error_tel', 'Veuillez fournir un numéro de portable valide !');
+                redirect('user/profil/'.$user_data->user_id);
+            }
+        }       
+        
         //var_dump($data);
         $this->M_User->modifier($data,$user_data->user_id);
         redirect('user/profil/'.$user_data->user_id);

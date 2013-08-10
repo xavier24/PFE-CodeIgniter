@@ -8,6 +8,8 @@
             $this->db->insert('users',array(
                                         'email'=>$data['email'],
                                         'password'=>$mdp,
+                                        'tel' => $data['tel'],
+                                        'confirm'=> $data['confirm'],
                                         'created_at'=>$data['registerDate'],
                                         'connected_at'=>$data['registerDate']
                                     ));

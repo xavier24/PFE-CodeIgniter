@@ -24,11 +24,14 @@ class inscription extends CI_Controller {
             $data['message']['error_exist'] = $this->session->flashdata('error_exist');
             $data['message']['error_mdp'] = $this->session->flashdata('error_mdp');
             $data['message']['error_mdp2'] = $this->session->flashdata('error_mdp2');
+            $data['message']['error_tel'] = $this->session->flashdata('error_tel');
             $data['message']['error_majeur'] = $this->session->flashdata('error_majeur');
+            $data['message']['error_facebook_register'] = $this->session->flashdata('error_facebook_register');
             //recuperer les données saisis pour les remettre		
             $data['donnee']['email'] = $this->session->flashdata('email');
             $data['donnee']['mdp'] = $this->session->flashdata('mdp');
             $data['donnee']['mdp2'] = $this->session->flashdata('mdp2');
+            $data['donnee']['tel'] = $this->session->flashdata('tel');
             $data['donnee']['majeur'] = $this->session->flashdata('majeur');
             $data['donnee']['condition'] = $this->session->flashdata('condition');
 
@@ -43,10 +46,12 @@ class inscription extends CI_Controller {
 		
         $this->load->library('form_validation');
         $this->load->model('M_Inscription');
+        $this->load->model('M_Email');
         //recuperer les données du formulaire
-        $data['email'] = $this->input->post('email');
-        $data['mdp'] = $this->input->post('mdp');
+        $data['email'] = $this->input->post('regist_email');
+        $data['mdp'] = $this->input->post('regist_mdp');
         $data['mdp2'] = $this->input->post('mdp2');
+        $data['tel'] = $this->input->post('tel');
         $data['majeur'] = $this->input->post('majeur');
         $data['condition'] = $this->input->post('condition');
         
@@ -55,9 +60,9 @@ class inscription extends CI_Controller {
         $data['registerDate'] = date("Y-m-d H:i:s");
         
         //verification
-        $this->form_validation->set_rules('email', 'Entrez votre adresse email', 'required|valid_email');
+        $this->form_validation->set_rules('regist_email', 'Entrez votre adresse email', 'required|valid_email');
         if ($this->form_validation->run() == FALSE){
-            $this->session->set_flashdata('error_email','Veuillez entrer une mail valide !');
+            $this->session->set_flashdata('error_email','Veuillez entrer un email valide !');
             $erreur = True;
         }        
         if($this->M_Inscription->verifier($data)){
@@ -77,16 +82,38 @@ class inscription extends CI_Controller {
             $this->session->set_flashdata('error_mdp2', 'Veuillez entrer le même mot de passe !');
             $erreur = True;
         }
-        if(!$data['majeur'] || !$data['condition']){
-            $this->session->set_flashdata('error_majeur', 'Veuillez accepter !');
+        
+        if($data['tel']){
+            $phoneNumber = preg_replace('/[^0-9]+/', '', $data['tel']);
+            //var_dump($phoneNumber);
+            $lengthNumber = strlen($phoneNumber);
+            if($lengthNumber ==10){
+                $data['tel'] = $phoneNumber;
+            }
+            else{
+                $erreur = True;
+                $this->session->set_flashdata('error_tel', 'Veuillez renseigner votre numéro de portable !'); 
+            }
+        }
+        else{
+            $erreur = True;
+            $this->session->set_flashdata('error_tel', 'Veuillez renseigner votre numéro de portable !');
+        }
+        
+        if(!$data['condition']){
+            $this->session->set_flashdata('error_majeur', 'Veuillez accepter les conditions d\'inscription !');
             $erreur = True;
         }
+        
+        $data['confirm'] = $this->M_Ajax->genererMDP(20);
+        
         //si un message erreur existe
         if($erreur){
             //mise en session des données du formulaire	
             $this->session->set_flashdata('email',$data['email']);
             $this->session->set_flashdata('mdp',$data['mdp']);
             $this->session->set_flashdata('mdp2',$data['mdp2']);
+            $this->session->set_flashdata('tel',$data['tel']);
             $this->session->set_flashdata('majeur',$data['majeur']);
             $this->session->set_flashdata('condition',$data['condition']);
             redirect('inscription');
@@ -98,26 +125,20 @@ class inscription extends CI_Controller {
             
             $this->M_Ajax->set_cookie_session_data('logged_in',$user_data);
             
-            var_dump($user_data);
-            //$this->confirmEmail();
+            $emailData['titre'] = "Email confirmation";
+            $emailData['type'] = "confirm";
+            $emailData['lien_confirm'] = $user_data->confirm;
+            if($user_data->username != ""){
+               $emailData['username'] = $user_data->username; 
+            }
+            $emailData['email'] = $user_data->email;
+            $emailData['id'] = $user_data->user_id;
+            
+            $this->M_Email->sendEmail($emailData);
             redirect('user/profil/'.$user_data->user_id);
         }
     }
     
-    public function confirmEmail(){
-        
-        $this->load->library('email');
-
-        $this->email->from('xavier24@hotmail.com', 'Your Name');
-        $this->email->to('xavier24@hotmail.com');
-
-        $this->email->subject('Email Test');
-        $this->email->message('Testing the email class.');
-
-        $this->email->send();
-
-        echo $this->email->print_debugger();
-    }
 }
 
 

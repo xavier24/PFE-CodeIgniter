@@ -43,6 +43,31 @@
             <div class="map visible-tablet">
                 <img src="http://maps.googleapis.com/maps/api/staticmap?&zoom=8&size=150x150&maptype=roadmap&markers=color:blue%7C<?php echo $info_membre->latitude.','.$info_membre->longitude ;?>&sensor=false"/>
             </div>
+            <div class="tel">
+                <?php if($user_connect){
+                    echo form_open('user/modifier',array('method'=>'post')); ?>
+                    <div class="edit_button clearfix">
+                        <p class="edit"><span class="edit_hidden"><?php echo lang('modifier') ?></span><span class="edit_hidden icon_modifier"></span><span class="annuler profil_modif"><?php echo lang('annuler') ?></span><span class="profil_modif icon_annuler"></span></p>
+                        <div class="modifier profil_modif">
+                            <?php echo form_button($data_submit) ?>
+                        </div>  
+                    </div>
+                    <label for="input_tel">N° de portable</label>
+                    <?php if($error['tel']){ ?>
+                        <p><?php echo $error['tel'] ?></p>
+                        <input type="tel" name="input_tel" id="input_tel" value="<?php echo $info_membre->tel ?>" name="tel" class="" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"/>
+                    <?php }
+                    else{ ?>
+                        <p class="edit_hidden"><?php echo $info_membre->telConvert ?></p>
+                        <input type="tel" name="input_tel" id="input_tel" value="<?php echo $info_membre->tel ?>" name="tel" class="profil_modif" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"/>
+                    <?php }
+                    echo form_close() ;
+                }
+                else{?>
+                     <p>N° de portable</p> 
+                     <p><?php echo $info_membre->telConvert ?></p>
+                <?php }?>
+            </div>
             <div class="delais_reponse">
                 <p>Taux de réponse : 98%</p>
                 <p>Délais moyen de réponse : 2jours</p>  
@@ -54,11 +79,11 @@
                     <?php if($user_connect){ ?>
                     <?php echo form_open('user/modifier',array('method'=>'post')); ?>
                         <div class="edit_button clearfix">
-                            <p class="edit"><span>Modifier</span><span class="icon_modifier"></span></p>
+                            <p class="edit"><span class="edit_hidden"><?php echo lang('modifier') ?></span><span class="edit_hidden icon_modifier"></span><span class="annuler profil_modif"><?php echo lang('annuler') ?></span><span class="profil_modif icon_annuler"></span></p>
                             <div class="modifier profil_modif">
                                 <?php echo form_button($data_submit) ?>
                             </div>  
-                        </div>    
+                        </div>
                         <h2 class="identite <?php echo $info_membre->sexe? 'rose': 'bleu' ?>">
                             <span class="edit_hidden <?php echo $info_membre->sexe? 'icon-female': 'icon-male' ?>"></span>
                             <label class="profil_modif bleu icon-male"><input type="radio" name="sexe" value="0" <?php if(!$info_membre->sexe){echo 'checked';}?> /></label>
@@ -220,7 +245,7 @@
                         <?php if($user_connect){ ?>
                         <?php echo form_open('user/modifier',array('method'=>'post','class'=>'clearfix')); ?>    
                             <div class="edit_button clearfix">
-                                <p class="edit"><span>Modifier</span><span class="icon_modifier"></span></p>
+                                <p class="edit"><span class="edit_hidden"><?php echo lang('modifier') ?></span><span class="edit_hidden icon_modifier"></span><span class="annuler profil_modif"><?php echo lang('annuler') ?></span><span class="profil_modif icon_annuler"></span></p>
                                 <div class="modifier profil_modif">
                                     <?php echo form_button($data_submit) ?>
                                 </div>  
@@ -313,7 +338,7 @@
                     <?php if($user_connect){ ?>
                         <?php echo form_open('user/modifier',array('method'=>'post','class'=>'clearfix')); ?>
                             <div class="edit_button clearfix">
-                                <p class="edit"><span>Modifier</span><span class="icon_modifier"></span></p>
+                                <p class="edit"><span class="edit_hidden"><?php echo lang('modifier') ?></span><span class="edit_hidden icon_modifier"></span><span class="annuler profil_modif"><?php echo lang('annuler') ?></span><span class="profil_modif icon_annuler"></span></p>
                                 <div class="modifier profil_modif">
                                     <?php echo form_button($data_submit) ?>
                                 </div>  
