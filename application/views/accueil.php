@@ -1,7 +1,7 @@
 <section class="content">
-    <div class="row-fluid ajouter_annonce">
-        <h1>Publier une annonce</h1>
-        <?php echo form_open('accueil/recherche',array('method'=>'post')); ?>
+    <div class="row-fluid accueil">
+        <h1><?php echo $titre ?></h1>
+        <?php echo form_open('accueil/recherche',array('method'=>'post', 'class'=>'clearfix')); ?>
         <?php if(isset($error)){
             echo'<div class="error"><p>Veuillez préciser '.$error.' du voyage</p></div>';
         }?>
@@ -20,64 +20,71 @@
                         </div>
                     </div> 
                 </div>
-            </div>
-            
-            <div class="clearfix row-fluid">
-                <div class="span6">
+                <div class="span3 offset1">
                     <h2>De</h2>
                     <div class="depart clearfix">
                         <label class="ico-depart"></label>
                         <div class="input">
                             <input type="text" class="champ" name="input_depart" id="input_depart" placeholder="ville de départ" <?php echo isset($donnee['depart']) ? 'value="'.$donnee['depart'].'"' : "" ; ?> />
                         </div>
+                        <?php if(isset($message['error_search']['departID'])){ ?>
+                        <p class="erreur">Veuillez spécifier la ville de depart</p>
+                        <?php } ?>
                         <input id="input_departID" name="input_departID" type="hidden" <?php echo isset($donnee['departID']) ? 'value="'.$donnee['departID'].'"' : "" ; ?> />
                         <input id="input_depart_lat" name="input_depart_lat" type="hidden" <?php echo isset($donnee['depart_lat']) ? 'value="'.$donnee['depart_lat'].'"' : "" ; ?> />
                         <input id="input_depart_lng" name="input_depart_lng" type="hidden" <?php echo isset($donnee['depart_lng']) ? 'value="'.$donnee['depart_lng'].'"' : "" ; ?> />
                     </div>
                 </div>
-                <div class="span6">
+                <div class="span4">
                     <h2>à</h2>
                     <div class="arrivee clearfix">
                         <label class="ico-arrivee"></label>
                         <div class="input">
                             <input type="text" class="champ" name="input_arrivee" id="input_arrivee" placeholder="ville d'arrivée" <?php echo isset($donnee['arrivee']) ? 'value="'.$donnee['arrivee'].'"' : "" ; ?>/>
                         </div>
+                        <?php if(isset($message['error_search']['arriveeID'])){ ?>
+                        <p class="erreur">Veuillez spécifier la ville d'arrivée</p>
+                        <?php } ?>
                         <input id="input_arriveeID" name="input_arriveeID" type="hidden" <?php echo isset($donnee['arriveeID']) ? 'value="'.$donnee['arriveeID'].'"' : "" ; ?> />
                         <input id="input_arrivee_lat" name="input_arrivee_lat" type="hidden" <?php echo isset($donnee['arrivee_lat']) ? 'value="'.$donnee['arrivee_lat'].'"' : "" ; ?> />
                         <input id="input_arrivee_lng" name="input_arrivee_lng" type="hidden" <?php echo isset($donnee['arrivee_lng']) ? 'value="'.$donnee['arrivee_lng'].'"' : "" ; ?> />
                     </div>
                 </div>
             </div>
-            <div class="row-fluid visible-desktop">
-                <div class="span3">
-                    <h2>Date</h2>
-                </div>
-                <div class="span3">
-                    <h2>Fléxibilité</h2>
-                </div>
-            </div>
-            <div class="row-fluid date_heure clearfix">
-                <div class="span6">
+            <div class="clearfix row-fluid">
+                
+                <div class="span4">
                     <div class="date clearfix">
-                        <h2 class="hidden-desktop">Date</h2>
-                        <label for="input_date"><span class="ico-date"></span></label>
-                        <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="champ" type="date" placeholder="JJ/MM/AAAA" />
-                    </div>
-                    <div class="flexibilite clearfix">
-                        <h2 class="hidden-desktop">Fléxibilité</h2>
-                        <label><span class="ico-flexible"></span></label>
-                        <div class="select_flexible">
-                            <span>+/-</span>
-                            <select name="input_flexibilite">
-                                <?php for($i=0;$i<15;$i++){
-                                    echo'<option>'.$i.'</option>';
-                                } ?>
-                            </select>
-                            <span>jour(s)</span>
+                        <h2 class=>Date</h2>
+                        <label for="input_date" class="ico-date"></label>
+                        <div class="input">
+                            <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="champ" type="date" placeholder="JJ/MM/AAAA" />
                         </div>
                     </div>
                 </div>
-                <div class="span6">
+                <div class="span4">
+                    <div class="clearfix">
+                        <div class="flexibilite clearfix">
+                            <h2>Fléxibilité</h2>
+                            <div class="select_flexible">
+                                <span>+/- </span>
+                                <select name="input_flexibilite">
+                                    <?php for($i=0;$i<15;$i++){
+                                        if($donnee['flexibilite']==$i){
+                                            echo'<option value="'.$i.'" selected="selected">'.$i.'</option>';
+                                        }
+                                        else{
+                                           echo'<option value="'.$i.'">'.$i.'</option>'; 
+                                        }
+                                        
+                                    } ?>
+                                </select>
+                                <span> jours</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
                     <div class="clearfix">
                         <div class="btn clearfix btn_check">
                             <label class="bouton_contour bouton_gris" for="input_retour">
@@ -102,19 +109,70 @@
             </div>
         </div>
 	<div id="rechercher" class="btn clearfix">
-            <div class="bouton_contour bouton_gris">
-                <button type="submit" value="true" class="button gris">
+            <div class="bouton_contour bouton_orange">
+                <button type="submit" value="true" class="button orange">
                     Rechercher
                 </button>
             </div>
         </div>
         <?php echo form_close(); ?>
         <div class="row-fluid clearfix">
-            
+            <div id="map"></div>
+        </div>
+        <div class="row-fluid clearfix">
+            <div class="span8 clearfix">
+                <h3>Les prochains départs</h3>                
+                <?php if($annonces){
+                foreach($annonces as $annonce): ?>
+                    <div id="annonce_<?php echo $annonce->id ?>"class="accueil_annonce clearfix <?php echo $annonce->parite ? "paire" : "impaire" ?>">
+                        <div class="photo" >
+                            <img src="<?php echo base_url().'web/images/membre/thumb/thumb_'; echo $annonce->photo ? $annonce->photo : 'default.jpg' ?>"/>                            
+                        </div>
+                        <div class="detail">
+                            <p class="destination">
+                                <a class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
+                                    <span class="ville"><?php echo $annonce->$ville_depart_lang ? $annonce->$ville_depart_lang : $annonce->ville_depart_fr ?></span>
+                                    <span class="icon-right-thin"></span>
+                                    <span class="ville"><?php echo $annonce->$ville_arrivee_lang ? $annonce->$ville_arrivee_lang : $annonce->ville_arrivee_fr ?></span>
+                                </a>
+                            </p>
+                            <p class="horaire">
+                                <span class="annonce_date"><?php echo $annonce->date ?></span>
+                                 à 
+                                <span class="annonce_heure"><?php echo $annonce->heure ?></span>
+                            </p>
+                        </div>
+                        <div class="prix tooltip" title="Trouvez les trajets au meilleur prix.">
+                            <p class="<?php echo $annonce->bestprice ? "orange" : "vert" ?>"><?php echo $annonce->prix ?>€</p>
+                        </div>
+                    </div>
+                <?php endforeach; 
+                }?>
+                
+            </div>
+            <div class="span3 offset1"><?php include('include/facebook.php'); ?></div>
+        </div>
+        <div class="pub">
+            <img src="<?php echo base_url() ?>web/images/pub/pub_1.jpg" />
         </div>
     </div>
     <script type="text/javascript">
         $(function(){
+            $(".tooltip").tooltip({
+                position: {
+                    my: "center bottom+75",
+                    at: "center top",
+                    using: function( position, feedback ) {
+                        $( this ).css( position );
+                        $( "<div>" )
+                        .addClass( "arrow" )
+                        .addClass( feedback.vertical )
+                        .addClass( feedback.horizontal )
+                        .appendTo( this );
+                    }
+                }
+            });
+            
             $( "#slider_conducteur" ).slider({
                     value:$( "#input_conducteur" ).val(),
                     min: 0,
@@ -174,7 +232,19 @@
                                                 $('#input_arrivee_lng').val(ui.item.lng);
                                         }
             });
+            
+            $("#map").googleMap();
+            <?php if($annonces){
+                foreach($annonces as $annonce): ?>
+                    $("#map").addMarker({
+                        coords: [<?php echo $annonce->d_lat ?>, <?php echo $annonce->d_lng ?>], // Coordonnées GPS du point
+                        //icon: 'http://www.tiloweb.com/logo.png',
+                        url: '#annonce_<?php echo $annonce->id ?>',
+                        title: "<?php echo $annonce->$ville_depart_lang ?> - <?php echo $annonce->$ville_arrivee_lang ?>", // Titre du point
+                        //text: "<?php echo $annonce->date ?> à <?php echo $annonce->heure ?>"
+                    });
+            <?php endforeach; 
+            }?>  
         });
     </script>
 </section>
-<?php include('include/facebook.php'); ?>

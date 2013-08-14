@@ -1982,8 +1982,9 @@ textarea.profil_modif{
     -moz-box-shadow: 1px 1px 3px #999999;
     -webkit-box-shadow: 1px 1px 3px #999999;
     box-shadow: 1px 1px 3px #999999;
-    overflow: hidden;
+    overflow: auto;
     border:1px solid #5c676b;
+    font-size: 0.875em;
 }
 .mes_annonces table{
     width:100%;
@@ -2020,27 +2021,60 @@ textarea.profil_modif{
 .mes_annonces table th:last-child span{
     border-right: 0 none;
 }
-.mes_annonces table tbody td span{
+.mes_annonces table tbody td{
+   border-bottom: 1px solid #666;
+}
+.mes_annonces table tbody td>span{
     display: block;
     padding:8px 10px;
     border-top: 1px solid #fff;
-    border-bottom: 1px solid #666;
 }
-.mes_annonces table .paire span{
+.mes_annonces table .paire td{
     background:#E0DFD9;
 }
 .mes_annonces table tbody tr:first-child span{
     border-top: 0 none;
 }
-.mes_annonces table tbody tr:last-child span{
+.mes_annonces table tbody tr:last-child td{
     border-bottom: 0 none;
 }
 .mes_annonces table tbody td:first-child + td{
     font-weight: bold;
     color:#555;
 }
-.mes_annonces table tbody tr:hover span{
+.mes_annonces table tbody tr:hover td{
     background:#ffeebb;
+}
+.modifier_annonce{
+    background: url('../images/elements.png') repeat scroll -270px -153px #555;
+    border-radius: 5px 5px 5px 5px;
+    height: 29px;
+    margin-right: 1px;
+    margin-top: 2px;
+    width: 29px;
+    text-indent: 100px;
+    overflow: hidden;
+    line-height: 29px;
+    display: block;
+}
+.supprimer_annonce {
+    background: url('../images/elements.png') repeat scroll -316px -153px #555;
+    border-radius: 5px 5px 5px 5px;
+    height: 29px;
+    margin-right: 1px;
+    margin-top: 2px;
+    width: 29px;
+    text-indent: 100px;
+    overflow: hidden;
+    line-height: 29px;
+    display: block;
+    cursor: pointer;
+}
+.modifier_annonce:hover {
+    background: url('../images/elements.png') repeat scroll -270px -153px #333;
+}
+.supprimer_annonce:hover {
+    background: url('../images/elements.png') repeat scroll -316px -153px #333;
 }
 #overlay{
     background: rgba(0,0,0,0.5);
@@ -2054,7 +2088,7 @@ textarea.profil_modif{
 }
 #confirm_delete{
    display: none;
-   position: absolute;
+   position: fixed;
    top:50%;
    left:50%;
    margin-top: -50px;
@@ -2066,6 +2100,15 @@ textarea.profil_modif{
    -webkit-border-radius: 5px;
    border-radius: 5px;
    z-index: 101;
+}
+#cancel_delete_annonce, #delete_annonce{
+    margin-top:10px;
+}
+#cancel_delete_annonce{
+    float:left;
+}
+#delete_annonce{
+    float:right;
 }
 /* ==========================================================================
    Footer styles
@@ -2328,7 +2371,7 @@ div.colorPicker-swatch {
         z-index:1;
         position:fixed;
         top:50px;
-        right:-75%;
+        right:-170px;
         width:170px;
         padding:0;
         margin-right:60px;
@@ -2354,6 +2397,14 @@ div.colorPicker-swatch {
         -webkit-border-radius:0;
         border-radius:0;
     }
+    .choix_conducteur>div>div{
+        float: left !important;
+        width: 33% !important;
+    }
+    #confirm_delete{
+        left:0;
+        margin-left: 0;
+     }
 }     
    
    

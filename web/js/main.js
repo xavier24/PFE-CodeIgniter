@@ -16,8 +16,9 @@
             $new_inputEtape,
             $count_inputEtape,
             $moreStep,
-            $input_confort;
-            
+            $input_confort,
+            $delete_annonce,
+            $cancel_delete_annonce;
 	// --- methods
     //INITIALISE SELON PAGE
         
@@ -37,16 +38,23 @@
                 initialise(connect);
                 }
             });
-        }
+        };
         
         var initialise = function(connect){
             
+            if($("body").hasClass('accueil')){ //ACCUEIL
+                //recuperer valeur slide conducteur pour ajouter la class
+                sliderConducteur();
+            }
+            if($("body").hasClass('resultat')){ //RESULTAT
+                //recuperer valeur slide conducteur pour ajouter la class
+                sliderConducteur();
+            }
             if($("body").hasClass('ajouter_annonce')){ //AJOUTER ANNONCE
                 
                 //recuperer valeur slide conducteur pour ajouter la class
                 if(connect){
-                    var $value = $( "#input_conducteur" ).val();
-                    $(".choix_conducteur"+$value).addClass('select');
+                    sliderConducteur();
                 }
                 else{
                     $('.nav_compte').find('.slideBlock').slideToggle();
@@ -54,14 +62,14 @@
                 }
                 
             }
-        }
+        };
         
         
     //MENU    
 	var loginForm = function(){ //slide connexion menu (portable)
             $(this).parent().next().children('.slideBlock').slideToggle();
             $(this).parent().parent().toggleClass('ouvert');
-        }//loginForm
+        };//loginForm
     
     //CHANGER LANGUE
         var changeLang = function(e){
@@ -74,8 +82,14 @@
                         location.reload();
                     }
             });
-        }//changeLang
-        
+        };//changeLang
+    
+    //INITIALISE SLIDER CHOIX CONDUCTEUR
+        var sliderConducteur = function(){
+            var $value = $( "#input_conducteur" ).val();
+            $(".choix_conducteur"+$value).addClass('select');
+        };//sliderConducteur
+
     //PROFIL   
         var editProfil = function(){ //editer profil
             $(this).parent().parent().find('.profil_modif').toggle();
@@ -136,7 +150,7 @@
                 $(this).find('.input_duree').attr('name','input_duree_'+i);
                 i++;
             });
-        }//countStep
+        };//countStep
         
         var btnCheck = function($this,$check){ //bouton checkbox annonce
             if($this.next().is(':checked') && !$check){
@@ -159,6 +173,18 @@
             
         };//btnCheck
         
+        var deleteAnnonce = function(){
+            var $id = $(this).parent().parent().find('.id_annonce input').val();
+            $("#input_id_annonce").val($id);
+            $("#overlay").show();
+            $("#confirm_delete").show();
+        };//deleteAnnonce
+        
+        var cancelDeleteAnnonce = function(){
+            $("#overlay").hide();
+            $("#confirm_delete").hide();
+        };//cancelDeleteAnnonce
+        
         $( function () {
 
             // --- onload routines
@@ -171,6 +197,8 @@
                 $etapes = $(".etapes");
                 $inputEtape = $etapes.find('.etape').first().clone();
                 $moreStep = $("#more_step");
+                $delete_annonce = $(".supprimer_annonce");
+                $cancel_delete_annonce = $("#cancel_delete_annonce");
                 
             // --- events
                 $slideCompte.on('click',loginForm);
@@ -181,6 +209,12 @@
                 $autreLang.on('click',autreLangTextearea);
                 $input_confort.select(function(){modifConfort()});
                 $(document).on('click',".min_step",removeStep);
+                $delete_annonce.on('click',deleteAnnonce);
+                $cancel_delete_annonce.on('click',cancelDeleteAnnonce);
+                
+                
+            // --- execute
+                controlSession();
                 
                 if($("#input_retour").is(':checked')){
                    btnCheck($("#input_retour").prev(),"isCheck");
@@ -192,10 +226,6 @@
                     btnCheck($(this))
                 });
                 
-                
-            // --- execute
-                //initialise();
-                controlSession();
                 if($autreLang){
                     autreLangTextearea();
                 }
