@@ -1,4 +1,4 @@
-<nav>
+<nav id="menu">
     <ul>
         <li class="current">
             <a href="<?php echo base_url(); ?>">

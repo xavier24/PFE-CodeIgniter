@@ -260,6 +260,8 @@ $(function() {
             direction.route(request, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     way.setDirections(response);
+                    
+                    
                     var route = response.routes[0];
                     var distance = 0,
                         time_taken = 0,
@@ -273,11 +275,17 @@ $(function() {
                     var heures= Math.floor(time_taken / 3600);
                     var minutes= Math.round((time_taken /60) % 60);
                     var time =heures+" heure "+minutes+" minutes";
-                    var coordString = JSON.stringify(route.overview_path);
+                    //var coordString = JSON.stringify(route.overview_path);
+                    var coordString = [];
                     var etapesString = JSON.stringify(params.waypoints);
-                    //var heure_depart = $("#input_heure_depart").val();
+                    for(var i=0;i<route.overview_path.length;i++){
+                        var $lat = route.overview_path[i].lat();
+                        var $lng = route.overview_path[i].lng();
+                        coordString.push({lat:$lat,lng:$lng});
+                    }
                     
-                    $("#input_coord").val(coordString);
+                    //var heure_depart = $("#input_heure_depart").val();
+                    $("#input_coord").val(JSON.stringify(coordString));
                     $("#distance").text(distance);
                     $("#input_distance").val(calc_distance);
                     $("#duree").text(time);

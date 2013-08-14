@@ -14,8 +14,10 @@
                     echo form_password($mdpInput);
                     echo '<input id="current_url" name="current_url" type="hidden" value="'.current_url().'"/>';
                 echo form_fieldset_close();
-                if($message['error_login']!=""){
-                    echo '<p class="erreur_inscription">'.$message['error_login'].'</p>';
+                if(isset($message['error_login'])){
+                    if($message['error_login']!=""){
+                        echo '<p class="erreur_inscription">'.$message['error_login'].'</p>';
+                    }
                 }                
                 echo '<div class="souvenir_moi">';
                     $input_souvenir = array('name'=>'souvenir', 'id'=>'souvenir', 'value'=>true);
@@ -42,12 +44,17 @@
 }
 
 // <!-- CONNECTE -->
-else{
-    echo '<div class="connex">
-            <div class="slideBlock">
-                <p>Bonjour '.$user_data->username.'</p>
-                <p>demande(s) en attente</p>
-                <p>trajet(s) vous interesse(ent)</p>
-            </div>
-          </div>';
-} ?>
+else{?>
+    <div class="connex">
+        <div class="slideBlock clearfix">
+            <ul class="user_menu clearfix">
+                <li><a href="<?php echo base_url() ?>message/">Messages</a></li>
+                <li><a href="<?php echo base_url().'annonce/mes_annonces/' ?>">Mes annonces</a></li>
+                <li><a href="#">Demandes reçues</a></li>
+                <li><a href="#">Mes reservations</a></li>
+                <li><a href="#">Paramètres</a></li>
+            </ul>
+            
+        </div>
+    </div>
+<?php } ?>

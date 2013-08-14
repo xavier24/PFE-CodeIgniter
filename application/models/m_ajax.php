@@ -2,11 +2,13 @@
 
 class M_ajax extends CI_Model{
     
-        public function lister(){
+        public function lister($id = false){
             $this->db->select('*');
             $this->db->from('villes');
             $this->db->where('id !=','1');
-
+            if($id){
+                $this->db->where('id',$id);  
+            }
             $query = $this->db->get();
             $villes = $query->result();
 

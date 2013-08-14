@@ -38,7 +38,15 @@ class M_Date extends CI_Model {
     }
 //Convertir une date US vers une date en français affichant le jour de la semaine
     public function dateLongue($date,$annee = 'yes',$heure = 'yes'){ //donner 1987-08-17,si afficher année, si afficher heure => retourne le 17 aout,1987,l'heure
+        $today = date("Y-m-d");
+        $tomorrow = date("Y-m-d",mktime(0,0,0,date("m"),date("d")+1,date("Y")));
         
+        if($date == $today ){
+            return "Aujourd'hui";
+        }
+        if($date == $tomorrow){
+            return "Demain";
+        }
         // Configure le script en français
         if($this->session->userdata('lang') == "en"){
             setlocale (LC_TIME, 'en_EN');

@@ -62,9 +62,9 @@
         <div class="wrapper">
             <header class="clearfix">
                 <?php include('include/banner.php');?>
-                <?php include('include/menu.php');?>
+                <?php include('include/lang.php');?>
             </header>
-                                    
+            <?php include('include/menu.php');?>                       
             <?php echo $vue ?>
             <div class="push"></div>
         </div>   
