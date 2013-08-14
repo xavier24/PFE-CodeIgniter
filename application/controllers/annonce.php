@@ -6,6 +6,7 @@ class Annonce extends CI_Controller {
             parent::__construct();
             $this->load->model('M_Annonce');
             $this->load->model('M_Ajax');
+            $this->load->model('M_Date');
             
             if( $this->session->userdata('lang') ){
                 $this->lang->is_loaded = array();
@@ -14,7 +15,7 @@ class Annonce extends CI_Controller {
             }
         }
         
-        public function lister(){
+        public function lister_non(){
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
             
             $dataList['page'] = 'Accueil';
@@ -46,8 +47,55 @@ class Annonce extends CI_Controller {
             $this->load->view('layout',$data);
         }
         
+        public function mes_annonces(){
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
+            
+            if(!$dataList['user_data']){
+                redirect('accueil');
+            }
+            
+            $dataList['annonces'] = $this->M_Annonce->lister($dataList['user_data']->user_id);
+            
+            for($i=0;$i<count($dataList['annonces']);$i++){
+                $numero = $i%2;
+                if ($numero == 0){
+	            $dataList['annonces'][$i]->parite = 0;
+	        } else {
+	            $dataList['annonces'][$i]->parite = 1;
+                }
+                $dataList['annonces'][$i]->date = $this->M_Date->dateLongue($dataList['annonces'][$i]->date,false,false);
+            }
+            
+            
+            //var_dump($dataList['annonces']);
+            if($this->session->userdata('lang')){ 
+                $dataList['lang'] = $this->session->userdata('lang');
+            }
+            else{
+                $dataList['lang'] = 'fr';
+            }
+            $dataList['d_lang'] = "d_".$dataList['lang'];
+            $dataList['a_lang'] = "a_".$dataList['lang'];
+            $dataList['ville_lang'] = "ville_".$dataList['lang'];
+            $dataList['province_lang'] = "province_".$dataList['lang'];
+            //var_dump($dataList);
+            $dataList['body'] = "mes_annonces";
+            $dataList['titre'] = "Mes annonces";
+            
+            $dataLayout['vue'] = $this->load->view('mes_annonces',$dataList,true);
+            $this->load->view('layout',$dataLayout);
+        }
+        
+        public function delete(){
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
+            if($dataList['user_data']){
+                $id = $this->input->post('input_id_annonce');
+                $this->M_Annonce->delete($id,$dataList['user_data']->user_id);
+            }
+            redirect('annonce/mes_annonces');
+        }
+        
         public function fiche(){
-            $this->load->model('M_Date');
             
             $idAnnonce = $this->uri->segment(3);
         //user_data    
@@ -326,53 +374,106 @@ class Annonce extends CI_Controller {
                 
                 
             //Recuperation donnée
-                if(isset($error)){
+
+
+            //infos a recup pour rechargement
+                $champRecup = array('depart','depart_lat','depart_lng','arrivee','arrivee_lat','arrivee_lng','carbu');
+
+                for($i=0;$i<count($champRecup);$i++){
+                    if($this->input->post('input_'.$champRecup[$i]) != ""){
+                        $dataRecup[$champRecup[$i]] = $this->input->post('input_'.$champRecup[$i]);
+                    }
+                }
+
+            //copie des infos deja recuperer   
+                $champDonnee = array(
+                    'conducteur',
+                    'departID',
+                    'description_depart',
+                    'arriveeID',
+                    'description_arrivee',
+                    'flexibilite',
+                    'heure',
+                    'heure_retour',
+                    'places',
+                    'retour',
+                    'regulier',
+                    'calendar',
+                    'commentaire',
+                    'prix_conseil',
+                    'prix'
+
+                );
+
+                for($i=0;$i<count($champDonnee);$i++){
+                    if(isset($data[$champDonnee[$i]])){
+                        $dataRecup[$champDonnee[$i]] = $data[$champDonnee[$i]];
+                    }
+                }
+
+                $dataRecup['etapes'] = $recupEtapes;
+                //var_dump($data);
+                //var_dump($dataRecup);
                 
-                //infos a recup pour rechargement
-                    $champRecup = array('depart','depart_lat','depart_lng','arrivee','arrivee_lat','arrivee_lng','carbu');
-
-                    for($i=0;$i<count($champRecup);$i++){
-                        if($this->input->post('input_'.$champRecup[$i]) != ""){
-                            $dataRecup[$champRecup[$i]] = $this->input->post('input_'.$champRecup[$i]);
-                        }
-                    }
-                    
-                //copie des infos deja recuperer   
-                    $champDonnee = array(
-                        'conducteur',
-                        'departID',
-                        'description_depart',
-                        'arriveeID',
-                        'description_arrivee',
-                        'flexibilite',
-                        'heure',
-                        'heure_retour',
-                        'places',
-                        'retour',
-                        'regulier',
-                        'calendar',
-                        'commentaire',
-                        'prix_conseil',
-                        'prix'
-                        
-                    );
-
-                    for($i=0;$i<count($champDonnee);$i++){
-                        if(isset($data[$champDonnee[$i]])){
-                            $dataRecup[$champDonnee[$i]] = $data[$champDonnee[$i]];
-                        }
-                    }
-
-                    $dataRecup['etapes'] = $recupEtapes;
-                    var_dump($data);
-                    var_dump($dataRecup);
+                if(isset($error)){
                     var_dump($data_error);
                     $this->session->set_userdata('dataRecup',$dataRecup);
                     $this->session->set_userdata('dataError',$data_error);
-                    //redirect('annonce/ajouter');
+                    redirect('annonce/ajouter');
                 }
                 else {
-                    $this->M_Annonce->ajouter($data,$dataCoord,$etapes);
+                    $id = $this->M_Annonce->ajouter($data,$dataCoord,$etapes);
+                    $this->correspondance($data,$dataRecup,$id);
+                    redirect('annonce/fiche/'.$id);
                 }
+            }
+            
+            public function correspondance($data,$dataRecup,$id){
+                $this->load->helper('date');
+                $this->load->model('M_Email');
+                $today = date("Y-m-d");
+                
+                //var_dump($data);
+                //var_dump($dataRecup);
+                
+                $req['user_id'] = $data['user_id'];
+                $req['depart_lat'] = $dataRecup['depart_lat'];
+                $req['depart_lng'] = $dataRecup['depart_lng'];
+                $req['arrivee_lat'] = $dataRecup['arrivee_lat'];
+                $req['arrivee_lng'] = $dataRecup['arrivee_lng'];
+                $req['date'] = $data['date'];
+                $req['regulier'] = $data['regulier'];
+                
+                if($dataRecup['date']){
+                    $flex = 7;
+                    $date = str_replace("/", "-", $req['date']);
+                    $time_date = strtotime($date);
+                    $date_min = date("d-m-Y",$time_date-($flex*24*3600));
+                    $date_max = date("d-m-Y",$time_date+($flex*24*3600));
+
+                    $date_min = explode("-", $date_min);
+                    $date_max = explode("-", $date_max);
+
+                    $req['date_min'] = $date_min[2].'-'.$date_min[1].'-'.$date_min[0];
+                    $req['date_max'] = $date_max[2].'-'.$date_max[1].'-'.$date_max[0];
+                }
+                //var_dump($req);
+                
+                $annonces = $this->M_Annonce->correspondance($req,$today);
+                
+                $table_annonce = array();
+                foreach ($annonces as $annonce){
+                    $annonce->correspondance = $id;
+                    $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no');
+                    if(!isset($table_annonce[$annonce->email])){
+                        $table_annonce[$annonce->email]=array();
+                    }
+                    array_push($table_annonce[$annonce->email],$annonce);
+                }
+                
+                $this->M_Email->CorrespondanceEmail($table_annonce);
+                
+                //var_dump($annonces);
+                //var_dump($table_annonce);
             }
 }

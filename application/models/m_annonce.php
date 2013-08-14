@@ -3,51 +3,16 @@
 class M_Annonce extends CI_Model{
     
 
-        public function lister($recherche){
-            /*$this->db->select('*');
-            $this->db->from('annonces');
-            $this->db->join('users','users.user_id = annonces.user_id');
-            $this->db->join('users','users.user_id = annonces.user_id');
-            $this->db->where('departID',$recherche['depart']);
-            // $this->db->where('places >',$recherche['places']-1);
-            // $this->db->or_where('arriveeID',$recherche['arrivee']);
-            
-            $this->db->order_by('date','asc');
-            $this->db->order_by('depart','asc');
-            */
-            $this->db->select('annonces.*, users.*,
-                depart.id AS d_ID, depart.fr AS d_fr, depart.nl AS d_nl, 
-                depart.code_postal AS d_code_postal, depart.provinceID AS d_provinceID,
-                depart.latitude AS d_lat, depart.longitude AS d_lng,			
-                arrivee.id AS a_ID, arrivee.fr AS a_fr, arrivee.nl AS a_nl, 
-                arrivee.code_postal AS a_code_postal, arrivee.provinceID AS a_provinceID,
-                arrivee.latitude AS a_lat, arrivee.longitude AS a_lng');
+        public function lister($idUser){
+            $this->db->select('annonces.*, depart.fr AS ville_depart_fr, depart.nl AS ville_depart_nl, arrivee.fr AS ville_arrivee_fr, , arrivee.nl AS ville_arrivee_nl');
             $this->db->from('annonces');
             $this->db->join('villes AS depart','depart.id = annonces.departID');
             $this->db->join('villes AS arrivee','arrivee.id = annonces.arriveeID');
-            $this->db->join('users','users.user_id = annonces.user_id');
-            $this->db->where('depart.id',$recherche['depart']);
-            /*
-            SELECT annonces.*, 
-            depart.id AS d_ID, depart.fr_FR AS d_fr_FR, depart.nl_NL AS d_nl_NL, 
-            depart.code_postal AS d_code_postal, depart.province AS d_province,
-            depart.latitude AS d_lat, depart.longitude AS d_lng,
-
-            arrivee.id AS a_ID, arrivee.fr_FR AS a_fr_FR, arrivee.nl_NL AS a_nl_NL, 
-            arrivee.code_postal AS a_code_postal, arrivee.province AS a_province,
-            arrivee.latitude AS a_lat, arrivee.longitude AS a_lng
-
-            FROM annonces
-            INNER JOIN villes AS depart
-            ON annonces.departID = depart.id
-            INNER JOIN villes AS arrivee
-            ON annonces.arriveeID = arrivee.id
-            */
+            $this->db->where('annonces.user_id',$idUser);
+            $this->db->order_by('annonces.date');
             
             $query = $this->db->get();
-            $nombre = $this->db->count_all_results();
-            $resultat = $query->result();
-            return $resultat;
+            return $query->result(); 
         }
     //recupere les infos de l'utilisateur connecté/selectionné
         public function getUserInfo($champ,$data){
@@ -98,8 +63,8 @@ class M_Annonce extends CI_Model{
                 for($i=0;$i<count($dataCoord);$i+=2){
                     $coord[$i] = array(
                         'annonceID' => $id,
-                        'lat' => $dataCoord[$i]->jb, 
-                        'lng' => $dataCoord[$i]->kb
+                        'lat' => $dataCoord[$i]->lat, 
+                        'lng' => $dataCoord[$i]->lng
                     );
                 }
                 $this->db->insert_batch('parcours',$coord);
@@ -111,7 +76,55 @@ class M_Annonce extends CI_Model{
                 $this->db->insert_batch('etapes',$etapes);
             }
             
-            redirect('annonce/fiche/'.$id);
+            //
+            return $id;
         }
-    
+        
+        public function delete($id,$user_id){
+            $this->db->where('id', $id);
+            $this->db->where('user_id',$user_id);
+            $this->db->delete('annonces'); 
+        }
+        
+        public function correspondance($req,$today){
+            
+            $rayon = 25;
+            $d_latitude = $req['depart_lat'];
+            $d_longitude = $req['depart_lng'];
+            $a_latitude = $req['arrivee_lat'];
+            $a_longitude = $req['arrivee_lng'];
+            
+            $formule_depart = '6366*acos(cos(radians('.$d_latitude.'))*cos(radians(parcours.lat))*cos(radians(parcours.lng) -radians('.$d_longitude.'))+sin(radians('.$d_latitude.'))*sin(radians(parcours.lat)))';
+            $formule_arrivee = '6366*acos(cos(radians('.$a_latitude.'))*cos(radians(parcours.lat))*cos(radians(parcours.lng) -radians('.$a_longitude.'))+sin(radians('.$a_latitude.'))*sin(radians(parcours.lat)))';
+            $where_depart = 'annonces.id IN (SELECT DISTINCT parcours.annonceID FROM parcours WHERE '.$formule_depart.'<='.$rayon.')';
+            $where_arrivee = 'annonces.id IN (SELECT DISTINCT parcours.annonceID FROM parcours WHERE '.$formule_arrivee.'<='.$rayon.')';
+            
+            $this->db->select('annonces.id,annonces.date,annonces.heure,users.user_id,users.username,users.email,
+                depart.id AS d_ID, depart.fr AS d_fr, depart.nl AS d_nl, 
+                depart.code_postal AS d_code_postal, depart.provinceID AS d_provinceID,
+                depart.latitude AS d_lat, depart.longitude AS d_lng,			
+                arrivee.id AS a_ID, arrivee.fr AS a_fr, arrivee.nl AS a_nl, 
+                arrivee.code_postal AS a_code_postal, arrivee.provinceID AS a_provinceID,
+                arrivee.latitude AS a_lat, arrivee.longitude AS a_lng');
+            $this->db->from('annonces');
+            $this->db->join('villes AS depart','depart.id = annonces.departID');
+            $this->db->join('villes AS arrivee','arrivee.id = annonces.arriveeID');
+            $this->db->join('users','users.user_id = annonces.user_id');
+            $this->db->where('annonces.date >=',$today);
+            $this->db->where($where_depart);
+            $this->db->where($where_arrivee);
+            $this->db->where('users.user_id !=',$req['user_id']);
+            if($req['regulier']){
+                $this->db->where('annonces.regulier',1);
+            }
+            else{
+                $this->db->where('annonces.date BETWEEN "'.$req['date_min'].'" AND "'.$req['date_max'].'"');
+            }
+            
+            $this->db->order_by('annonces.date');
+            
+            $query = $this->db->get();
+            return $query->result();
+            
+        }
 }
