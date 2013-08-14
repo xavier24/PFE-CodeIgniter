@@ -7,6 +7,17 @@
                 </span>
             </div>
         </div>
+        <div class="partager">
+            <a href="#" 
+                onclick="window.open(
+                    'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 
+                    'facebook-share-dialog', 
+                    'width=626,height=436'); 
+                return false;">
+                Partager sur Facebook
+            </a>
+            <div class="fb-like" data-href="<?php echo current_url() ?>" data-width="450" data-layout="button_count" data-show-faces="false" data-send="true"></div>
+        </div>
         <div class="row-fluid">
             <div class="span8">
                 <h2 class="bleu"><?php echo isset($annonce->$d_lang)? $annonce->$d_lang : $annonce->d_fr ?> - <?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?><span><?php echo $annonce->date." ".$annonce->heure ?></span></h2>
