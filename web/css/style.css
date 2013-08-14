@@ -49,6 +49,12 @@ hr {
  */
 img {
     vertical-align: middle;
+    width: auto\9;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    border: 0;
+    -ms-interpolation-mode: bicubic;
 }
 /*
  * Remove default fieldset styles.
@@ -260,6 +266,7 @@ body{
 	font-family:Helvetica, Arial, sans-serif;
 	font-size:16px;
         color:#333;
+        min-height: 100%;
 }
 .wrapper {
 	min-height: 100%;
@@ -267,22 +274,20 @@ body{
 	height: 100%;
 	margin: 0 auto -300px; /* the bottom margin is the negative value of the footer's height */
 	max-width:1200px;
-	background:#efefef;
-	-moz-box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
-	-webkit-box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
-	box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
+	
 }
 .content{
 	padding:70px 5% 40px;
+        background:#efefef;
+	-moz-box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
+	-webkit-box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
+	box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
 }
 .footer, .push {
 	height: 299px; /* .push must be the same height as .footer */
 	margin: 0 auto;
 	max-width:1180px;
 	padding:0 10px;
-}
-header{
-    padding-top:20px;
 }
 h1{
    font-size:1.75em; 
@@ -310,8 +315,16 @@ a:hover, a:active, a:focus{
 .orange{
     color:darkorange;
 }
+.vert{
+    color:#8EAA1B;
+}
 .gris{
     color:#666;
+}
+.erreur_inscription, .erreur{
+    color:darkred;
+    margin:0;
+    font-size: 0.75em;
 }
 .ui-autocomplete{
     max-height: 250px;
@@ -329,6 +342,49 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 }
 .clear{
     clear: both;
+}
+.pub{
+    margin-top: 20px;
+}
+.pub img{
+    width: 100%;
+    height: auto;
+}
+/* ==========================================================================
+   Header styles
+   ========================================================================== */
+header{
+    padding-top:20px;
+    position:relative;
+}
+header h1{
+    background: url('../images/logo.png') no-repeat 0 0 scroll transparent;
+    height: 104px;
+    width:374px;
+    text-indent: 400px;
+    overflow: hidden;
+    line-height: 104px;
+    position: absolute;
+    top:35px;
+}
+.lang{
+    position:absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.lang #fr, .lang #nl{
+    background: url('../images/elements.png') no-repeat -248px -48px scroll transparent;
+    width: 34px;
+    height: 30px;
+    display:block;
+    text-indent: 40px;
+    overflow:hidden;
+    line-height: 30px;
+    float:left;
+}
+.lang #nl{
+    background-position: -288px -48px ;
+    margin-left: 10px;
 }
 /* ==========================================================================
    Nav styles
@@ -373,7 +429,7 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
         width:45px;
         height:49px;
 }
-nav{
+#menu{
 	background: #666666; /* Old browsers */
 	background: -moz-linear-gradient(top,  #666666 0%, #404040 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#666666), color-stop(100%,#404040)); /* Chrome,Safari4+ */
@@ -386,8 +442,11 @@ nav{
 	background-repeat: no-repeat;
 	padding:1px;
 	font-size:0.875em;
+        -moz-box-shadow : 2px 1px 5px rgba(0,0,0,0.6);
+	-webkit-box-shadow : 2px 1px 5px rgba(0,0,0,0.6);
+	box-shadow : 2px 1px 5px rgba(0,0,0,0.6);
 }
-nav ul{
+#menu > ul{
 	background: #2e5071; /* Old browsers */
 	background: -moz-linear-gradient(top,  #2e5071 0%, #1e344a 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2e5071), color-stop(100%,#1e344a)); /* Chrome,Safari4+ */
@@ -403,7 +462,7 @@ nav ul{
 	box-shadow: inset 0 0 8px 1px rgba(0,0,0,0.5);
 	height:50px;
 }
-nav li{
+#menu > ul>li{
 	float:left;
 	list-style-type:none;
 	line-height:50px;
@@ -412,7 +471,7 @@ nav li{
 	font-weight:bold;
 	text-align:center;
 }
-nav li>a{
+#menu > ul>li>a{
 	text-decoration:none;
 	color:#DDD;
 	text-shadow:1px 0 0 rgba(0,0,0,0.5);
@@ -422,11 +481,11 @@ nav li>a{
 	border-right:1px solid #405971;
 	border-left:1px solid #142331;
 }
-nav li.current{
+#menu > ul>li.current{
 	line-height:48px;
 	margin-top:1px;
 }
-nav li.current>a{
+#menu > ul>li.current>a{
 	background: #065f9d; /* Old browsers */
 	background: -moz-linear-gradient(top,  #065f9d 0%, #033151 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#065f9d), color-stop(100%,#033151)); /* Chrome,Safari4+ */
@@ -442,7 +501,7 @@ nav li.current>a{
 	box-shadow: inset 0 0 2px 1px rgba(0,0,0,0.5);
 	-color:#ccc;
 }
-nav li>a:hover, nav li>a:active, nav li>a:focus {
+#menu > ul>li>a:hover, nav>ul>li>a:active, nav>ul>li>a:focus {
 	background: #0573db; /* Old browsers */
 	background: -moz-linear-gradient(top,  #0573db 0%, #033151 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0573db), color-stop(100%,#033151)); /* Chrome,Safari4+ */
@@ -455,7 +514,7 @@ nav li>a:hover, nav li>a:active, nav li>a:focus {
 	background-repeat: no-repeat;
 	color:#ccc;
 }
-nav li.nav_compte{
+#menu > ul> li.nav_compte{
 	background: #aaa; /* Old browsers */
 	background: -moz-linear-gradient(top,  #aaa 0%, #333333 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aaa), color-stop(100%,#333333)); /* Chrome,Safari4+ */
@@ -494,7 +553,7 @@ nav li.nav_compte{
 	float:left;
 	padding:0 5%;
 }
-nav li.nav_compte>div{
+#menu li.nav_compte>div{
 	display:block;
 	position:relative;
 	z-index:1;
@@ -511,14 +570,15 @@ nav li.nav_compte>div{
 	margin-left:10px;
 }
 .nav_facebook{
-	display:block;
-	height:45px;
-	width:117px;
-	background: url(../images/elements.png) no-repeat scroll -150px 0 transparent;
-	float:right;
-	margin: 0 5px;
+    display:block;
+    height:45px;
+    width:117px;
+    background: url(../images/elements.png) no-repeat scroll -150px 0 transparent;
+    float:right;
+    margin: 0 5px;
+    cursor: pointer;
 }
-nav li.nav_compte .connex{
+#menu li.nav_compte .connex{
 	background: #2e5071; /* Old browsers */
 	background: -moz-linear-gradient(top,  #2e5071 0%, #1e344a 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2e5071), color-stop(100%,#1e344a)); /* Chrome,Safari4+ */
@@ -539,12 +599,32 @@ nav li.nav_compte .connex{
 	text-transform:none;
 	line-height:16px;
 }
-nav li.nav_compte .slideBlock{
-	display:none;
-	padding: 8px 10px 5px;
+#menu li.nav_compte .slideBlock{
+    display:none;
+}
+#login_form .slideBlock{
+    padding:10px;
 }
 .slide_compte, .souvenir_moi *, button, .button{
 	cursor:pointer;
+}
+.user_menu li{
+    border-bottom: 1px solid #152124;
+    border-top: 1px solid #506B84;
+}
+.user_menu li:first-child{
+    border-top: 0 none;
+}
+.user_menu li:last-child{
+    border-bottom: 0 none;
+}
+.user_menu a{
+    display: block;
+    padding: 10px 0 10px 40px;
+    text-decoration: none;
+}
+.user_menu a:hover,.user_menu a:active,.user_menu a:focus{
+    cursor:pointer;
 }
 /* ==========================================================================
    Inscription styles
@@ -628,11 +708,6 @@ nav li.nav_compte .slideBlock{
     box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
     width: 280px;
     color:#000;
-}
-.erreur_inscription{
-    color:darkred;
-    margin:0;
-    font-size: 0.75em;
 }
 
 /* ==========================================================================
@@ -901,14 +976,152 @@ button{
 	font-size:0.875em;
 }
 /* ==========================================================================
+   Accueil styles
+   ========================================================================== */
+.accueil .formulaire, .resultat .formulaire, .ajouter_annonce .formulaire{
+    background: #bbbbbb; /* Old browsers */
+    background: -moz-linear-gradient(top,  #e0e0e0 0%, #bbb 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e0e0e0), color-stop(100%,#bbb)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #e0e0e0 0%,#bbb 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #e0e0e0 0%,#bbb 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #e0e0e0 0%,#bbb 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #e0e0e0 0%,#bbb 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', endColorstr='#bbbbbb',GradientType=0 ); /* IE6-9 */
+    background-position: top center;
+    background-repeat: no-repeat;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px;
+    color:#222;
+    border: 1px solid #999;
+    -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+.accueil .formulaire input, .resultat .formulaire input, .ajouter_annonce .formulaire input{
+    background-color: #eee;
+    border: medium none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
+    -webkit-box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
+    box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
+    margin-bottom: 15px;
+    -width: 50%;
+    color:#000;
+    margin-left: 10px;
+    
+    font-weight: bold;
+}
+.accueil .formulaire .input, .resultat .formulaire .input, .ajouter_annonce .formulaire .input{
+    margin-top: 5px;
+}
+.accueil .depart, .accueil .arrivee , .resultat .depart, .resultat .arrivee, .ajouter_annonce .depart, .ajouter_annonce .arrivee{
+    margin-top: 20px;
+}
+.accueil .date, .resultat .date, .ajouter_annonce .date{
+    -text-align: center;
+}
+.accueil h2, .ajouter_annonce h2, .resultat h2{
+    text-align: left;
+    color:#222;
+    text-shadow: 0px 1px 0 #eee;
+}
+.accueil .ico-date, .ajouter_annonce .ico-date, .resultat .ico-date{
+    background-position: -240px -300px;
+    height: 60px;
+    width: 55px;
+    float:left;
+    margin-top: 4px;
+}
+.accueil #input_date, .resultat #input_date, .ajouter_annonce #input_date{
+    margin-top: 19px;
+    text-align: center;
+}
+.accueil .formulaire .flexibilite, .resultat .formulaire .flexibilite, .ajouter_annonce .formulaire .flexibilite{
+    margin-bottom: 20px;
+}
+#rechercher{
+    position: relative;
+    left: 50%;
+    margin-left: -75px;
+    float:left;
+}
+#rechercher button{
+    padding:10px 30px;
+}
+.accueil #map, .resultat #map, .ajouter_annonce #map{
+    margin: 90px 0 50px;
+    -moz-box-shadow: 1px 1px 5px #999999;
+    -webkit-box-shadow: 1px 1px 5px #999999;
+    box-shadow: 1px 1px 5px #999999;
+}
+.accueil .accueil_annonce{
+    float: left;
+    position: relative;
+    width: 46%;
+    margin: 0 1%;
+    padding: 7px 1%;
+    min-height: 70px;
+}
+.accueil_annonce+.accueil_annonce+.accueil_annonce{
+    border-top: 1px solid #ccc;
+}
+.accueil .accueil_annonce.impaire{
+    clear: left;
+}
+.accueil_annonce .photo{
+    float:left;
+    -moz-box-shadow: -1px 1px 2px #aaa;
+    -webkit-box-shadow: -1px 1px 2px #aaa;
+    box-shadow: -1px 1px 2px #aaa;
+    margin-right: 10px;
+}
+.accueil_annonce .detail{
+    padding-right: 35px;
+    padding-left:65px;
+}
+.accueil_annonce .detail .destination a{
+    text-decoration: none;
+}
+.accueil_annonce .detail .destination a:hover,.accueil_annonce .detail .destination a:active,.accueil_annonce .detail .destination a:focus{
+    text-decoration: none;
+    border-bottom: 1px solid;
+    color:#000 !important;
+}
+.accueil_annonce .horaire{
+    font-size:0.875em;
+    color:#666;
+}
+.accueil_annonce .prix{
+    font-size:1.562em;
+    font-weight: bold;
+    color:#666;
+    position:absolute;
+    right:0;
+    top:0;
+    margin-top: 15px;
+}
+#facebook-page{
+    overflow: hidden;
+}
+#facebook-page .fb-like-box span,#facebook-page .fb-like-box span ifram{
+    width: 100% !important;
+}
+/* ==========================================================================
    Profil styles
    ========================================================================== */
 .profil .photo{
     margin-top: 6px;
     margin-bottom:30px;
 }
-.photo img{
+.profil .photo img{
     border:7px solid white;
+    -moz-box-shadow: -1px 1px 2px #aaa;
+    -webkit-box-shadow: -1px 1px 2px #aaa;
     box-shadow: -1px 1px 2px #aaa;
 }
 .profil .btn_profil .btn{
@@ -1300,70 +1513,32 @@ textarea.profil_modif{
 .ajouter_annonce .choix_conducteur{
     margin-bottom: 30px;
 }
-.ajouter_annonce .choix_conducteur .select{
-    border:1px solid black;
-}
 .ico-passager, .ico-passager-conducteur, .ico-conducteur{
     display:block;
-    background: url(../images/elements.png) no-repeat scroll -255px -155px transparent;
-    height: 70px;
-    width: 62px;
+    background: url(../images/elements.png) no-repeat scroll -159px -554px transparent;
+    height: 65px;
 }
 .ico-passager{
-    -background-position: -255px -155px;
-    width: 35px;
+    width: 75px;
+}
+.ico-passager.select{
+    background-position: -159px -494px;
 }
 .ico-passager-conducteur{
     margin:0 auto;
-    background-position: -257px -229px;
+    background-position: -335px -554px;
+    width: 85px;
+}
+.ico-passager-conducteur.select{
+    background-position: -335px -494px;
 }
 .ico-conducteur{
     float:right;
-    background-position: -150px -300px;
-    width:36px;
+    background-position: -240px -554px;
+    width:80px;
 }
-.ajouter_annonce .depart, .ajouter_annonce .arrivee{
-    border: 2px solid #091E32;
-    -border: 1px solid #065f9d;
-    background: #2E5071; /* Old browsers */
-    background: -moz-linear-gradient(top,  #2E5071 0%, #1E344A 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2E5071), color-stop(100%,#1E344A)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #2E5071 0%,#1E344A 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #2E5071 0%,#1E344A 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #2E5071 0%,#1E344A 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #2E5071 0%,#1E344A 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2E5071', endColorstr='#1E344A',GradientType=0 ); /* IE6-9 */
-    background-position: top center;
-    background-repeat: no-repeat;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 30px;
-}
-.ajouter_annonce .input{
-    -float: left;
-    -clear:both;
-    padding-top:7px;
-}
-.ajouter_annonce .depart input, .ajouter_annonce .arrivee input{
-    background-color: #192E42;
-    border: medium none;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    -moz-box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #fff;
-    -webkit-box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #fff;
-    box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #fff;
-    margin-bottom: 15px;
-    width: 50%;
-    color:white;
-    margin-left: 10px;
-    
-    font-weight: bold;
-}
-.depart input[placeholder], .arrivee input[placeholder]{
-    -color:#333;
+.ico-conducteur.select{
+    background-position: -240px -494px;
 }
 .ico-depart{
     background: url(../images/elements.png) no-repeat scroll -323px -102px transparent;
@@ -1794,6 +1969,105 @@ textarea.profil_modif{
     margin-top: 80px;
 }
 /* ==========================================================================
+   Mes Annonces styles
+   ========================================================================== */
+.mes_annonces{
+    position:relative;
+}
+.mes_annonces .table{
+    width:100%;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 1px 1px 3px #999999;
+    -webkit-box-shadow: 1px 1px 3px #999999;
+    box-shadow: 1px 1px 3px #999999;
+    overflow: hidden;
+    border:1px solid #5c676b;
+}
+.mes_annonces table{
+    width:100%;
+}
+.mes_annonces table thead{
+    background: #AAA; /* Old browsers */
+    background: -moz-linear-gradient(top,  #aaa 0%, #777 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aaa), color-stop(100%,#777)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #aaa 0%,#777 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #aaa 0%,#777 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #aaa 0%,#777 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #aaa 0%,#777 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aaa', endColorstr='#777',GradientType=0 ); /* IE6-9 */
+    background-position: top center;
+    background-repeat: no-repeat;
+    color:white;
+    -moz-box-shadow: 0 1px 4px 1px #111;
+    -webkit-box-shadow: 0 1px 4px 1px #111;
+    box-shadow: 0 1px 4px 1px #111;
+}
+.mes_annonces table thead tr{
+}
+.mes_annonces table th span{
+    display: block;
+    padding:5px 10px;
+    text-align: left;
+    border-left: 1px solid #bbb;
+    border-right: 1px solid #666;
+    text-shadow: -1px -1px 0px #444;
+}
+.mes_annonces table th:first-child span{
+    border-left: 0 none;
+}
+.mes_annonces table th:last-child span{
+    border-right: 0 none;
+}
+.mes_annonces table tbody td span{
+    display: block;
+    padding:8px 10px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #666;
+}
+.mes_annonces table .paire span{
+    background:#E0DFD9;
+}
+.mes_annonces table tbody tr:first-child span{
+    border-top: 0 none;
+}
+.mes_annonces table tbody tr:last-child span{
+    border-bottom: 0 none;
+}
+.mes_annonces table tbody td:first-child + td{
+    font-weight: bold;
+    color:#555;
+}
+.mes_annonces table tbody tr:hover span{
+    background:#ffeebb;
+}
+#overlay{
+    background: rgba(0,0,0,0.5);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top:0;
+    left:0;
+    display:none;
+    z-index: 100;
+}
+#confirm_delete{
+   display: none;
+   position: absolute;
+   top:50%;
+   left:50%;
+   margin-top: -50px;
+   margin-left: -180px;
+   background: #fff;
+   border:2px solid #333;
+   padding:15px;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+   z-index: 101;
+}
+/* ==========================================================================
    Footer styles
    ========================================================================== */
 .footer{
@@ -1968,6 +2242,14 @@ div.colorPicker-swatch {
     }
 }
 @media only screen and (max-width: 650px){ /*MOINS DE 650px*/
+    header h1{
+        background: url('../images/logo_medium.png') no-repeat 0 0 scroll transparent;
+        height: 78px;
+        width:264px;
+        text-indent: 400px;
+        line-height: 78px;
+        top:35px;
+    }
     .mon_compte{
         display:none;
     }
@@ -2009,13 +2291,27 @@ div.colorPicker-swatch {
     body{
         padding:0;
     }
-    nav{
+    header{
+        background-color: #333;
+        height: 30px;
+    }
+    header h1{
+        background: url('../images/logo_small.png') no-repeat 0 0 scroll transparent;
+        height: 50px;
+        width:154px;
+        text-indent: 400px;
+        line-height: 50px;
+        top:10px;
+        left:20px;
+        z-index: 100;
+    }
+    #menu{
         padding:0;
         -moz-border-radius:0;
         -webkit-border-radius:0;
         border-radius:0;
     }
-    nav ul{
+    #menu>ul{
         position:fixed;
         z-index: 11;
         bottom:0;
@@ -2025,15 +2321,15 @@ div.colorPicker-swatch {
         -webkit-border-radius:0;
         border-radius:0;
     }
-    nav ul li{
+    #menu>ul>li{
         width:25%;
     }
-    nav li.nav_compte{
+    #menu>ul>li.nav_compte{
         z-index:1;
         position:fixed;
-        top:0;
+        top:50px;
         right:-75%;
-        width:75%;
+        width:170px;
         padding:0;
         margin-right:60px;
         -moz-border-radius:0 0 0 5px;
@@ -2043,17 +2339,17 @@ div.colorPicker-swatch {
         -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5) inset;
         box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5) inset;
     }
-    nav li.nav_compte .degrade_compte{
+    #menu>ul>li.nav_compte .degrade_compte{
         -moz-border-radius:0 0 0 5px;
         -webkit-border-radius:0 0 0 5px;
         border-radius:0 0 0 5px;
         padding-bottom: 2px;
     }
-    nav li.nav_compte.ouvert{
+    #menu>ul>li.nav_compte.ouvert{
         right:0;
         margin-right:0;
     }
-    nav li.nav_compte.ouvert .degrade_compte{
+    #menu>ul>li.nav_compte.ouvert .degrade_compte{
         -moz-border-radius:0;
         -webkit-border-radius:0;
         border-radius:0;
