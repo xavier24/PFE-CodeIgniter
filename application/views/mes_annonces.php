@@ -24,7 +24,7 @@
                         <td class="hidden-phone"><span><?php echo $annonce->heure ?></span></td>
                         <td class="hidden-phone"><span><?php echo $annonce->places ?></span></td>
                         <td><span><a class="modifier_annonce" title="modifier" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">modifier</a></span></td>
-                        <td><span><span class="supprimer_annonce" title="supprimer">supprimer</span></span></td>
+                        <td><span><span class="btn_actionOverlay supprimer_annonce" title="supprimer">supprimer</span></span></td>
                         <td class="id_annonce hidden"><input type="hidden" value="<?php echo $annonce->id ?>" /></td>
                     </tr>
                     <?php } ?>
@@ -32,18 +32,18 @@
             </table>
         </div>
         <div id="overlay"></div>
-        <div id="confirm_delete">
+        <div id="confirm_delete" class="actionOverlay">
             <h3>Confirmation de suppression</h3>
             <?php echo form_open('annonce/delete',array('method'=>'post', 'class'=>'clearfix')); ?>
                 <p>Etes-vous sur de vouloir supprimer cette annonce ?</p>
-                <div id="cancel_delete_annonce" class="btn clearfix">
+                <div class="btn clearfix cancel_action_overlay">
                     <span class="bouton_contour bouton_gris" for="input_regulier">
                         <span class="button gris">
                             Annuler
                         </span>
                     </span>
                 </div>
-                <div id="delete_annonce" class="btn clearfix">
+                <div id="delete_annonce" class="btn clearfix confirm_action_overlay">
                     <span class="bouton_contour bouton_gris" for="input_regulier">
                         <button type="submit" class="button gris">
                             Supprimer

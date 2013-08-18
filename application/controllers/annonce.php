@@ -89,8 +89,11 @@ class Annonce extends CI_Controller {
         public function delete(){
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
             if($dataList['user_data']){
-                $id = $this->input->post('input_id_annonce');
-                $this->M_Annonce->delete($id,$dataList['user_data']->user_id);
+                $id_annonce = $this->input->post('input_id_annonce');
+                $annonce = $this->M_Annonce->voir($id_annonce);
+                $reservations = $this->M_Annonce->getAllReservation($id_annonce);
+                $this->M_Annonce->delete($id_annonce,$dataList['user_data']->user_id);
+                $this->M_Email->deleteAnnonce($annonce,$reservations);
             }
             redirect('annonce/mes_annonces');
         }
@@ -111,7 +114,9 @@ class Annonce extends CI_Controller {
             $dataList['annonce']->date= $this->M_Date->dateLongue($dataList['annonce']->date,'no','no');
             $dataList['annonce']->date_retour= $this->M_Date->dateLongue($dataList['annonce']->date_retour,'no','no');
             //var_dump($dataList['annonce']->etapes);
-        
+        //reservation du visiteur
+            $dataList['reservation'] = $this->M_Annonce->getReservation($idAnnonce,$dataList['user_data']->user_id);
+            
         //etapes    
             $dataList['etapes'] = $this->M_Annonce->get_etapes($dataList['annonce']->id);
             //var_dump($dataList['etapes']);
@@ -428,52 +433,91 @@ class Annonce extends CI_Controller {
                 }
             }
             
-            public function correspondance($data,$dataRecup,$id){
-                $this->load->helper('date');
-                $this->load->model('M_Email');
-                $today = date("Y-m-d");
-                
-                //var_dump($data);
-                //var_dump($dataRecup);
-                
-                $req['user_id'] = $data['user_id'];
-                $req['depart_lat'] = $dataRecup['depart_lat'];
-                $req['depart_lng'] = $dataRecup['depart_lng'];
-                $req['arrivee_lat'] = $dataRecup['arrivee_lat'];
-                $req['arrivee_lng'] = $dataRecup['arrivee_lng'];
-                $req['date'] = $data['date'];
-                $req['regulier'] = $data['regulier'];
-                
-                if($dataRecup['date']){
-                    $flex = 7;
-                    $date = str_replace("/", "-", $req['date']);
-                    $time_date = strtotime($date);
-                    $date_min = date("d-m-Y",$time_date-($flex*24*3600));
-                    $date_max = date("d-m-Y",$time_date+($flex*24*3600));
+        public function correspondance($data,$dataRecup,$id){
+            $this->load->helper('date');
+            $this->load->model('M_Email');
+            $today = date("Y-m-d");
 
-                    $date_min = explode("-", $date_min);
-                    $date_max = explode("-", $date_max);
+            //var_dump($data);
+            //var_dump($dataRecup);
 
-                    $req['date_min'] = $date_min[2].'-'.$date_min[1].'-'.$date_min[0];
-                    $req['date_max'] = $date_max[2].'-'.$date_max[1].'-'.$date_max[0];
-                }
-                //var_dump($req);
-                
-                $annonces = $this->M_Annonce->correspondance($req,$today);
-                
-                $table_annonce = array();
-                foreach ($annonces as $annonce){
-                    $annonce->correspondance = $id;
-                    $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no');
-                    if(!isset($table_annonce[$annonce->email])){
-                        $table_annonce[$annonce->email]=array();
-                    }
-                    array_push($table_annonce[$annonce->email],$annonce);
-                }
-                
-                $this->M_Email->CorrespondanceEmail($table_annonce);
-                
-                //var_dump($annonces);
-                //var_dump($table_annonce);
+            $req['user_id'] = $data['user_id'];
+            $req['depart_lat'] = $dataRecup['depart_lat'];
+            $req['depart_lng'] = $dataRecup['depart_lng'];
+            $req['arrivee_lat'] = $dataRecup['arrivee_lat'];
+            $req['arrivee_lng'] = $dataRecup['arrivee_lng'];
+            $req['date'] = $data['date'];
+            $req['regulier'] = $data['regulier'];
+
+            if($dataRecup['date']){
+                $flex = 7;
+                $date = str_replace("/", "-", $req['date']);
+                $time_date = strtotime($date);
+                $date_min = date("d-m-Y",$time_date-($flex*24*3600));
+                $date_max = date("d-m-Y",$time_date+($flex*24*3600));
+
+                $date_min = explode("-", $date_min);
+                $date_max = explode("-", $date_max);
+
+                $req['date_min'] = $date_min[2].'-'.$date_min[1].'-'.$date_min[0];
+                $req['date_max'] = $date_max[2].'-'.$date_max[1].'-'.$date_max[0];
             }
+            //var_dump($req);
+
+            $annonces = $this->M_Annonce->correspondance($req,$today);
+
+            $table_annonce = array();
+            foreach ($annonces as $annonce){
+                $annonce->correspondance = $id;
+                $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no');
+                if(!isset($table_annonce[$annonce->email])){
+                    $table_annonce[$annonce->email]=array();
+                }
+                array_push($table_annonce[$annonce->email],$annonce);
+            }
+
+            $this->M_Email->CorrespondanceEmail($table_annonce);
+
+            //var_dump($annonces);
+            //var_dump($table_annonce);
+        }
+
+        public function reservation(){
+            $this->load->model('M_Email');
+
+            $id_annonce = $_POST[ "id_annonce" ];
+            $place = $_POST[ "place" ];
+            $user_demande = $this->M_Ajax->get_cookie_session_data();
+
+            $annonce = $this->M_Annonce->voir($id_annonce);
+            $user_data = $this->M_Annonce->getUserInfo("user_id",$annonce->user_id);
+
+            if($user_demande){
+                $this->M_Annonce->reserver($id_annonce,$place,$user_demande->user_id,$user_data->user_id);
+                echo true;
+                $this->M_Email->demandeReservation($user_data,$place,$annonce,$user_demande);
+            }
+            else{
+                echo false;
+            }
+        }
+        
+        public function cancel_reservation(){
+            $id_annonce = $this->uri->segment(3);
+            
+            $user_demande = $this->M_Ajax->get_cookie_session_data();
+            $annonce = $this->M_Annonce->voir($id_annonce);
+            $user_data = $this->M_Annonce->getUserInfo("user_id",$annonce->user_id);
+            
+            if($user_demande){
+                $reservation_info = $this->M_Annonce->getReservation($id_annonce,$user_demande->user_id);
+                $this->M_Annonce->cancelReservation($id_annonce,$user_demande->user_id);
+                if($reservation_info->accepte){
+                    $this->load->model('M_Email');
+                    $this->M_Email->CancelReservation($user_data,$reservation_info->places,$annonce,$user_demande);
+                }
+            }
+            
+            redirect('annonce/fiche/'.$id_annonce);
+        }
 }

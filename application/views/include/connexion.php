@@ -48,11 +48,10 @@ else{?>
     <div class="connex">
         <div class="slideBlock clearfix">
             <ul class="user_menu clearfix">
-                <li><a href="<?php echo base_url() ?>message/">Messages</a></li>
-                <li><a href="<?php echo base_url().'annonce/mes_annonces/' ?>">Mes annonces</a></li>
-                <li><a href="#">Demandes reçues</a></li>
-                <li><a href="#">Mes reservations</a></li>
-                <li><a href="#">Paramètres</a></li>
+                <li><a href="<?php echo base_url() ?>message/"><span class="message"></span>Messages</a></li>
+                <li><a href="<?php echo base_url().'annonce/mes_annonces/' ?>"><span class="annonce"></span>Mes annonces</a></li>
+                <li><a href="#"><span class="reservation"></span>Mes reservations</a></li>
+                <li><a href="#"><span class="parametre"></span>Paramètres</a></li>
             </ul>
             
         </div>

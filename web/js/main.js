@@ -5,7 +5,7 @@
 	"use strict";
 
 	// --- global vars
-        var baseUrl = location.origin, 
+        var baseUrl = location.origin + "/PFE-CodeIgniter",
             $slideCompte,
             $lang,
             $edit,
@@ -17,15 +17,17 @@
             $count_inputEtape,
             $moreStep,
             $input_confort,
-            $delete_annonce,
-            $cancel_delete_annonce;
+            $btn_actionOverlay,
+            $cancel_action_overlay,
+            $confirm_reserv_place;
+            
 	// --- methods
     //INITIALISE SELON PAGE
         
         var controlSession = function(){
             
             $.ajax({
-                url:baseUrl+'/PFE-CodeIgniter/ajax/dataSession',
+                url:baseUrl+'/ajax/dataSession',
                 type:'POST',
                 success: function($data){
                 var connect;
@@ -76,7 +78,7 @@
             e.preventDefault();
             //console.log($(this).attr("id"));
             $.ajax({
-                    url:baseUrl+'/PFE-CodeIgniter/ajax/lang/'+$(this).attr("id"),
+                    url:baseUrl+'/ajax/lang/'+$(this).attr("id"),
                     type:'POST',
                     success: function($data){
                         location.reload();
@@ -173,17 +175,38 @@
             
         };//btnCheck
         
-        var deleteAnnonce = function(){
-            var $id = $(this).parent().parent().find('.id_annonce input').val();
-            $("#input_id_annonce").val($id);
+        var actionOverlay = function(){
             $("#overlay").show();
-            $("#confirm_delete").show();
-        };//deleteAnnonce
+            $(".actionOverlay").show();
+            if($(this).hasClass('supprimer_annonce')){
+                var $id_annonce = $(this).parent().parent().next().find('input').val();
+                $("#input_id_annonce").val($id_annonce);
+            }
+        };//actionOverlay
         
-        var cancelDeleteAnnonce = function(){
+        var cancelActionOverlay = function(){
             $("#overlay").hide();
-            $("#confirm_delete").hide();
+            $(".actionOverlay").hide();
         };//cancelDeleteAnnonce
+              
+        var reserverPlace = function(e){
+            e.preventDefault();
+            var $id_annonce = $("#id_annonce").val();
+            var $nb_place = $(".nb_place option:selected").attr('value');
+            console.log($nb_place);
+            $.ajax({
+                    url:baseUrl+'/annonce/reservation',
+                    type:'POST',
+                    dataType: "json",
+                    data: { id_annonce: $id_annonce, place:$nb_place },
+                    success: function($data){
+                        if($data){
+                            location.reload();
+                        }
+                    }
+            });
+        }
+              
         
         $( function () {
 
@@ -197,8 +220,11 @@
                 $etapes = $(".etapes");
                 $inputEtape = $etapes.find('.etape').first().clone();
                 $moreStep = $("#more_step");
-                $delete_annonce = $(".supprimer_annonce");
-                $cancel_delete_annonce = $("#cancel_delete_annonce");
+                
+                $btn_actionOverlay = $('.btn_actionOverlay');
+                $cancel_action_overlay = $(".cancel_action_overlay");
+                $confirm_reserv_place = $("#confirm_reserve_place button");
+                
                 
             // --- events
                 $slideCompte.on('click',loginForm);
@@ -209,8 +235,10 @@
                 $autreLang.on('click',autreLangTextearea);
                 $input_confort.select(function(){modifConfort()});
                 $(document).on('click',".min_step",removeStep);
-                $delete_annonce.on('click',deleteAnnonce);
-                $cancel_delete_annonce.on('click',cancelDeleteAnnonce);
+                
+                $btn_actionOverlay.on('click',actionOverlay);
+                $cancel_action_overlay.on('click',cancelActionOverlay);
+                $confirm_reserv_place.on('click',reserverPlace);
                 
                 
             // --- execute

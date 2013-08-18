@@ -48,10 +48,57 @@
                         <p><?php echo $annonce->description_arrivee ? $annonce->description_arrivee : "Non précisé" ?></p>
                     </div>
                     <div class="span2">
-                        <?php echo form_open('',array('method'=>'post')); ?> 
+                        <?php if(!isset($not_user)){
+                            if($reservation){?>
+                                <div class="btn clearfix">
+                                    <span class="bouton_contour bouton_orange">
+                                        <span id="reserv_place" class="button orange">
+                                            <?php if($reservation[0]->accepte){?>
+                                                Vous avez <?php echo $reservation[0]->places ?> place(s) de réservée(s) pour ce voyage
+                                            <?php }else{?>
+                                                Vous avez <?php echo $reservation[0]->places ?> place(s) en attente de réservation pour ce voyage 
+                                            <?php }?>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="annuler_reserv_place">
+                                    <div class="btn clearfix">
+                                        <span class="bouton_contour bouton_rouge">
+                                            <span id="annuler_reserv_place" class="btn_actionOverlay button rouge">
+                                                Annuler
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div id="overlay"></div>
+                                <div id="form_place" class="actionOverlay">
+                                    <form method="post" action="<?php echo base_url() ?>annonce/cancel_reservation/<?php echo $annonce->id ?>">
+                                        <div>
+                                            <label>Annuler votre réservation ?</label>
+                                            <input type="hidden" id="id_annonce" name="id_annonce" value="<?php echo $annonce->id ?>"/>
+                                        </div>
+                                        <div class="btn clearfix cancel_action_overlay">
+                                             <span class="bouton_contour bouton_gris" for="input_regulier">
+                                                 <span class="button gris">
+                                                     Non
+                                                 </span>
+                                             </span>
+                                        </div>
+                                        <div class="btn clearfix confirm_action_overlay">
+                                            <span class="bouton_contour bouton_gris" for="input_regulier">
+                                                <button type="submit" class="button gris">
+                                                    Oui
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </form> 
+                                </div>
+                            <?php }
+                            else{ ?>
                             <div class="btn clearfix">
-                                <span class="bouton_contour bouton_bleu">
-                                    <button class="button bleu">Je réserve ma place au prix de 
+                                <span class="bouton_contour bouton_orange">
+                                    <button id="reserv_place" class="btn_actionOverlay button orange">
+                                        Je réserve ma place au prix de 
                                         <?php if($annonce->prix <= $annonce->prix_conseil ){
                                             echo '<span class="prix_vert">'.$annonce->prix;
                                         }
@@ -61,7 +108,35 @@
                                     </button>
                                 </span>
                             </div>
-                        </form>
+                            <div id="overlay"></div>
+                            <div id="form_place" class="actionOverlay">
+                               <form method="post" action="annonce/reservation">
+                                    <div>
+                                        <label>Nombre de places à réserver</label>
+                                        <select class="nb_place">
+                                            <?php for($i=1;$i<=$annonce->places;$i++){?>
+                                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <input type="hidden" id="id_annonce" name="id_annonce" value="<?php echo $annonce->id ?>"/>
+                                    </div>
+                                    <div class="btn clearfix cancel_action_overlay">
+                                         <span class="bouton_contour bouton_gris" for="input_regulier">
+                                             <span class="button gris">
+                                                 Annuler
+                                             </span>
+                                         </span>
+                                    </div>
+                                    <div id="confirm_reserve_place" class="btn clearfix confirm_action_overlay">
+                                        <span class="bouton_contour bouton_gris" for="input_regulier">
+                                            <button type="submit" class="button gris">
+                                                Réserver
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form> 
+                            </div>
+                        <?php } } ?>
                     </div>
                 </div>
                 <div class="row-fluid">

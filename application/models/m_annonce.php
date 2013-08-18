@@ -127,4 +127,35 @@ class M_Annonce extends CI_Model{
             return $query->result();
             
         }
+        
+        public function reserver($id_annonce,$place,$demandeur_id,$annonceur_id){
+            $data = array('annonceID'=>$id_annonce,"demandeurID"=>$demandeur_id,"annonceurID"=>$annonceur_id,"places"=>$place);
+            $this->db->insert('reservation',$data);
+        }
+        
+        public function getReservation($id_annonce,$user_id){
+            $this->db->select('*');
+            $this->db->from('reservation');
+            $this->db->where('annonceID',$id_annonce);
+            $this->db->where('demandeurID',$user_id);
+            $query = $this->db->get();
+            
+            return $query->result();
+        }
+        
+        public function getAllReservation($id_annonce){
+            $this->db->select('reservation.*,users.username,users.email');
+            $this->db->from('reservation');
+            $this->db->join('users','users.user_id = reservation.demandeurID');
+            $this->db->where('annonceID',$id_annonce);
+            $query = $this->db->get();
+            
+            return $query->result();
+        }
+        
+        public function cancelReservation($id_annonce,$user_id){
+            $this->db->where('annonceID', $id_annonce);
+            $this->db->where('demandeurID',$user_id);
+            $this->db->delete('reservation');
+        }
 }
