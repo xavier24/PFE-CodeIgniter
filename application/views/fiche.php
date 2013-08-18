@@ -78,14 +78,14 @@
                                             <input type="hidden" id="id_annonce" name="id_annonce" value="<?php echo $annonce->id ?>"/>
                                         </div>
                                         <div class="btn clearfix cancel_action_overlay">
-                                             <span class="bouton_contour bouton_gris" for="input_regulier">
+                                             <span class="bouton_contour bouton_gris">
                                                  <span class="button gris">
                                                      Non
                                                  </span>
                                              </span>
                                         </div>
                                         <div class="btn clearfix confirm_action_overlay">
-                                            <span class="bouton_contour bouton_gris" for="input_regulier">
+                                            <span class="bouton_contour bouton_gris">
                                                 <button type="submit" class="button gris">
                                                     Oui
                                                 </button>

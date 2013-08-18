@@ -654,16 +654,16 @@ header h1{
     float:left;
     margin-right: 5px;
 }
-.user_menu .message{
-    background: url(../images/elements.png) no-repeat scroll -410px -502px transparent;
+.user_menu .item_message{
+    background: url(../images/elements.png) no-repeat scroll -410px -498px transparent;
 }
-.user_menu .annonce{
+.user_menu .item_annonce{
     background: url(../images/elements.png) no-repeat scroll -350px -529px transparent;
 }
-.user_menu .reservation{
+.user_menu .item_reservation{
     background: url(../images/elements.png) no-repeat scroll -379px -529px transparent;
 }
-.user_menu .parametre{
+.user_menu .item_parametre{
     background: url(../images/elements.png) no-repeat scroll -410px -529px transparent;
 }
 /* ==========================================================================
@@ -2197,6 +2197,106 @@ textarea.profil_modif{
     float:left;
 }
 .confirm_action_overlay{
+    float:right;
+}
+/* ==========================================================================
+   Messagerie styles
+   ========================================================================== */
+.liste_conversation>ul{
+    background:#fafafa;
+    border: 1px solid #ccc;
+}
+.item_conversation{
+    list-style-type: none;
+    border-bottom: 1px solid #ccc;
+}
+.item_conversation a{
+    padding: 5px 10px;
+    display: block;
+    color:#333;
+    text-decoration: none;
+}
+.item_conversation a:hover, .item_conversation a:focus{
+    color:#333 !important;
+    background:#e0e0e0;
+}
+.item_conversation a:active , .item_conversation a.current{
+    color:white !important;
+    background:#213951;
+}
+.item_conversation .photo{
+    float: left;
+    margin-right: 5px;
+    overflow: hidden;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+.item_conversation .infos{
+    padding-left:60px;
+    padding-right:60px;
+}
+.item_conversation .infos .nom{
+    font-weight: bold;
+}
+.item_conversation .apercu_mess{
+    overflow: hidden;
+    -o-text-overflow: ellipsis; /* pour Opera 9 */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size:0.875em;
+}
+.item_conversation .apercu_mess .icon-reply-1{
+    color:#aaa;
+    font-size:0.875em;
+}
+#convers_open{
+    background:#fafafa;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-height:600px;
+    overflow: auto;
+}
+#convers_open li{
+    list-style-type: none;
+    padding-bottom: 10px;
+}
+#convers_open li .photo{
+    float: left;
+}
+#convers_open li .photo img{
+    height:32px;
+    padding-top: 5px;
+}
+#convers_open li .message{
+    padding-left:40px;
+    font-size:0.875em;
+    color:#000;
+}
+#convers_open li .nom a{
+    font-weight: bold;
+    color:#333;
+    text-decoration: none;
+}
+#convers_open li .heure{
+    float:right;
+    font-size:0.75em;
+    color:#aaa;
+    margin-top: 5px;
+}
+#editeur{
+    text-align: center;
+    margin-top: 15px;
+}
+#editeur textarea{
+    width: 90%;
+    margin:0 auto;
+    text-align: left;
+    height:80px;
+    border: 1px solid #ccc;
+}
+#editeur .btn{
+    margin-right: 4%;
     float:right;
 }
 /* ==========================================================================

@@ -37,9 +37,10 @@ class M_Date extends CI_Model {
         return $age;
     }
 //Convertir une date US vers une date en français affichant le jour de la semaine
-    public function dateLongue($date,$annee = 'yes',$heure = 'yes'){ //donner 1987-08-17,si afficher année, si afficher heure => retourne le 17 aout,1987,l'heure
+    public function dateLongue($date,$annee = 'yes',$heure = 'yes',$jour = 'yes'){ //donner 1987-08-17,si afficher année, si afficher heure => retourne le 17 aout,1987,l'heure
         $today = date("Y-m-d");
         $tomorrow = date("Y-m-d",mktime(0,0,0,date("m"),date("d")+1,date("Y")));
+        $yesterday = date("Y-m-d",mktime(0,0,0,date("m"),date("d")-1,date("Y")));
         
         if($date == $today ){
             return "Aujourd'hui";
@@ -47,6 +48,10 @@ class M_Date extends CI_Model {
         if($date == $tomorrow){
             return "Demain";
         }
+        if($date == $yesterday){
+            return "Hier";
+        }
+            
         // Configure le script en français
         if($this->session->userdata('lang') == "en"){
             setlocale (LC_TIME, 'en_EN');
@@ -62,22 +67,21 @@ class M_Date extends CI_Model {
         //Definit l'encodage interne
         mb_internal_encoding("UTF-8");
 
+        $convert_form = '';
+        
+        if($jour == 'yes'){
+           $convert_form .= '%A '; 
+        }
+        $convert_form .= '%d %B';
         if($annee == 'yes'){
-            if($heure == 'yes'){
-                $strDate = mb_convert_encoding('%A %d %B %Y à %Hh%M','ISO-8859-9','UTF-8');  
-            }
-            else{
-                $strDate = mb_convert_encoding('%A %d %B %Y','ISO-8859-9','UTF-8');    
-            }
+            $convert_form .= '%Y ';
         }
-        else {
-            if($heure == 'yes'){
-                $strDate = mb_convert_encoding('%A %d %B à %Hh%M','ISO-8859-9','UTF-8');  
-            }
-            else{
-                $strDate = mb_convert_encoding('%A %d %B','ISO-8859-9','UTF-8');    
-            }
+        if($heure == 'yes'){
+            $convert_form .= 'à %Hh%M';
         }
+        
+        $strDate = mb_convert_encoding($convert_form,'ISO-8859-9','UTF-8');    
+        
         return iconv("ISO-8859-9","UTF-8",strftime($strDate ,strtotime($date))); 
     }
 }

@@ -34,9 +34,9 @@
                         </span>
                     </div>
                     <div class="btn clearfix">
-                        <span class="bouton_contour bouton_bleu">
+                        <a href="<?php echo base_url() ?>message/nouveau/<?php echo $info_membre->user_id ?>" class="bouton_contour bouton_bleu">
                             <span class="button bleu"><span class="icon-mail-4"></span>Contacter le covoitureur</span>
-                        </span>
+                        </a>
                     </div>
                 </div>
             <?php } ?>
@@ -68,10 +68,10 @@
                      <p><?php echo $info_membre->telConvert ?></p>
                 <?php }?>
             </div>
-            <div class="delais_reponse">
+            <!--<div class="delais_reponse">
                 <p>Taux de réponse : 98%</p>
                 <p>Délais moyen de réponse : 2jours</p>  
-            </div>
+            </div>-->
         </div>
         <div class="span9">
             <div class="row-fluid info_profil">
