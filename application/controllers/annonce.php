@@ -86,6 +86,43 @@ class Annonce extends CI_Controller {
             $this->load->view('layout',$dataLayout);
         }
         
+        public function mes_reservations(){
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
+            
+            if(!$dataList['user_data']){
+                redirect('accueil');
+            }
+            
+            $dataList['annonces'] = $this->M_Annonce->lister($dataList['user_data']->user_id);
+            
+            for($i=0;$i<count($dataList['annonces']);$i++){
+                $numero = $i%2;
+                if ($numero == 0){
+	            $dataList['annonces'][$i]->parite = 0;
+	        } else {
+	            $dataList['annonces'][$i]->parite = 1;
+                }
+                $dataList['annonces'][$i]->date = $this->M_Date->dateLongue($dataList['annonces'][$i]->date,false,false);
+            }            
+            
+            if($this->session->userdata('lang')){ 
+                $dataList['lang'] = $this->session->userdata('lang');
+            }
+            else{
+                $dataList['lang'] = 'fr';
+            }
+            $dataList['d_lang'] = "d_".$dataList['lang'];
+            $dataList['a_lang'] = "a_".$dataList['lang'];
+            $dataList['ville_lang'] = "ville_".$dataList['lang'];
+            $dataList['province_lang'] = "province_".$dataList['lang'];
+            //var_dump($dataList);
+            $dataList['body'] = "mes_reservations";
+            $dataList['titre'] = "Mes réservations";
+            
+            $dataLayout['vue'] = $this->load->view('mes_reservations',$dataList,true);
+            $this->load->view('layout',$dataLayout); 
+        }
+        
         public function delete(){
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
             if($dataList['user_data']){
