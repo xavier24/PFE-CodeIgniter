@@ -135,9 +135,9 @@ class Annonce extends CI_Controller {
             redirect('annonce/mes_annonces');
         }
         
-        public function fiche(){
+        public function fiche($idAnnonce){
             
-            $idAnnonce = $this->uri->segment(3);
+            //$idAnnonce = $this->uri->segment(3);
         //user_data    
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
                       
@@ -152,8 +152,9 @@ class Annonce extends CI_Controller {
             $dataList['annonce']->date_retour= $this->M_Date->dateLongue($dataList['annonce']->date_retour,'no','no');
             //var_dump($dataList['annonce']->etapes);
         //reservation du visiteur
-            $dataList['reservation'] = $this->M_Annonce->getReservation($idAnnonce,$dataList['user_data']->user_id);
-            
+            if($dataList['user_data']){
+                $dataList['reservation'] = $this->M_Annonce->getReservation($idAnnonce,$dataList['user_data']->user_id);
+            }
         //etapes    
             $dataList['etapes'] = $this->M_Annonce->get_etapes($dataList['annonce']->id);
             //var_dump($dataList['etapes']);
@@ -402,11 +403,10 @@ class Annonce extends CI_Controller {
             
             //Calcul heure arrivée trajet
                 if(isset($data['heure'])){
-                    $dataRecup["duree"] = intval($this->input->post('input_duree'));
-                    
+                    $dataRecup["duree"] = intval($this->input->post('input_duree')/60);
                     list($heures,$minutes) = preg_split('/[:]/', $data['heure']);
                     $minutes += ($heures*60)+ $etape_time + $dataRecup["duree"];
-                    
+                                        
                     $tot_heure = floor($minutes/60);
                     $tot_min = $minutes - ($tot_heure*60);
                     $heure_arrivee = $tot_heure.":".$tot_min;

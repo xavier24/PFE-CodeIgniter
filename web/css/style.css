@@ -266,7 +266,8 @@ body{
 	font-family:'Trebuchet MS',Helvetica, Arial, sans-serif;
 	font-size:16px;
         color:#333;
-        min-height: 100%;
+        -min-height: 100%;
+        height:auto;
 }
 .wrapper {
 	min-height: 100%;
@@ -277,7 +278,7 @@ body{
 	
 }
 .content{
-	padding:70px 5% 40px;
+	padding:50px 5% 40px;
         background:#efefef;
 	-moz-box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
 	-webkit-box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
@@ -303,8 +304,12 @@ h3{
 h5{
     color:#617E96;
 }
+a{
+    color:#265A84;
+}
 a:hover, a:active, a:focus{
-	color:#faba10 !important;
+    -color:#faba10 !important;
+    color:#0087FF !important;
 }
 .bleu{
     color:#294765;
@@ -364,11 +369,24 @@ header h1{
     background: url('../images/logo.png') no-repeat 0 0 scroll transparent;
     height: 104px;
     width:374px;
+    position: absolute;
+    top:35px;
+}
+header h1 a{
+    display: block;
+    height:100%;
+    width:100%;
     text-indent: 400px;
     overflow: hidden;
     line-height: 104px;
-    position: absolute;
-    top:35px;
+}
+header h2.slogan{
+    color:white;
+    text-shadow: 0 0 3px #000;
+    position:absolute;
+    top:107px;
+    left: 0;
+        
 }
 .lang{
     position:absolute;
@@ -398,7 +416,7 @@ header h1{
 /* ==========================================================================
    Nav styles
    ========================================================================== */
-.nav_search, .nav_add, .nav_register, .nav_help, .nav_user, .logout{
+.nav_search, .nav_add, .nav_register,.nav_profil, .nav_help, .nav_user, .logout{
 	background: url(../images/elements.png) no-repeat scroll 0px -95px transparent;
 	display:block;
 	height:42px;
@@ -414,6 +432,10 @@ header h1{
 }
 .nav_register{
 	background-position: -146px -93px;
+	width:36px;
+}
+.nav_profil{
+	background-position: -137px -556px;
 	width:36px;
 }
 .nav_help{
@@ -460,6 +482,9 @@ header h1{
         -moz-box-shadow : 2px 1px 5px rgba(0,0,0,0.6);
 	-webkit-box-shadow : 2px 1px 5px rgba(0,0,0,0.6);
 	box-shadow : 2px 1px 5px rgba(0,0,0,0.6);
+}
+#menu a:hover, #menu a:active, #menu a:focus{
+    color:#faba10 !important;
 }
 #menu > ul{
 	background: #2e5071; /* Old browsers */
@@ -663,6 +688,9 @@ header h1{
 .user_menu .item_reservation{
     background: url(../images/elements.png) no-repeat scroll -379px -529px transparent;
 }
+.user_menu .item_profil{
+    background: url(../images/elements.png) no-repeat scroll -410px -557px transparent;
+}
 .user_menu .item_parametre{
     background: url(../images/elements.png) no-repeat scroll -410px -529px transparent;
 }
@@ -749,7 +777,11 @@ header h1{
     width: 280px;
     color:#000;
 }
-
+.tel_precision{
+    font-size: 0.75em;
+    margin-top:5px;
+    font-weight: bold;
+}
 /* ==========================================================================
    Formulaire styles
    ========================================================================== */
@@ -1069,6 +1101,16 @@ btn button.rouge,.button.rouge{
 /* ==========================================================================
    Accueil styles
    ========================================================================== */
+.intro{
+    margin-bottom: 20px;
+    font-size: 1.125em;
+    color:#213952;
+    -background: #213952;
+    padding: 10px;
+}
+#recherche{
+    margin-bottom: 90px;
+}
 .accueil .formulaire, .resultat .formulaire, .ajouter_annonce .formulaire{
     background: #bbbbbb; /* Old browsers */
     background: -moz-linear-gradient(top,  #e0e0e0 0%, #bbb 100%); /* FF3.6+ */
@@ -1091,6 +1133,11 @@ btn button.rouge,.button.rouge{
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
     margin-bottom: 10px;
 }
+.accueil .formulaire .input, .resultat .formulaire .input, .ajouter_annonce .formulaire .input{
+    margin-top: 5px;
+    margin-left: 30px;
+    padding-right: 15px;
+}
 .accueil .formulaire input, .resultat .formulaire input, .ajouter_annonce .formulaire input{
     background-color: #eee;
     border: medium none;
@@ -1101,14 +1148,16 @@ btn button.rouge,.button.rouge{
     -webkit-box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
     box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
     margin-bottom: 15px;
-    -width: 50%;
+    width: 100%;
     color:#000;
-    margin-left: 10px;
-    
     font-weight: bold;
 }
-.accueil .formulaire .input, .resultat .formulaire .input, .ajouter_annonce .formulaire .input{
-    margin-top: 5px;
+.formulaire .date .input{
+    margin-left: 10px;
+    float:left;
+}
+.formulaire .date input{
+    width: 80px;
 }
 .accueil .depart, .accueil .arrivee , .resultat .depart, .resultat .arrivee, .ajouter_annonce .depart, .ajouter_annonce .arrivee{
     margin-top: 20px;
@@ -1123,7 +1172,7 @@ btn button.rouge,.button.rouge{
 }
 .accueil .ico-date, .resultat .ico-date{
     background-position: -389px -211px;
-    height: 60px;
+    height: 55px;
     width: 55px;
     float:left;
     margin-top: 15px;
@@ -1138,7 +1187,12 @@ btn button.rouge,.button.rouge{
     text-align: center;
 }
 .accueil .formulaire .flexibilite, .resultat .formulaire .flexibilite, .ajouter_annonce .formulaire .flexibilite{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    float:left;
+}
+.accueil .formulaire .flexibilite p, .resultat .formulaire .flexibilite p, .ajouter_annonce .formulaire .flexibilite p{
+    font-weight: bold;
+    margin-bottom:7px;
 }
 #rechercher{
     position: relative;
@@ -1150,7 +1204,7 @@ btn button.rouge,.button.rouge{
     padding:10px 30px;
 }
 .accueil #map, .resultat #map, .ajouter_annonce #map{
-    margin: 90px 0 50px;
+    margin: 50px 0;
     -moz-box-shadow: 1px 1px 5px #999999;
     -webkit-box-shadow: 1px 1px 5px #999999;
     box-shadow: 1px 1px 5px #999999;
@@ -1175,6 +1229,23 @@ btn button.rouge,.button.rouge{
     -webkit-box-shadow: -1px 1px 2px #aaa;
     box-shadow: -1px 1px 2px #aaa;
     margin-right: 10px;
+    margin-left: 17px;
+}
+.accueil_annonce .photo .role{
+    background-color : white;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px 0 0 5px;
+    top: 12px;
+    border:1px solid #bbb;
+    box-shadow: 0px 0px 4px 1px #AAAAAA inset;
+    color: #555;
+    float: left;
+    left: 0px;
+    position: absolute;
+}
+.accueil_annonce .photo .role span{
+    clear:both;
+    float:left;
 }
 .accueil_annonce .detail{
     padding-right: 35px;
@@ -1206,6 +1277,160 @@ btn button.rouge,.button.rouge{
 }
 #facebook-page .fb-like-box span,#facebook-page .fb-like-box span ifram{
     width: 100% !important;
+}
+/* ==========================================================================
+   Resultat styles
+   ========================================================================== */
+#resultat .type{
+    background-color:#FDC956;
+    color:#975C25;
+    padding:5px 10px;
+    margin-top:10px;
+}
+#resultat h3 span{
+    font-size:0.875em;
+    line-height: 1.7em;
+    font-weight: normal;
+}
+#resultat .annonce{
+    position: relative;
+    margin: 0;
+    padding: 15px 20px;
+}
+#resultat .paire{
+    background-color: #fff;
+}
+#resultat .annonce +.annonce{
+    border-top: 1px solid #ccc;
+}
+#resultat .annonce .photo{
+    float:left;
+    -moz-box-shadow: -1px 1px 2px #aaa;
+    -webkit-box-shadow: -1px 1px 2px #aaa;
+    box-shadow: -1px 1px 2px #aaa;
+    margin-right: 10px;
+    margin-left: 14px;
+    margin-top:8px;
+    position:relative;
+}
+#resultat .annonce .photo .role{
+    background-color : white;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px 0 0 5px;
+    top: 5px;
+    border:1px solid #bbb;
+    box-shadow: 0px 0px 4px 1px #AAAAAA inset;
+    color: #555;
+    left: -25px;
+    position: absolute;
+}
+#resultat .annonce .photo .role span{
+    clear:both;
+    float:left;
+}
+#resultat .photo a{
+    display: block;
+}
+#resultat .propose:first-letter{
+   text-transform: uppercase;
+}
+#resultat .destination{
+    -float:left;
+}
+#resultat .annonce .detail{
+    padding-right: 130px;
+    padding-left:80px;
+    min-height: 110px;
+}
+#resultat .annonce .detail .destination{
+    font-size: 1.125em;
+    margin-bottom: 5px;
+}
+#resultat .annonce .detail .destination a{
+    text-decoration: none;
+}
+#resultat .annonce .detail .destination a:hover,#resultat .annonce .detail .destination a:active,#resultat .annonce .detail .destination a:focus{
+    text-decoration: none;
+    border-bottom: 1px solid;
+    color:#000 !important;
+}
+#resultat .preferences{
+    float:left;
+    margin-right: 20px;
+}
+#resultat .description{
+    clear:both;
+    font-size:0.875em;
+    color: #666;
+}
+#resultat .place{
+    padding-top: 7px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+#resultat .annonce_date{
+    font-size:1.125em;
+    font-weight: normal;
+    color:#333;
+    float:left;
+}
+#resultat .annonce_heure{
+    font-size:0.875em;
+    font-weight: bold;
+    color:#666;
+    float:left;
+    padding-top: 4px;
+}
+#resultat .annonce .info_prix{
+    color:#666;
+    position:absolute;
+    right:10px;
+    top:10px;
+}
+#resultat .annonce .prix{
+    font-size:1.562em;
+    font-weight: bold;
+}
+#resultat .prix span{
+    font-size: 0.5em;
+    display: block;
+}
+#resultat .button{
+    text-decoration: none;
+}
+#resultat .button:hover,#resultat .button:active,#resultat .button:focus{
+    color:#975C25 !important;
+}
+/* ==========================================================================
+   Pagination styles
+   ========================================================================== */
+.pagination{
+    margin-left: 50%;
+    margin-top: 80px;
+}
+.pagination .current{
+    color:white;
+    background-color:orange;
+    width: 20px;
+    display:block;
+    float:left;
+    text-align: center;
+    border-radius:3px;
+    box-shadow: inset 1px 1px 4px  #492F01;
+    margin:0 5px;
+}
+.pagination a{
+    text-decoration: none;
+    color:#333;
+    width: 20px;
+    display: block;
+    float:left;
+    text-align: center;
+    margin:0 5px;
+}
+.pagination .next, .pagination .prev{
+    font-size: 1.3em;
+    line-height: 1.1em;
 }
 /* ==========================================================================
    Profil styles
@@ -1502,7 +1727,7 @@ textarea.profil_modif{
     margin-bottom: 15px;
 }
 .profil .couleur_vehicule .img_vehicule{
-    background: url(../images/elements.png) no-repeat scroll -288px -346px transparent;
+    background: url(../images/elements.png) no-repeat scroll -6px -557px transparent;
     height:50px;
     width: 121px;
 }
@@ -1606,14 +1831,29 @@ textarea.profil_modif{
 /* ==========================================================================
    AJOUTER ANNONCE styles
    ========================================================================== */
-.ajouter_annonce .choix_conducteur{
-    margin-bottom: 30px;
+.choix_conducteur{
+    margin-bottom: 20px;
+}
+.slider_legend{
+    font-size: 0.75em;
+    display: block;
+    color:#444;
+    margin-bottom: 10px;
+}
+.ico-passager-conducteur + .slider_legend{
+    margin:0 auto;
+    text-align: center;
+}
+.ico-conducteur + .slider_legend{
+    float:right;
+    text-align: right;
+    clear:both;
 }
 .ico-passager, .ico-passager-conducteur, .ico-conducteur{
     display:block;
     background: url(../images/elements.png) no-repeat scroll -2px -330px transparent;
     height: 63px;
-    margin-bottom: 2px;
+    position: relative;
 }
 .ico-passager{
     width: 75px;
@@ -1994,7 +2234,7 @@ textarea.profil_modif{
     margin-left:90px;
     margin-bottom: 10px;
 }
-.annonce_profil .preferences span {
+.annonce_profil .preferences span, #resultat .preferences span {
     background: url("../images/elements.png") no-repeat scroll 0 0 transparent;
     display: block;
     float: left;
@@ -2002,49 +2242,49 @@ textarea.profil_modif{
     margin: 1px;
     width: 30px;
 }
-.annonce_profil .preferences .pref_fumeur0{
+.annonce_profil .preferences .pref_fumeur0, #resultat .preferences .pref_fumeur0{
     background-position:-255px -400px ;
 }
-.annonce_profil .preferences .pref_fumeur1{
+.annonce_profil .preferences .pref_fumeur1, #resultat .preferences .pref_fumeur1{
     background-position:-255px -430px ;
 }
-.annonce_profil .preferences .pref_fumeur2{
+.annonce_profil .preferences .pref_fumeur2, #resultat .preferences .pref_fumeur2{
     background-position:-255px -460px ;
 }
-.annonce_profil .preferences .pref_musique0{
+.annonce_profil .preferences .pref_musique0, #resultat .preferences .pref_musique0{
     background-position:-285px -400px ;
 }
-.annonce_profil .preferences .pref_musique1{
+.annonce_profil .preferences .pref_musique1, #resultat .preferences .pref_musique1{
     background-position:-285px -430px ;
 }
-.annonce_profil .preferences .pref_musique2{
+.annonce_profil .preferences .pref_musique2, #resultat .preferences .pref_musique2{
     background-position:-285px -460px ;
 }
-.annonce_profil .preferences .pref_bagage0{
+.annonce_profil .preferences .pref_bagage0, #resultat .preferences .pref_bagage0{
     background-position:-315px -400px ;
 }
-.annonce_profil .preferences .pref_bagage1{
+.annonce_profil .preferences .pref_bagage1, #resultat .preferences .pref_bagage1{
     background-position:-315px -430px ;
 }
-.annonce_profil .preferences .pref_bagage2{
+.annonce_profil .preferences .pref_bagage2, #resultat .preferences .pref_bagage2{
     background-position:-315px -460px ;
 }
-.annonce_profil .preferences .pref_discussion0{
+.annonce_profil .preferences .pref_discussion0, #resultat .preferences .pref_discussion0{
     background-position:-345px -400px ;
 }
-.annonce_profil .preferences .pref_discussion1{
+.annonce_profil .preferences .pref_discussion1, #resultat .preferences .pref_discussion1{
     background-position:-345px -430px ;
 }
-.annonce_profil .preferences .pref_discussion2{
+.annonce_profil .preferences .pref_discussion2, #resultat .preferences .pref_discussion2{
     background-position:-345px -460px ;
 }
-.annonce_profil .preferences .pref_animaux0{
+.annonce_profil .preferences .pref_animaux0, #resultat .preferences .pref_animaux0{
     background-position:-375px -400px ;
 }
-.annonce_profil .preferences .pref_animaux1{
+.annonce_profil .preferences .pref_animaux1, #resultat .preferences .pref_animaux1{
     background-position:-375px -430px ;
 }
-.annonce_profil .preferences .pref_animaux2{
+.annonce_profil .preferences .pref_animaux2, #resultat .preferences .pref_animaux2{
     background-position:-375px -460px ;
 }
 .annonce_profil .vehicule{
@@ -2600,33 +2840,34 @@ div.colorPicker-swatch {
      }
     
 }
-@media only screen and (max-width: 340px) {/*MINI PHONE*/
+@media only screen and (max-width: 2040px) {/*MINI PHONE*/
     .ico-passager, .ico-passager-conducteur, .ico-conducteur{
-        background: url(../images/elements.png) no-repeat scroll -285px -307px transparent;
-        height: 37px;
-        margin-bottom: 5px;
+        background: url(../images/elements.png) no-repeat scroll -277px -312px transparent;
+        height: 40px;
     }
     .ico-passager{
-        width: 48px;
+        width: 53px;
     }
     .ico-passager.select{
-        background-position: -285px -271px;
+        background-position: -277px -269px;
     }
     .ico-passager-conducteur{
-        background-position: -392px -307px;
-        width: 52px;
+        background-position: -342px -355px;
+        width: 58px;
     }
     .ico-passager-conducteur.select{
-        background-position: -392px -271px;
+        background-position: -279px -355px;
     }
     .ico-conducteur{
-        background-position: -338px -307px;
-        width:45px;
+        background-position: -340px -312px;
+        width:52px;
     }
     .ico-conducteur.select{
-        background-position: -338px -271px;
+        background-position: -340px -269px;
     }
-
+    .slider_legend{
+        text-align: left;
+    }
 }
    
    

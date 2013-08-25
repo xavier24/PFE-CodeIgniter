@@ -203,8 +203,8 @@ class User extends CI_Controller {
     public function upload(){
         //recupere les données sessions
         $user_data = $this->M_Ajax->get_cookie_session_data();
-        $user_id = $user_data->user_id;
-        
+        $user_id = $user_data->user_id; 
+                
         //donne les parametres de upload
         $titre = time().rand(1000,9999);
         $config['upload_path'] = './web/images/membre/tmp';
@@ -221,7 +221,7 @@ class User extends CI_Controller {
         if ( ! $this->upload->do_upload('photo')){
             $error = $this->upload->display_errors();
             $this->session->set_flashdata('upload_error',$error);
-            redirect('user/profil');
+            redirect('user/profil/'.$user_id);
         }
         //si upload OK
         else{
@@ -335,6 +335,7 @@ class User extends CI_Controller {
            }
         }
         else {
+            echo true;
             redirect('user/profil/'.$user_id);
         }
         

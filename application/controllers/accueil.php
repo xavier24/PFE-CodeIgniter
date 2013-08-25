@@ -43,7 +43,6 @@ class Accueil extends CI_Controller {
 	            $dataList['annonces'][$i]->parite = 1;
                 }  
                 
-                
                 if($dataList['annonces'][$i]->prix > $dataList['annonces'][$i]->prix_conseil){
                     $dataList['annonces'][$i]->bestprice = 1;
                 }
@@ -52,7 +51,7 @@ class Accueil extends CI_Controller {
                 }
             }
             
-            //var_dump($dataList['annonces']);
+            
             
             if($this->session->userdata('lang')){ 
                 $dataList['lang'] = $this->session->userdata('lang');
@@ -145,19 +144,10 @@ class Accueil extends CI_Controller {
                 }
             }
             //valeur pagination
-            $pagination = 1;
+            $pagination = 10;
             $page = $page_annonces = $page_rayons = $page_parcours = 1;
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
-            }
-            if(isset($_GET['a_page'])){
-                $page_annonces = $_GET['a_page'];
-            }
-            if(isset($_GET['r_page'])){
-                $page_rayons = $_GET['r_page'];
-            }
-            if(isset($_GET['p_page'])){
-                $page_parcours = $_GET['p_page'];
             }
             
         //recup coordonnée depuis ID ville    
@@ -217,8 +207,19 @@ class Accueil extends CI_Controller {
         //ANNONCES        
             for($i=0 ;$i < count($tri_annonces) ;$i++){
                 
-                if($i >= ($pagination*($page-1)-1+$pagination) && $i <($pagination*$page)-1+$pagination){
+                if($i >= ($pagination*($page-1)) && $i <($pagination*$page)){
                     $annonce = $tri_annonces[$i];
+                    
+                    $numero = $i%2;
+                    if ($numero == 0){
+                        $annonce->parite = 0;
+                    } else {
+                        $annonce->parite = 1;
+                    }
+                    
+                    if($annonce->commentaire_annonce){
+                        $annonce->commentaire_annonce = $this->tronque($annonce->commentaire_annonce,100);
+                    }
                     
                     if($annonce->prix > $annonce->prix_conseil){
                         $annonce->bestprice = 1;
@@ -226,15 +227,25 @@ class Accueil extends CI_Controller {
                     else{
                         $annonce->bestprice = 0;
                     }
-                    $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no');
+                    $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no','no');
                     array_push($dataList['annonces'],$annonce);
                 }
             }
        //RAYONS
             for($i=0 ;$i < count($tri_rayons) ;$i++){
                 
-                if( $i >= ($pagination*($page-1)-1+$pagination) && $i <($pagination*$page)-1+$pagination){
+                if($i >= ($pagination*($page-1)) && $i <($pagination*$page)){
                     $annonce = $tri_rayons[$i];
+                    $numero = $i%2;
+                    if ($numero == 0){
+                        $annonce->parite = 0;
+                    } else {
+                        $annonce->parite = 1;
+                    }
+                    
+                    if($annonce->commentaire_annonce){
+                        $annonce->commentaire_annonce = $this->tronque($annonce->commentaire_annonce,100);
+                    }
                     
                     if($annonce->prix > $annonce->prix_conseil){
                         $annonce->bestprice = 1;
@@ -242,7 +253,7 @@ class Accueil extends CI_Controller {
                     else{
                         $annonce->bestprice = 0;
                     }
-                    $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no');
+                    $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no','no');
                     array_push($dataList['rayons'],$annonce);
                 }
             }     
@@ -255,17 +266,29 @@ class Accueil extends CI_Controller {
             }
             
             for($i=0 ;$i < count($triParcours) ;$i++){
-                if($i >= ($pagination*($page-1)-1+$pagination) && $i <($pagination*$page)-1+$pagination){
+                if($i >= ($pagination*($page-1)) && $i <=($pagination*$page)){
                     $annonce = $triParcours[$i];
                
                     if(!in_array($annonce->id, $id_annonce)){
+                        
+                        $numero = $i%2;
+                        if ($numero == 0){
+                            $annonce->parite = 0;
+                        } else {
+                            $annonce->parite = 1;
+                        }
+                        
+                        if($annonce->commentaire_annonce){
+                            $annonce->commentaire_annonce = $this->tronque($annonce->commentaire_annonce,100);
+                        }
+                        
                         if($annonce->prix > $annonce->prix_conseil){
                             $annonce->bestprice = 1;
                         }
                         else{
                             $annonce->bestprice = 0;
                         }
-                        $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no');
+                        $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no','no');
 
                         array_push($dataList['parcours'], $annonce);
                     }
@@ -276,7 +299,10 @@ class Accueil extends CI_Controller {
     //PAGINATION
             $count_annonces = count($tri_annonces);
             $count_rayons = count($tri_rayons);
-            $count_parcours = count($resultat['parcours'])-$count_annonces-$count_rayons;
+            $count_parcours = 0;
+            if($resultat['parcours']){
+                $count_parcours = count($resultat['parcours'])-$count_annonces-$count_rayons;
+            }
             $count_max = max($count_annonces,$count_rayons,$count_parcours); 
         
             if($count_max>$pagination){
@@ -287,73 +313,25 @@ class Accueil extends CI_Controller {
                 $config ['query_string_segment'] = 'page';
                 $config['first_url']=current_url()."?".$current_url.'&page=1';
                 $config['use_page_numbers'] = true;
+                $config ['full_tag_open'] = '<div>';
+                $config ['full_tag_close'] = '</div>';
+                $config['first_link'] = 'First';
+                $config['last_link'] = 'Last';
+                $config ['prev_tag_open'] = '<span class="prev">';
+                $config ['prev_link'] = '<span class="icon-left-dir-1"></span>';
+                $config ['prev_tag_close'] = '</span>';
+                $config ['cur_tag_open'] = '<span class="current">';
+                $config ['cur_tag_close'] = '</span>';
+                $config ['next_tag_open'] = '<span class="next"> ';
+                $config ['next_link'] = '<span class="icon-right-dir-1"></span>';
+                $config ['next_tag_close'] = '</span>';
                 $config['total_rows'] = $count_max;
                 $config['per_page'] = $pagination;
                 $this->pagination->initialize($config);
 
                 $dataList['pagination'] = $this->pagination->create_links();
             }
-            
-            
-            
-        /*
-        //PAGINATION ANNONCES
-            $count_annonces = count($tri_annonces);
-            if($count_annonces>$pagination){
-                $current_url = preg_replace('/&a_page=\d/','',urldecode($_SERVER['QUERY_STRING']));
-                $config['base_url'] = current_url()."?".$current_url;
-                $config['num_links'] = '10';
-                $config ['page_query_string'] = true;
-                $config ['query_string_segment'] = 'a_page';
-                $config['first_url']=current_url()."?".$current_url.'&a_page=1';
-                $config['use_page_numbers'] = true;
-                $config['total_rows'] = $count_annonces;
-                $config['per_page'] = $pagination;
-                $this->pagination->initialize($config);
-
-                $dataList['pagination']['annonces'] = $this->pagination->create_links();
-            }
-            
-    
-        
-        //PAGINATION RAYON
-            $count_rayons = count($tri_rayons);
-            if($count_rayons>$pagination){
-                $current_url = preg_replace('/&r_page=\d/','',urldecode($_SERVER['QUERY_STRING']));
-                $config['base_url'] = current_url()."?".$current_url;
-                $config['num_links'] = '10';
-                $config ['page_query_string'] = true;
-                $config ['query_string_segment'] = 'r_page';
-                $config['first_url']=current_url()."?".$current_url.'&r_page=1';
-                $config['use_page_numbers'] = true;
-                $config['total_rows'] = $count_rayons;
-                $config['per_page'] = $pagination;
-                $this->pagination->initialize($config);
-
-                $dataList['pagination']['rayons'] = $this->pagination->create_links();
-            }
-            
-    
-        //PAGINATION PARCOURS
-            $count_parcours = count($this->M_Accueil->parcours($req,$today))-$count_rayons-$count_annonces;
-            //var_dump($count_parcours);
-            $config= array();
-            
-            if($count_parcours>$pagination){
-                $current_url = preg_replace('/&p_page=\d/','',urldecode($_SERVER['QUERY_STRING']));
-                $config['base_url'] = current_url()."?".$current_url;
-                $config['num_links'] = '10';
-                $config ['page_query_string'] = true;
-                $config['first_url']=current_url()."?".$current_url.'&p_page=1';
-                $config ['query_string_segment'] = 'p_page';
-                $config['use_page_numbers'] = true;
-                $config['total_rows'] = $count_parcours;
-                $config['per_page'] = $pagination;
-                $this->pagination->initialize($config);
-
-                $dataList['pagination']['parcours'] = $this->pagination->create_links();       
-            }*/
-            
+           
         //LANGUES    
             if($this->session->userdata('lang')){ 
                 $dataList['lang'] = $this->session->userdata('lang');
@@ -381,5 +359,19 @@ class Accueil extends CI_Controller {
             $data['vue'] = $this->load->view('recherche',$dataList,true);
             $this->load->view('layout',$data);
             
+        }
+        
+        function tronque($str, $nb = 150) 
+{
+            // Si le nombre de caractères présents dans la chaine est supérieur au nombre 
+            // maximum, alors on découpe la chaine au nombre de caractères 
+            if (strlen($str) > $nb) 
+            {
+                $str = substr($str, 0, $nb);
+                $position_espace = strrpos($str, " "); //on récupère l'emplacement du dernier espace dans la chaine, pour ne pas découper un mot.
+                $texte = substr($str, 0, $position_espace);  //on redécoupe à la fin du dernier mot
+                $str = $str."..."; //puis on rajoute des ...
+            }
+            return $str; //on retourne la variable modifiée
         }
 }

@@ -1,26 +1,47 @@
 <section class="content">
     <div class="row-fluid accueil">
-        <h1><?php echo $titre ?></h1>
-        <?php echo form_open('accueil/recherche',array('method'=>'post', 'class'=>'clearfix')); ?>
+        <div class="row-fluid">
+            <div class="span6 intro">
+                Organisez <span class="orange">simplement</span> et <span class="orange">rapidement</span> votre covoiturage grâce à Car People et faites ainsi des <span class="orange">économies</span>. 
+                Voyagez dans la bonne humeur et la convivialité avec des personnes se rendant aux même endroits que vous. 
+                
+            </div>
+        </div>
+        
+        <?php echo form_open('accueil/recherche',array('method'=>'post','id'=>'recherche','class'=>'clearfix')); ?>
         <?php if(isset($error)){
             echo'<div class="error"><p>Veuillez préciser '.$error.' du voyage</p></div>';
         }?>
-        <div id="recherche" class="formulaire">
+        <div class="formulaire">
             <h2>Je suis </h2>
             <div class="clearfix row-fluid">
                 <div class="span4">
                     <div class="choix_conducteur">
                         <div class="row-fluid clearfix">
-                            <div class="span4"><span class="choix_conducteur0 ico-passager"></span></div>
-                            <div class="span4"><span class="choix_conducteur1 ico-passager-conducteur"></span></div>
-                            <div class="span4"><span class="choix_conducteur2 ico-conducteur"></span></div>
+                            <div class="span4">
+                                <span class="choix_conducteur0 ico-passager">
+                                    
+                                </span><span class="slider_legend">Passager</span>
+                            </div>
+                            <div class="span4">
+                                <span class="choix_conducteur1 ico-passager-conducteur">
+                                    
+                                </span><span class="slider_legend">L'un ou l'autre</span>
+                            </div>
+                            <div class="span4">
+                                <span class="choix_conducteur2 ico-conducteur">
+                                    
+                                </span><span class="slider_legend">Conducteur</span>
+                            </div>
                         </div>
                         <input type="hidden" id="input_conducteur" name="input_conducteur" value="<?php echo isset($donnee['conducteur']) ? $donnee['conducteur'] : "1" ; ?>" />
                         <div id="slider_conducteur">
                         </div>
                     </div> 
                 </div>
-                <div class="span3 offset1">
+            </div>
+            <div class="row-fluid">
+                <div class="span4">
                     <h2>De</h2>
                     <div class="depart clearfix">
                         <label class="ico-depart"></label>
@@ -50,22 +71,15 @@
                         <input id="input_arrivee_lng" name="input_arrivee_lng" type="hidden" <?php echo isset($donnee['arrivee_lng']) ? 'value="'.$donnee['arrivee_lng'].'"' : "" ; ?> />
                     </div>
                 </div>
-            </div>
-            <div class="clearfix row-fluid">
-                
                 <div class="span4">
+                    <h2 class=>Date</h2>
                     <div class="date clearfix">
-                        <h2 class=>Date</h2>
                         <label for="input_date" class="ico-date"></label>
                         <div class="input">
                             <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="champ" type="date" placeholder="JJ/MM/AAAA" />
                         </div>
-                    </div>
-                </div>
-                <div class="span4">
-                    <div class="clearfix">
                         <div class="flexibilite clearfix">
-                            <h2>Fléxibilité</h2>
+                            <p>Fléxibilité</p>
                             <div class="select_flexible">
                                 <span>+/- </span>
                                 <select name="input_flexibilite">
@@ -84,17 +98,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="span4">
+            </div>
+            <div class="clearfix row-fluid">
+                <div class="span2 offset8">
                     <div class="clearfix">
                         <div class="btn clearfix btn_check">
                             <label class="bouton_contour bouton_gris" for="input_retour">
                                 <span class="button gris">
                                     <span class="icon-loop-alt-1"></span>
-                                    Allée-retour
+                                    Retour
                                 </span>
                             </label>
                             <input id="input_retour" class="hidden show_retour" type="checkbox" name="input_retour" value="1" <?php if(isset($donnee['retour'])){if($donnee['retour']){ echo 'checked="checked"';}} ?>/>
                         </div>
+                    </div>
+                </div>
+                <div class="span2">
+                    <div class="clearfix">
                         <div class="btn clearfix btn_check">
                             <label class="bouton_contour bouton_gris" for="input_regulier">
                                 <span class="button gris">
@@ -117,15 +137,23 @@
         </div>
         <?php echo form_close(); ?>
         <div class="row-fluid clearfix">
-            <div id="map"></div>
-        </div>
-        <div class="row-fluid clearfix">
             <div class="span8 clearfix">
                 <h3>Les prochains départs</h3>                
                 <?php if($annonces){
                 foreach($annonces as $annonce): ?>
                     <div id="annonce_<?php echo $annonce->id ?>"class="accueil_annonce clearfix <?php echo $annonce->parite ? "paire" : "impaire" ?>">
                         <div class="photo" >
+                            <p class="role">
+                            <?php if($annonce->conducteur== '2'){
+                               echo '<span class=" icon-steering-wheel"></span>';
+                            } 
+                            elseif($annonce->conducteur=='0'){
+                                echo '<span class="icon-suitcase-1"></span>';
+                            }
+                            else{
+                                echo '<span class="icon-suitcase-1"></span><span class="icon-steering-wheel"></span>';
+                            } ?>
+                            </p>
                             <img src="<?php echo base_url().'web/images/membre/thumb/thumb_'; echo $annonce->photo ? $annonce->photo : 'default.jpg' ?>"/>                            
                         </div>
                         <div class="detail">
@@ -148,9 +176,14 @@
                     </div>
                 <?php endforeach; 
                 }?>
-                
             </div>
-            <div class="span3 offset1"><?php include('include/facebook.php'); ?></div>
+            <div class="span4">
+                <img src="http://fakeimg.pl/300x250/?text=Pub">
+                <?php include('include/facebook.php'); ?>
+            </div>
+        </div>
+        <div class="row-fluid clearfix">
+            <div id="map"></div>
         </div>
         <div class="pub">
             <img src="<?php echo base_url() ?>web/images/pub/pub_1.jpg" />

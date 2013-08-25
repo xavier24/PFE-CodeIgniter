@@ -6,6 +6,7 @@
 
 	// --- global vars
         var baseUrl = location.origin + "/PFE-CodeIgniter",
+            $loginForm,
             $slideCompte,
             $lang,
             $edit,
@@ -68,7 +69,29 @@
         
         
     //MENU    
-	var loginForm = function(){ //slide connexion menu (portable)
+	var login = function(e){
+            e.preventDefault();
+            var $email = $('#email').val();
+            var $mdp = $('#mdp').val();
+            var $souvenir = $('#souvenir').val();
+            $.ajax({
+               url:baseUrl+'/ajax/login',
+               type:'POST',
+               dataType: "json",
+               data: { email: $email, mdp:$mdp, souvenir:$souvenir },
+               success: function($data){
+                   if($data){
+                       console.log($data);
+                       $('#erreur_login').text($data).removeClass("hidden");
+                   }
+                   else{
+                       location.reload();
+                   }
+               }               
+            });
+        }
+        
+        var loginFormSlide = function(){ //slide connexion menu (portable)
             $(this).parent().next().children('.slideBlock').slideToggle();
             $(this).parent().parent().toggleClass('ouvert');
         };//loginForm
@@ -211,7 +234,8 @@
         $( function () {
 
             // --- onload routines
-		$slideCompte = $('.slide_compte');
+		$loginForm = $('#login_form');
+                $slideCompte = $('.slide_compte');
                 $lang = $('.btn_lang');
                 $edit = $(".edit");
                 $editPhoto = $(".edit_photo");
@@ -227,7 +251,8 @@
                 
                 
             // --- events
-                $slideCompte.on('click',loginForm);
+                $loginForm.on('submit',login)
+                $slideCompte.on('click',loginFormSlide);
                 $lang.on('click',changeLang);
                 $edit.on("click", editProfil);
                 $editPhoto.on('click',uploadPhoto);

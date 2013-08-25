@@ -1,19 +1,32 @@
 <section class="content">
     <div class="row-fluid resultat">
+        
         <h1><?php echo $titre ?></h1>
-        <?php echo form_open('accueil/recherche',array('method'=>'post', 'class'=>'clearfix')); ?>
+        <?php echo form_open('accueil/recherche',array('method'=>'post','id'=>'recherche', 'class'=>'clearfix')); ?>
         <?php if(isset($error)){
             echo'<div class="error"><p>Veuillez préciser '.$error.' du voyage</p></div>';
         }?>
-        <div id="recherche" class="formulaire">
+        <div class="formulaire">
             <h2>Je suis </h2>
             <div class="clearfix row-fluid">
                 <div class="span4">
                     <div class="choix_conducteur">
                         <div class="row-fluid clearfix">
-                            <div class="span4"><span class="choix_conducteur0 ico-passager"></span></div>
-                            <div class="span4"><span class="choix_conducteur1 ico-passager-conducteur"></span></div>
-                            <div class="span4"><span class="choix_conducteur2 ico-conducteur"></span></div>
+                            <div class="span4">
+                                <span class="choix_conducteur0 ico-passager">
+                                    
+                                </span><span class="slider_legend">Passager</span>
+                            </div>
+                            <div class="span4">
+                                <span class="choix_conducteur1 ico-passager-conducteur">
+                                    
+                                </span><span class="slider_legend">L'un ou l'autre</span>
+                            </div>
+                            <div class="span4">
+                                <span class="choix_conducteur2 ico-conducteur">
+                                    
+                                </span><span class="slider_legend">Conducteur</span>
+                            </div>
                         </div>
                         <input type="hidden" id="input_conducteur" name="input_conducteur" value="<?php echo isset($donnee['conducteur']) ? $donnee['conducteur'] : "1" ; ?>" />
                         <div id="slider_conducteur">
@@ -21,8 +34,8 @@
                     </div> 
                 </div>
             </div>
-            <div class="clearfix row-fluid">
-                <div class="span3">
+            <div class="row-fluid">
+                <div class="span4">
                     <h2>De</h2>
                     <div class="depart clearfix">
                         <label class="ico-depart"></label>
@@ -37,7 +50,7 @@
                         <input id="input_depart_lng" name="input_depart_lng" type="hidden" <?php echo isset($donnee['depart_lng']) ? 'value="'.$donnee['depart_lng'].'"' : "" ; ?> />
                     </div>
                 </div>
-                <div class="span3">
+                <div class="span4">
                     <h2>à</h2>
                     <div class="arrivee clearfix">
                         <label class="ico-arrivee"></label>
@@ -52,19 +65,15 @@
                         <input id="input_arrivee_lng" name="input_arrivee_lng" type="hidden" <?php echo isset($donnee['arrivee_lng']) ? 'value="'.$donnee['arrivee_lng'].'"' : "" ; ?> />
                     </div>
                 </div>
-                <div class="span3">
+                <div class="span4">
+                    <h2 class=>Date</h2>
                     <div class="date clearfix">
-                        <h2 class=>Date</h2>
                         <label for="input_date" class="ico-date"></label>
                         <div class="input">
                             <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="champ" type="date" placeholder="JJ/MM/AAAA" />
                         </div>
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="clearfix">
                         <div class="flexibilite clearfix">
-                            <h2>Fléxibilité</h2>
+                            <p>Fléxibilité</p>
                             <div class="select_flexible">
                                 <span>+/- </span>
                                 <select name="input_flexibilite">
@@ -81,15 +90,25 @@
                                 <span> jours</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix row-fluid">
+                <div class="span2 offset8">
+                    <div class="clearfix">
                         <div class="btn clearfix btn_check">
                             <label class="bouton_contour bouton_gris" for="input_retour">
                                 <span class="button gris">
                                     <span class="icon-loop-alt-1"></span>
-                                    Allée-retour
+                                    Retour
                                 </span>
                             </label>
                             <input id="input_retour" class="hidden show_retour" type="checkbox" name="input_retour" value="1" <?php if(isset($donnee['retour'])){if($donnee['retour']){ echo 'checked="checked"';}} ?>/>
                         </div>
+                    </div>
+                </div>
+                <div class="span2">
+                    <div class="clearfix">
                         <div class="btn clearfix btn_check">
                             <label class="bouton_contour bouton_gris" for="input_regulier">
                                 <span class="button gris">
@@ -111,137 +130,47 @@
             </div>
         </div>
         </form>
-        <div class="row-fluid">
-            <h3><?php echo $soustitre ?> <span class="nb_result"><?php echo $total_annonce ?> résultats</span></h3> 
-            <?php if($annonces || $rayons || $parcours){    
-                if($annonces){
-                   echo '<div class="exact">';
-                   foreach($annonces as $annonce): ?>
-                       <div class="annonce clearfix">
-                           <div class="photo" >
-                               <img src="<?php echo base_url().'web/images/membre/thumb/thumb_'; echo $annonce->photo ? $annonce->photo : 'default.jpg' ?>"/>                            
-                               <span><?php echo $annonce->conducteur ?></span>
-                           </div>
-                           <div class="detail">
-                               <p class="destination">
-                                   <a class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
-                                       <span class="ville"><?php echo $annonce->$ville_depart_lang ? $annonce->$ville_depart_lang : $annonce->ville_depart_fr ?></span>
-                                       <span class="icon-right-thin"></span>
-                                       <span class="ville"><?php echo $annonce->$ville_arrivee_lang ? $annonce->$ville_arrivee_lang : $annonce->ville_arrivee_fr ?></span>
-                                   </a>
-                               </p>
-                               <p class="horaire">
-                                   <span class="annonce_date"><?php echo $annonce->date ?></span>
-                                    à 
-                                   <span class="annonce_heure"><?php echo $annonce->heure ?></span>
-                               </p>
-                               <p class="places"><?php echo $annonce->places ?> pl. disponibles</p>
-                           </div>
-                           <div class="prix tooltip" title="Trouvez les trajets au meilleur prix.">
-                               <p class="<?php echo $annonce->bestprice ? "orange" : "vert" ?>"><?php echo $annonce->prix ?>€</p>
-                           </div>
-                           <div class="voir_annonce btn clearfix">
-                               <div class="bouton_contour bouton_orange">
-                                   <a href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
-                                       <span type="submit" value="true" class="button orange">
-                                           Voir l'annonce
-                                       </span>
-                                   </a>
-                               </div>
-                           </div>
+        <div id="resultat" class="row-fluid">
+            <div class="span8">
+                <h3><?php echo $soustitre ?> <span class="nb_result"><?php echo $total_annonce ?> résultats</span></h3> 
+                <?php if($annonces || $rayons || $parcours){    
+                    if($annonces){?>
+                        <div class="exact">
+                        <h3 class="type">De votre départ</h3>
+                        <?php foreach($annonces as $annonce): 
+                            include('include/resultat_annonce.php');
+                        endforeach;?>
+                        </div>
+                    <?php }
+                    if($rayons){?>
+                        <div class="rayons">
+                        <h3 class="type">Dans un rayon de 25km</h3>
+                        <?php foreach($rayons as $annonce): 
+                            include('include/resultat_annonce.php');
+                        endforeach;?>
                        </div>
-                   <?php endforeach;
-                   echo '</div>';
+                    <?php }
+                    if($parcours){ ?>
+                    <div class="parcours">
+                        <h3 class="type">Passe par chez vous</h3>
+                        <?php foreach($parcours as $annonce): 
+                            include('include/resultat_annonce.php');
+                        endforeach;?>
+                    </div>  
+                   <?php }
                 }
-                if($rayons){
-                    echo '<div class="rayons">';
-                    echo '<h3>Dans un rayon de 25km</h3>';
-                    //var_dump($annonces);
-                    foreach($rayons as $annonce): ?>
-                        <div class="annonce clearfix">
-                            <div class="photo" >
-                                <img src="<?php echo base_url().'web/images/membre/thumb/thumb_'; echo $annonce->photo ? $annonce->photo : 'default.jpg' ?>"/>                            
-                                <span><?php echo $annonce->conducteur ?></span>
-                            </div>
-                            <div class="detail">
-                                <p class="destination">
-                                    <a class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
-                                        <span class="ville"><?php echo $annonce->$ville_depart_lang ? $annonce->$ville_depart_lang : $annonce->ville_depart_fr ?></span>
-                                        <span class="icon-right-thin"></span>
-                                        <span class="ville"><?php echo $annonce->$ville_arrivee_lang ? $annonce->$ville_arrivee_lang : $annonce->ville_arrivee_fr ?></span>
-                                    </a>
-                                </p>
-                                <p class="horaire">
-                                    <span class="annonce_date"><?php echo $annonce->date ?></span>
-                                     à 
-                                    <span class="annonce_heure"><?php echo $annonce->heure ?></span>
-                                </p>
-                                <p class="places"><?php echo $annonce->places ?> pl. disponibles</p>
-                            </div>
-                            <div class="prix tooltip" title="Trouvez les trajets au meilleur prix.">
-                                <p class="<?php echo $annonce->bestprice ? "orange" : "vert" ?>"><?php echo $annonce->prix ?>€</p>
-                            </div>
-                            <div class="voir_annonce btn clearfix">
-                                <div class="bouton_contour bouton_orange">
-                                    <a href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
-                                        <span type="submit" value="true" class="button orange">
-                                            Voir l'annonce
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach;
-                    echo '</div>';
+                else{
+                    echo '<p>Aucun trajet ne correspont à votre recherche.</p>';
                 }?>
-                <?php if($parcours){ ?>
-                <div class="parcours">
-                    <h3>Passe par chez vous</h3>
-                    <?php foreach($parcours as $annonce): ?>
-                        <div class="annonce clearfix">
-                            <div class="photo" >
-                                <img src="<?php echo base_url().'web/images/membre/thumb/thumb_'; echo $annonce->photo ? $annonce->photo : 'default.jpg' ?>"/>                            
-                                <span><?php echo $annonce->conducteur ?></span>
-                            </div>
-                            <div class="detail">
-                                <p class="destination">
-                                    <a class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
-                                        <span class="ville"><?php echo $annonce->$ville_depart_lang ? $annonce->$ville_depart_lang : $annonce->ville_depart_fr ?></span>
-                                        <span class="icon-right-thin"></span>
-                                        <span class="ville"><?php echo $annonce->$ville_arrivee_lang ? $annonce->$ville_arrivee_lang : $annonce->ville_arrivee_fr ?></span>
-                                    </a>
-                                </p>
-                                <p class="horaire">
-                                    <span class="annonce_date"><?php echo $annonce->date ?></span>
-                                     à 
-                                    <span class="annonce_heure"><?php echo $annonce->heure ?></span>
-                                </p>
-                                <p class="places"><?php echo $annonce->places ?> pl. disponibles</p>
-                            </div>
-                            <div class="prix tooltip" title="Trouvez les trajets au meilleur prix.">
-                                <p class="<?php echo $annonce->bestprice ? "orange" : "vert" ?>"><?php echo $annonce->prix ?>€</p>
-                            </div>
-                            <div class="voir_annonce btn clearfix">
-                                <div class="bouton_contour bouton_orange">
-                                    <a href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
-                                        <span type="submit" value="true" class="button orange">
-                                            Voir l'annonce
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach;
-                echo '</div>';    
-                }
-            }
-            else{
-                echo '<p>Aucun trajet ne correspont à votre recherche.</p>';
-            }?>
-            
-            <?php if(isset($pagination)){
-                echo '<div class="pagination">'.$pagination.'</div>';
-            }?>
+
+                <?php if(isset($pagination)){
+                    echo '<div class="pagination">'.$pagination.'</div>';
+                }?>
+            </div>
+            <div class="span4">
+                <img src="http://fakeimg.pl/300x250/?text=Pub">
+                <?php include('include/facebook.php'); ?>
+            </div>
         </div>
 </section>
 <script type="text/javascript">

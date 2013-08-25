@@ -21,7 +21,7 @@
                 </a>': 
                 '<a href="'.base_url().'user/profil/'.$user_data->user_id.'">
                     <span class="visible-desktop">'.lang('mon_profil').'</span>
-                    <span class="hidden-desktop nav_register"></span>
+                    <span class="hidden-desktop nav_profil"></span>
                 </a>' 
             ?>
         </li>

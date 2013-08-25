@@ -148,7 +148,7 @@
                     <?php } ?>
                     <div class="commentaire">
                         <h5>Commentaire</h5>
-                        <p><?php echo $annonce->commentaire ? $annonce->commentaire : "Pas de commentaire" ?></p>
+                        <p><?php echo $annonce->commentaire_annonce ? $annonce->commentaire_annonce : "Pas de commentaire" ?></p>
                     </div>
                     <?php if($annonce->calendar != ""){?>
                     <div class="regulier">
