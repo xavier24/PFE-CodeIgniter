@@ -227,6 +227,9 @@ class Accueil extends CI_Controller {
                     else{
                         $annonce->bestprice = 0;
                     }
+                    
+                    $annonce->places_annonce = $annonce->places_annonce - $annonce->reservations;  
+                    
                     $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no','no');
                     array_push($dataList['annonces'],$annonce);
                 }
@@ -253,6 +256,7 @@ class Accueil extends CI_Controller {
                     else{
                         $annonce->bestprice = 0;
                     }
+                    $annonce->places_annonce = $annonce->places_annonce - $annonce->reservations;
                     $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no','no');
                     array_push($dataList['rayons'],$annonce);
                 }
@@ -288,6 +292,7 @@ class Accueil extends CI_Controller {
                         else{
                             $annonce->bestprice = 0;
                         }
+                        $annonce->places_annonce = $annonce->places_annonce - $annonce->reservations;
                         $annonce->date = $this->M_Date->dateLongue($annonce->date,'no','no','no');
 
                         array_push($dataList['parcours'], $annonce);
@@ -361,12 +366,10 @@ class Accueil extends CI_Controller {
             
         }
         
-        function tronque($str, $nb = 150) 
-{
+        public function tronque($str, $nb = 150){
             // Si le nombre de caractères présents dans la chaine est supérieur au nombre 
             // maximum, alors on découpe la chaine au nombre de caractères 
-            if (strlen($str) > $nb) 
-            {
+            if (strlen($str) > $nb){
                 $str = substr($str, 0, $nb);
                 $position_espace = strrpos($str, " "); //on récupère l'emplacement du dernier espace dans la chaine, pour ne pas découper un mot.
                 $texte = substr($str, 0, $position_espace);  //on redécoupe à la fin du dernier mot

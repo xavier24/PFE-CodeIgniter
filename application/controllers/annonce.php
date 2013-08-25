@@ -93,17 +93,29 @@ class Annonce extends CI_Controller {
                 redirect('accueil');
             }
             
-            $dataList['annonces'] = $this->M_Annonce->lister($dataList['user_data']->user_id);
+            $dataList['mes_reservations'] = $this->M_Annonce->getMyReservation('demandeurID',$dataList['user_data']->user_id,'annonceurID');
             
-            for($i=0;$i<count($dataList['annonces']);$i++){
+            $dataList['demande_reservation'] = $this->M_Annonce->getMyReservation('annonceurID',$dataList['user_data']->user_id,'demandeurID');
+            
+            for($i=0;$i<count($dataList['mes_reservations']);$i++){
                 $numero = $i%2;
                 if ($numero == 0){
-	            $dataList['annonces'][$i]->parite = 0;
+	            $dataList['mes_reservations'][$i]->parite = 0;
 	        } else {
-	            $dataList['annonces'][$i]->parite = 1;
+	            $dataList['mes_reservations'][$i]->parite = 1;
                 }
-                $dataList['annonces'][$i]->date = $this->M_Date->dateLongue($dataList['annonces'][$i]->date,false,false);
+                $dataList['mes_reservations'][$i]->date = $this->M_Date->dateLongue($dataList['mes_reservations'][$i]->date,false,false,false);
             }            
+            
+            for($i=0;$i<count($dataList['demande_reservation']);$i++){
+                $numero = $i%2;
+                if ($numero == 0){
+	            $dataList['demande_reservation'][$i]->parite = 0;
+	        } else {
+	            $dataList['demande_reservation'][$i]->parite = 1;
+                }
+                $dataList['demande_reservation'][$i]->date = $this->M_Date->dateLongue($dataList['demande_reservation'][$i]->date,false,false,false);
+            } 
             
             if($this->session->userdata('lang')){ 
                 $dataList['lang'] = $this->session->userdata('lang');
@@ -121,6 +133,57 @@ class Annonce extends CI_Controller {
             
             $dataLayout['vue'] = $this->load->view('mes_reservations',$dataList,true);
             $this->load->view('layout',$dataLayout); 
+        }
+        
+        public function accepter($id_annonce){
+            
+            $this->load->model('M_Email');
+            
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
+            
+            if(!$dataList['user_data']){
+                redirect('accueil');
+            }
+            
+            $id_reservation = end($this->uri->segments);
+            $annonce = $this->M_Annonce->voir($id_annonce);
+            $reservation_info = $this->M_Annonce->getReservation($id_annonce,false,$id_reservation);
+            $user_data = $this->M_Annonce->getUserInfo("user_id",$reservation_info->demandeurID);
+            
+            $this->M_Annonce->accepterReservation($id_reservation,$dataList['user_data']->user_id);
+            
+            $this->M_Email->AccepterReservationEmail($user_data,$reservation_info->places,$annonce,$dataList['user_data']);
+            redirect('annonce/mes_reservations');
+        }
+        
+        public function refuser_reservation(){
+            $this->load->model('M_Email');
+            
+            $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
+            if(!$dataList['user_data']){
+                redirect('accueil');
+            }
+            $id_annonce = $this->input->post('input_id_annonce');
+            $id_reservation = $this->input->post('input_id_reservation');
+            $type_reservation = $this->input->post('input_type_reservation');
+            
+            $reservation_info = $this->M_Annonce->getReservation($id_annonce,false,$id_reservation);
+            $annonce = $this->M_Annonce->voir($id_annonce);
+            
+            
+            if($type_reservation =="annuler"){
+                $user_data = $this->M_Annonce->getUserInfo("user_id",$annonce->user_id);
+                $this->M_Annonce->cancelReservation($id_annonce,$dataList['user_data']->user_id);
+                if($reservation_info->accepte){
+                    $this->M_Email->CancelReservation($user_data,$reservation_info->places,$annonce,$dataList['user_data']);
+                }
+            }
+            else{
+                $user_data = $this->M_Annonce->getUserInfo("user_id",$reservation_info->demandeurID);
+                $this->M_Annonce->refuser_reservation($id_reservation,$dataList['user_data']->user_id);
+                $this->M_Email->RefuserReservationEmail($dataList['user_data'],$reservation_info->places,$annonce,$user_data);
+            }
+            redirect('annonce/mes_reservations');
         }
         
         public function delete(){
@@ -312,6 +375,7 @@ class Annonce extends CI_Controller {
                     }
                 }
                 
+                $data['reservations'] = 0;
                 
                 if($this->input->post('input_commentaire')){
                     $data['commentaire'] = $this->input->post('input_commentaire');
@@ -355,6 +419,18 @@ class Annonce extends CI_Controller {
                     $data['retour'] = 0;
                 }
                 
+                $choix_prix = $this->input->post('calculPrix');
+                
+                if($choix_prix == 1){
+                    $data['prix'] =  $data['prix_conseil'];
+                }
+                else if($choix_prix == 2){
+                    $data['prix'] =  $this->input->post('input_prix');;
+                }
+                else{
+                    $data['prix'] =  0;
+                }
+                                
                 if($this->input->post('input_prix')){
                     $data['prix'] = $this->input->post('input_prix');
                 }
@@ -444,7 +520,6 @@ class Annonce extends CI_Controller {
                     'commentaire',
                     'prix_conseil',
                     'prix'
-
                 );
 
                 for($i=0;$i<count($champDonnee);$i++){
@@ -452,7 +527,7 @@ class Annonce extends CI_Controller {
                         $dataRecup[$champDonnee[$i]] = $data[$champDonnee[$i]];
                     }
                 }
-
+                
                 $dataRecup['etapes'] = $recupEtapes;
                 //var_dump($data);
                 //var_dump($dataRecup);

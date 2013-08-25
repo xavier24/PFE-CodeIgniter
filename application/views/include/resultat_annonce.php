@@ -53,7 +53,7 @@
             </div>
             <div class="info_prix clearfix">
                 <p class="prix tooltip <?php echo $annonce->bestprice ? "orange" : "vert" ?>" title="Trouvez les trajets au meilleur prix."><?php echo $annonce->prix ?>€ <span>par passager</span></p>
-                <p class="place bleu"><?php if($annonce->places == 1){echo $annonce->places." pl. libre"; } else if($annonce->places > 1){echo $annonce->places." pl. libres"; }else{ echo 'Complet';} ?></p>
+                <p class="place bleu"><?php if($annonce->places_annonce == 1){echo $annonce->places_annonce." pl. libre"; } else if($annonce->places_annonce > 1){echo $annonce->places_annonce." pl. libres"; }else{ echo 'Complet';} ?></p>
                 <div class="btn clearfix">
                     <div class="bouton_contour bouton_orange">
                         <a href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>" class="button orange">

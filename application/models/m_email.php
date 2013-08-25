@@ -87,6 +87,32 @@ class M_email extends CI_Model{
         $this->email->send();
     }
     
+    public function AccepterReservationEmail($user_data,$place,$annonce,$annonceur){
+        $this->load->library('email');
+        $config['charset'] = 'utf_8';
+        $config['mailtype']  = 'html';
+        
+        $data['type'] = 'accepte_reservation';
+        $data['titre'] = 'Votre réservation a été acceptée';
+        $data['user_data'] = $user_data;
+        $data['place'] = $place;
+        $data['annonce']= $annonce;
+        $data['annonceur'] = $annonceur;
+        
+        $this->email->set_newline("\r\n");
+        $this->email->initialize($config);
+        $this->email->from('noreply@car-people.be', 'Car People');
+        //$this->email->to($data['user_data']->email);
+        $this->email->to('xavier24@hotmail.com');
+
+        $this->email->subject($data['titre']);
+        $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
+        //$this->email->set_alt_message($this->load->view('email/'.$data['type'].'-txt', $data, TRUE));
+
+
+        $this->email->send();
+    }
+    
     public function CancelReservation($user_data,$place,$annonce,$user_demande){
         $this->load->library('email');
         $config['charset'] = 'utf_8';
@@ -102,7 +128,7 @@ class M_email extends CI_Model{
         $this->email->set_newline("\r\n");
         $this->email->initialize($config);
         $this->email->from('noreply@car-people.be', 'Car People');
-        //$this->email->to($data['user_data']->email);
+        //$this->email->to($user_data->email);
         $this->email->to('xavier24@hotmail.com');
 
         $this->email->subject($data['titre']);
@@ -111,6 +137,32 @@ class M_email extends CI_Model{
 
 
         $this->email->send();
+    }
+    
+    public function RefuserReservationEmail($user_data,$place,$annonce,$user_demande){
+        $this->load->library('email');
+        $config['charset'] = 'utf_8';
+        $config['mailtype']  = 'html';
+        
+        $data['type'] = 'refuser_reservation';
+        $data['titre'] = 'Votre réservation a été refusée';
+        $data['user_data'] = $user_data;
+        $data['place'] = $place;
+        $data['annonce']= $annonce;
+        $data['user_demande'] = $user_demande;
+        
+        $this->email->set_newline("\r\n");
+        $this->email->initialize($config);
+        $this->email->from('noreply@car-people.be', 'Car People');
+        //$this->email->to($data['user_demande']->email);
+        $this->email->to('xavier24@hotmail.com');
+
+        $this->email->subject($data['titre']);
+        $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
+        //$this->email->set_alt_message($this->load->view('email/'.$data['type'].'-txt', $data, TRUE));
+
+
+        $this->email->send(); 
     }
     
     public function deleteAnnonce($annonce,$reservations){

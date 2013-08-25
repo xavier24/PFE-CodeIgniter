@@ -133,11 +133,33 @@ class M_Annonce extends CI_Model{
             $this->db->insert('reservation',$data);
         }
         
-        public function getReservation($id_annonce,$user_id){
+        public function getReservation($id_annonce = false,$user_id = false,$id_reservation = false){
             $this->db->select('*');
             $this->db->from('reservation');
-            $this->db->where('annonceID',$id_annonce);
-            $this->db->where('demandeurID',$user_id);
+            if($id_annonce){
+                $this->db->where('annonceID',$id_annonce);
+            }   
+            if($user_id){
+                $this->db->where('demandeurID',$user_id);
+            }
+            if($id_reservation){
+                $this->db->where('id_reservation',$id_reservation);
+            }
+            $query = $this->db->get();
+            
+            return $query->result();
+        }
+        
+        public function getMyReservation($champ,$user_id,$champ_user){
+            $this->db->select('reservation.*, annonces.*, users.username,users.user_id,users.photo ,depart.fr AS ville_depart_fr, depart.nl AS ville_depart_nl, arrivee.fr AS ville_arrivee_fr, , arrivee.nl AS ville_arrivee_nl');
+            $this->db->from('reservation');
+            $this->db->join('annonces','reservation.annonceID=annonces.id');
+            $this->db->join('villes AS depart','depart.id = annonces.departID');
+            $this->db->join('villes AS arrivee','arrivee.id = annonces.arriveeID');
+            $this->db->join('users','users.user_id = reservation.'.$champ_user);
+            $this->db->where($champ,$user_id);
+            $this->db->order_by('annonces.date');
+            $this->db->order_by('reservation.accepte');
             $query = $this->db->get();
             
             return $query->result();
@@ -153,9 +175,23 @@ class M_Annonce extends CI_Model{
             return $query->result();
         }
         
+        public function accepterReservation($id_reservation,$user_id){
+            $data['accepte']= 1;
+            
+            $this->db->where('annonceurID',$user_id);
+            $this->db->where('id_reservation',$id_reservation);
+            $this->db->update('reservation',$data);
+        }
+
         public function cancelReservation($id_annonce,$user_id){
             $this->db->where('annonceID', $id_annonce);
             $this->db->where('demandeurID',$user_id);
+            $this->db->delete('reservation');
+        }
+        
+        public function refuser_reservation($id_reservation,$user_id){
+            $this->db->where('id_reservation', $id_reservation);
+            $this->db->where('annonceurID',$user_id);
             $this->db->delete('reservation');
         }
 }

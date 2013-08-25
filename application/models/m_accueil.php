@@ -121,13 +121,4 @@
             
         }
         
-        public function getAllReservation($id_annonce){
-            $this->db->select('reservation.*,users.username,users.email');
-            $this->db->from('reservation');
-            $this->db->join('users','users.user_id = reservation.demandeurID');
-            $this->db->where('annonceID',$id_annonce);
-            $query = $this->db->get();
-            
-            return $query->result();
-        }
     }

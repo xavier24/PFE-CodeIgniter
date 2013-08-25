@@ -21,7 +21,7 @@
         <div class="row-fluid">
             <div class="span8">
                 <h2 class="bleu"><?php echo isset($annonce->$d_lang)? $annonce->$d_lang : $annonce->d_fr ?> - <?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?><span><?php echo $annonce->date." ".$annonce->heure ?></span></h2>
-                <p class="places orange"><?php echo $annonce->places ?> place(s) disponible(s)</p>
+                <p class="places orange"><?php if($annonce->places_annonce == 1){echo $annonce->places_annonce." place libre"; } else if($annonce->places_annonce > 1){echo $annonce->places_annonce." places libres"; }else{ echo 'Complet';} ?></p>
                 <div class="row-fluid">
                     <div class="span4 depart">
                         <h4><?php echo isset($annonce->$d_lang)? $annonce->$d_lang : $annonce->d_fr ?></h4>
@@ -48,7 +48,7 @@
                         <p><?php echo $annonce->description_arrivee ? $annonce->description_arrivee : "Non précisé" ?></p>
                     </div>
                     <div class="span2">
-                        <?php if(!isset($not_user)){
+                        <?php if(isset($not_user)&& $annonce->conducteur){
                             if($reservation){?>
                                 <div class="btn clearfix">
                                     <span class="bouton_contour bouton_orange">
@@ -114,7 +114,7 @@
                                     <div>
                                         <label>Nombre de places à réserver</label>
                                         <select class="nb_place">
-                                            <?php for($i=1;$i<=$annonce->places;$i++){?>
+                                            <?php for($i=1;$i<=$annonce->places_annonce;$i++){?>
                                             <option value="<?php echo $i ?>"><?php echo $i ?></option>
                                             <?php } ?>
                                         </select>
