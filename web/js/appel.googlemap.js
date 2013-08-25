@@ -126,9 +126,9 @@
                     end:  [arrivee_lat, arrivee_lng], // Coordonnées GPS ou adresse postale d'arrivée (obligatoire)
                     route : 'way', // ID du bloc dans lequel injecter le détail de l'itinéraire (optionnel)
                     langage : 'french' // Langue du détail de l'itinéraire (optionnel, en anglais)
-                }) ;
+                });
                     
-                calculPrix();
+                
             }
             
             var calculPrix = function(){

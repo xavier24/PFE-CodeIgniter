@@ -22,10 +22,10 @@
                         <td><span><?php echo $annonce->ville_depart_fr ?></span></td>
                         <td><span><?php echo $annonce->ville_arrivee_fr ?></span></td>
                         <td class="hidden-phone"><span><?php echo $annonce->heure ?></span></td>
-                        <td class="hidden-phone"><span><?php echo $annonce->places ?></span></td>
-                        <td><span><a class="modifier_annonce" title="modifier" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">modifier</a></span></td>
-                        <td><span><span class="btn_actionOverlay supprimer_annonce" title="supprimer">supprimer</span></span></td>
-                        <td class="id_annonce hidden"><input type="hidden" value="<?php echo $annonce->id ?>" /></td>
+                        <td class="hidden-phone"><span><?php echo $annonce->places_annonce ?></span></td>
+                        <td class="action"><span><a class="modifier_annonce" title="modifier" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">modifier</a></span></td>
+                        <td class="action"><span><span class="btn_actionOverlay supprimer_annonce" title="supprimer">supprimer</span></span></td>
+                        <td class="id_annonce hidden"><input class="id_annonce" type="hidden" value="<?php echo $annonce->id ?>" /></td>
                     </tr>
                     <?php } ?>
                 </tbody>

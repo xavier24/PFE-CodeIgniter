@@ -273,7 +273,7 @@ body{
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0 auto -300px; /* the bottom margin is the negative value of the footer's height */
+	margin: 0 auto -100px; /* the bottom margin is the negative value of the footer's height */
 	max-width:1200px;
 	
 }
@@ -285,7 +285,7 @@ body{
 	box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
 }
 .footer, .push {
-	height: 299px; /* .push must be the same height as .footer */
+	height: 100px; /* .push must be the same height as .footer */
 	margin: 0 auto;
 	max-width:1180px;
 	padding:0 10px;
@@ -1183,7 +1183,7 @@ btn button.rouge,.button.rouge{
     width: 97px;
 }
 .accueil #input_date, .resultat #input_date, .ajouter_annonce #input_date{
-    margin-top: 19px;
+    margin-top: 20px;
     text-align: center;
 }
 .accueil .formulaire .flexibilite, .resultat .formulaire .flexibilite, .ajouter_annonce .formulaire .flexibilite{
@@ -1203,7 +1203,7 @@ btn button.rouge,.button.rouge{
 #rechercher button{
     padding:10px 30px;
 }
-.accueil #map, .resultat #map, .ajouter_annonce #map{
+.accueil #map, .resultat #map{
     margin: 50px 0;
     -moz-box-shadow: 1px 1px 5px #999999;
     -webkit-box-shadow: 1px 1px 5px #999999;
@@ -1274,6 +1274,7 @@ btn button.rouge,.button.rouge{
 }
 #facebook-page{
     overflow: hidden;
+    margin-top: 20px;
 }
 #facebook-page .fb-like-box span,#facebook-page .fb-like-box span ifram{
     width: 100% !important;
@@ -1299,6 +1300,9 @@ btn button.rouge,.button.rouge{
 }
 #resultat .paire{
     background-color: #fff;
+}
+#resultat .impaire{
+    background-color: #e0e0e0;
 }
 #resultat .annonce +.annonce{
     border-top: 1px solid #ccc;
@@ -1892,15 +1896,17 @@ textarea.profil_modif{
 .ajouter_annonce .description{
     -float:left;
     -width: 100%;
+    padding-left: 30px;
+    padding-right:12px;
 }
 .ajouter_annonce .description label{
     font-size: 0.75em;
-    color: #fff;
+    color: #333;
     float: left;
 }
 .ajouter_annonce .description textarea{
     clear:both;
-    width: 80%;
+    width: 100%;
     height: 50px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1913,6 +1919,10 @@ textarea.profil_modif{
 }
 .ajouter_annonce .etapes{
     margin-bottom: 10px;
+    margin-top: 30px;
+}
+.ajouter_annonce .etapes>p{
+    margin-bottom: 10px;
 }
 .ajouter_annonce .etape{
     padding-top: 6px;
@@ -1921,7 +1931,7 @@ textarea.profil_modif{
     float:left;
 }
 .ajouter_annonce .etape_inputs{
-    -position: relative;
+    position: relative;
 }
 .ajouter_annonce .etape_inputs input{
     margin-top: -6px;
@@ -1938,10 +1948,18 @@ textarea.profil_modif{
 .ajouter_annonce .min_step{
     color: crimson;
     cursor: pointer;
-    float: right;
-    margin-top: -26px;
-    margin-left: -26px;
-    position: relative;
+    position: absolute;
+    top:0;
+    right: 0;
+}
+.ajouter_annonce .formulaire .input_stop{
+    width: auto;
+    margin-bottom:3px;
+}
+.ajouter_annonce .formulaire .input_duree{
+    width: auto;
+    margin-bottom:3px;
+    margin-right:4px;
 }
 #more_step{
     color:#0471D7;
@@ -1955,9 +1973,11 @@ textarea.profil_modif{
 }
 .ajouter_annonce .etape .stop label{
     font-size: 0.75em;
-    margin-top: 5px ;
     margin-left: 25px;
     float:left;
+}
+.ajouter_annonce .etape .stop>label:first-child{
+    margin-top: 3px;
 }
 .ajouter_annonce .etape .stop input{
     margin-left: 5px;
@@ -1974,6 +1994,9 @@ textarea.profil_modif{
 }
 #recalculer_trajet{
     margin-bottom: 30px;
+}
+.ajouter_annonce .titre_date_heure h2{
+    text-align: center;
 }
 .ajouter_annonce .date_heure{
     border: 2px solid #EDA52A;
@@ -2014,23 +2037,32 @@ textarea.profil_modif{
     box-shadow: 1px 1px 0 #777 inset, 1px 1px 0 #fff;
 }
 .ajouter_annonce .date .input_date, .ajouter_annonce .heure .input_heure{
-    margin: 20px auto 0;
+    margin: 20px auto 5px;
     display: block;
 }
+#input_date_retour, #input_heure_retour{
+    margin: 0 auto ;
+}
 .ajouter_annonce .date .input_date_retour, .ajouter_annonce .heure .input_heure_retour{
-    display: none;
+    display: block;
+    text-align: center;
+    
 }
 .ajouter_annonce .select_flexible, .ajouter_annonce .select_place{
     text-align: center;
     margin-top: 23px;
     line-height: 2.2em;
 }
+.ajouter_annonce .select_flexible{
+    margin-top: 65px;
+    margin-bottom: 35px;
+}
 .ajouter_annonce .select_flexible select, .ajouter_annonce .select_place select{
     padding:8px;
     font-weight:bold;
 }
 .ico-date{
-    background: url(../images/elements.png) no-repeat scroll 0px -370px transparent;
+    background: url(../images/elements.png) no-repeat scroll -389px -211px transparent;
     height: 112px;
     width: 115px;
     display: block;
@@ -2094,8 +2126,16 @@ textarea.profil_modif{
     padding-top: 5px;
     padding-bottom: 5px;
 }
+.ajouter_annonce .regulier table input{
+    margin: 0;
+    -moz-border-radius:0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    height: 20px;
+}
 .ajouter_annonce .commentaire{
     margin-top: 20px;
+    padding-right: 15px;
 }
 #input_commentaire{
     height: 100px;
@@ -2105,25 +2145,34 @@ textarea.profil_modif{
     -webkit-box-shadow: 1px 1px 0 #777777 inset, 1px 1px 0 #FFFFFF;
     box-shadow: 1px 1px 0 #777777 inset, 1px 1px 0 #FFFFFF;
     color: #000;
-}
-.ajouter_annonce .calculateur{
-    border: 2px solid #EDA52A;
-    background: #FDD661 ; /* Old browsers */
-    background: -moz-linear-gradient(top,  #FDD661 0%, #FDBD4C 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FDD661), color-stop(100%,#FDBD4C)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #FDD661 0%,#FDBD4C 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #FDD661 0%,#FDBD4C 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FDD661', endColorstr='#FDBD4C',GradientType=0 ); /* IE6-9 */
-    background-position: top center;
-    background-repeat: no-repeat;
-    margin: 0 auto;
-    width: 70%;
-    padding:10px 20px;
-    -moz-border-radius: 5px;
+    background-color: #eee;
+    -moz-border-radius:5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+}
+.ajouter_annonce .calculateur{
+    border: 1px solid #fff;
+    background: #d2d2d2;
+    background: -moz-linear-gradient(left,  #d2d2d2 0%, #c9c9c9 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#d2d2d2), color-stop(100%,#c9c9c9));
+    background: -webkit-linear-gradient(left,  #d2d2d2 0%,#c9c9c9 100%);
+    background: -o-linear-gradient(left,  #d2d2d2 0%,#c9c9c9 100%);
+    background: -ms-linear-gradient(left,  #d2d2d2 0%,#c9c9c9 100%);
+    background: linear-gradient(to right,  #d2d2d2 0%,#c9c9c9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#c9c9c9',GradientType=1 );
+    background-position: top center;
+    background-repeat: no-repeat;
+    -width: 60%;
+    max-width: 350px;
+    float:right;
+    padding:20px;
+    -moz-border-radius:10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 4px 1px #595959,inset -5px -1px 10px #999, inset 1px 1px 5px #fff ;
+}
+.ajouter_annonce .calculateur h2{
+    margin-bottom: 10px;
 }
 .ajouter_annonce .calculateur p, .ajouter_annonce .calculateur label{
     font-size: 0.875em;
@@ -2135,9 +2184,69 @@ textarea.profil_modif{
     color: #333;
     font-weight:bold;
 }
+.ajouter_annonce .calculateur .ecran{
+    padding-right:20px;
+    position:relative;
+}
+.ajouter_annonce .calculateur .ecran input{
+    background-color: #8c8c8c;
+    box-shadow: inset 1px 1px 6px #111, 1px 1px 0 #FFFFFF;
+    font-size: 2em;
+    color:#333;
+    text-shadow: 0 1px 0 #EEEEEE;
+    text-align: right;
+    padding: 20px 10px 10px;
+    font-weight: normal;
+    height: 35px;
+}
+.calculateur .result_prix{
+    display: none;
+}
+.ajouter_annonce .calculateur .touche{
+    background: #404040;
+    background: -moz-linear-gradient(-45deg,  #404040 0%, #0e0d0d 100%);
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#404040), color-stop(100%,#0e0d0d));
+    background: -webkit-linear-gradient(-45deg,  #404040 0%,#0e0d0d 100%);
+    background: -o-linear-gradient(-45deg,  #404040 0%,#0e0d0d 100%);
+    background: -ms-linear-gradient(-45deg,  #404040 0%,#0e0d0d 100%);
+    background: linear-gradient(135deg,  #404040 0%,#0e0d0d 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#404040', endColorstr='#0e0d0d',GradientType=1 );
+    background-position: top center;
+    background-repeat: no-repeat;
+    margin: 10px 0;
+    line-height: 35px;
+    color:white;
+    min-height: 35px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: inset 1px 1px 0px 0px #bbb, 0 0 1px #000;
+    border: 1px solid #555;
+}
+#recalculer_prix{
+    float:right;
+}
+#recalculer_prix .button{
+    padding: 10px 20px;
+}
 #input_carbu,#input_prix_choisi{
     width: 30px;
     text-align: right;
+    margin: 0;
+}
+.ajouter_annonce .calculateur fieldset label+label{
+    margin-left: 10px;
+}
+.ajouter_annonce .calculateur fieldset input{
+    width: auto;
+    margin: 0 5px 2px 2px;
+}
+#publier{
+    margin: 0 auto;
+    width: 130px;
+}
+#publier button{
+    padding : 20px 20px;
+    font-size: 1.5em;
 }
 #map{
     width:100%;
@@ -2309,10 +2418,10 @@ textarea.profil_modif{
 /* ==========================================================================
    Mes Annonces styles
    ========================================================================== */
-.mes_annonces{
+.mes_annonces, .mes_reservations{
     position:relative;
 }
-.mes_annonces .table{
+.mes_annonces .table, .mes_reservations .table{
     width:100%;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -2324,10 +2433,10 @@ textarea.profil_modif{
     border:1px solid #5c676b;
     font-size: 0.875em;
 }
-.mes_annonces table{
+.mes_annonces table, .mes_reservations table{
     width:100%;
 }
-.mes_annonces table thead{
+.mes_annonces table thead , .mes_reservations table thead{
     background: #AAA; /* Old browsers */
     background: -moz-linear-gradient(top,  #aaa 0%, #777 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aaa), color-stop(100%,#777)); /* Chrome,Safari4+ */
@@ -2343,9 +2452,7 @@ textarea.profil_modif{
     -webkit-box-shadow: 0 1px 4px 1px #111;
     box-shadow: 0 1px 4px 1px #111;
 }
-.mes_annonces table thead tr{
-}
-.mes_annonces table th span{
+.mes_annonces table th span, .mes_reservations table th span{
     display: block;
     padding:5px 10px;
     text-align: left;
@@ -2353,34 +2460,34 @@ textarea.profil_modif{
     border-right: 1px solid #666;
     text-shadow: -1px -1px 0px #444;
 }
-.mes_annonces table th:first-child span{
+.mes_annonces table th:first-child span, .mes_reservations table th:first-child span{
     border-left: 0 none;
 }
-.mes_annonces table th:last-child span{
+.mes_annonces table th:last-child span, .mes_reservations table th:last-child span{
     border-right: 0 none;
 }
-.mes_annonces table tbody td{
+.mes_annonces table tbody td, .mes_reservations table tbody td{
    border-bottom: 1px solid #666;
 }
-.mes_annonces table tbody td>span{
+.mes_annonces table tbody td>span, .mes_reservations table tbody td>span{
     display: block;
-    padding:8px 10px;
+    padding:8px 5px;
     border-top: 1px solid #fff;
 }
-.mes_annonces table .paire td{
+.paire td{
     background:#E0DFD9;
 }
-.mes_annonces table tbody tr:first-child span{
+.mes_annonces table tbody tr:first-child span, .mes_reservations table tbody tr:first-child span{
     border-top: 0 none;
 }
-.mes_annonces table tbody tr:last-child td{
+.mes_annonces table tbody tr:last-child td, .mes_reservations table tbody tr:first-child td{
     border-bottom: 0 none;
 }
-.mes_annonces table tbody td:first-child + td{
+.mes_annonces table tbody td:first-child + td, .mes_reservations table tbody td:first-child + td{
     font-weight: bold;
     color:#555;
 }
-.mes_annonces table tbody tr:hover td{
+.mes_annonces table tbody tr:hover td , .mes_reservations table tbody tr:hover td{
     background:#ffeebb;
 }
 .modifier_annonce, .supprimer_annonce{
@@ -2395,17 +2502,19 @@ textarea.profil_modif{
     display: block;
 }
 .modifier_annonce{
-    background: url('../images/elements.png') repeat scroll -346px -496px #555;
+    background: url('../images/elements.png') no-repeat scroll -346px -496px #555;
 }
 .supprimer_annonce {
-    background: url('../images/elements.png') repeat scroll -375px -496px #555;
+    background: url('../images/elements.png') no-repeat scroll -375px -496px #555;
     cursor: pointer;
 }
 .modifier_annonce:hover , .modifier_annonce:active, .modifier_annonce:focus, 
-.supprimer_annonce:hover, .supprimer_annonce:active,.supprimer_annonce:focus {
+.supprimer_annonce:hover, .supprimer_annonce:active,.supprimer_annonce:focus,
+.voir_annonce:hover, .voir_annonce:active, .voir_annonce:focus{
     background-color: #333;
 }
 #overlay{
+    background: url('../images/overlay.png') repeat scroll 0 0 transparent;
     background: rgba(0,0,0,0.5);
     height: 100%;
     width: 100%;
@@ -2438,6 +2547,48 @@ textarea.profil_modif{
 }
 .confirm_action_overlay{
     float:right;
+}
+/* ==========================================================================
+   Mes reservations styles
+   ========================================================================== */
+.table{
+    margin-bottom:30px; 
+}
+.mes_reservations td{
+    background-color:#FFD063 ;
+}
+.mes_reservations .reservation_accepte td{
+    background-color:#8BC487 ;
+}
+.refuser_reservation, .accepter_reservation, .voir_annonce, .annuler_reservation{
+    background-color: #555555;
+    border-radius: 5px 5px 5px 5px;
+    color: #EEEEEE;
+    cursor: pointer;
+    display: block;
+    font-size: 1.286em;
+    height: 26px;
+    line-height: 24px;
+    overflow: hidden;
+    padding-left: 2px;
+    padding-top: 3px;
+    width: 27px;
+    margin-top: 2px;
+}
+.accepter_reservation, .voir_annonce{
+    text-decoration: none;
+}
+.accepter_reservation:hover , .accepter_reservation:active, .accepter_reservation:focus{
+    background-color: #333;
+    color:#10C600 !important;
+} 
+.refuser_reservation:hover, .refuser_reservation:active,.refuser_reservation:focus,
+.annuler_reservation:hover, .annuler_reservation:active, .annuler_reservation:focus{
+    background-color: #333;
+    color:#EF3734;
+}
+.action{
+    width: 39px;
 }
 /* ==========================================================================
    Messagerie styles
@@ -2543,14 +2694,14 @@ textarea.profil_modif{
    Footer styles
    ========================================================================== */
 .footer{
-	background-color: #213951;
-    border-top: 1px solid #294248;
+    background-color: #213951;
+    border-top: 1px solid #000;
 } 
 .footer_nav{
-	border-bottom: 1px solid #294248;
-    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #426282;
     margin-left: -10px;
-	margin-bottom:0;
+    margin-bottom:0;
     padding: 15px 10px;
     text-align: center;
     width: 100%;
@@ -2578,11 +2729,19 @@ textarea.profil_modif{
 	text-shadow: 0 0 20px #fff, 0 0 15px #fff, 0 0 15px #fff;
 	text-decoration:none;
 }
+.footer .copyright{
+    text-align: center;
+    border-top: 1px solid #426282;
+    color:white;
+    padding:10px 10px;
+    margin-left: -10px;
+    width: 100%;
+    font-size:0.75em;
+}
+
 .footer_villes{
-	padding:20px 10px;
-	margin-left: -10px;
-	width: 100%;
-	border-top: 1px solid #ccc;
+	
+	
 }
 .footer_villes h4{
 	padding-left:50px;
@@ -2833,7 +2992,6 @@ div.colorPicker-swatch {
         -webkit-border-radius:0;
         border-radius:0;
     }
-    
     #confirm_delete{
         left:0;
         margin-left: 0;

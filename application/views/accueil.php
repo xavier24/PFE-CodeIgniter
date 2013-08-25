@@ -76,7 +76,7 @@
                     <div class="date clearfix">
                         <label for="input_date" class="ico-date"></label>
                         <div class="input">
-                            <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="champ" type="date" placeholder="JJ/MM/AAAA" />
+                            <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="champ" type="text" placeholder="JJ/MM/AAAA" />
                         </div>
                         <div class="flexibilite clearfix">
                             <p>Fléxibilité</p>

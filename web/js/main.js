@@ -21,7 +21,6 @@
             $btn_actionOverlay,
             $cancel_action_overlay,
             $confirm_reserv_place;
-            
 	// --- methods
     //INITIALISE SELON PAGE
         
@@ -58,6 +57,9 @@
                 //recuperer valeur slide conducteur pour ajouter la class
                 if(connect){
                     sliderConducteur();
+                    var $class = $('.choix_prix input:checked').attr('class');
+                    $('.result_prix').hide();
+                    $('#input_'+$class).show();
                 }
                 else{
                     $('.nav_compte').find('.slideBlock').slideToggle();
@@ -113,6 +115,12 @@
         var sliderConducteur = function(){
             var $value = $( "#input_conducteur" ).val();
             $(".choix_conducteur"+$value).addClass('select');
+            if($value == 0){
+                $('.calculateur').hide();
+            }
+            else{
+                $('.calculateur').show();
+            }
         };//sliderConducteur
 
     //PROFIL   
@@ -192,8 +200,8 @@
             }
             if($this.next().hasClass('show_retour')){
                 $(".table_retour").toggle();
-                $(".input_heure_retour").toggle();
-                $(".input_date_retour").toggle();
+                $(".input_heure_retour").toggleClass('hidden');
+                $(".input_date_retour").toggleClass('hidden');
             }
             
         };//btnCheck
@@ -201,9 +209,18 @@
         var actionOverlay = function(){
             $("#overlay").show();
             $(".actionOverlay").show();
-            if($(this).hasClass('supprimer_annonce')){
-                var $id_annonce = $(this).parent().parent().next().find('input').val();
-                $("#input_id_annonce").val($id_annonce);
+            var $id_annonce = $(this).parent().parent().next().find('.id_annonce').val();
+            var $id_reservation = $(this).parent().parent().next().find('.id_reservation').val();
+            
+            $("#input_id_annonce").val($id_annonce);
+            
+            if($(this).hasClass('refuser_reservation')){
+                $("#input_id_reservation").val($id_reservation);
+                $("#input_type_reservation").val('refuser');
+            }
+            if($(this).hasClass('annuler_reservation')){
+                $("#input_id_reservation").val($id_reservation);
+                $("#input_type_reservation").val('annuler');
             }
         };//actionOverlay
         
@@ -216,7 +233,6 @@
             e.preventDefault();
             var $id_annonce = $("#id_annonce").val();
             var $nb_place = $(".nb_place option:selected").attr('value');
-            console.log($nb_place);
             $.ajax({
                     url:baseUrl+'/annonce/reservation',
                     type:'POST',
@@ -229,7 +245,12 @@
                     }
             });
         }
-              
+        
+        var choixPrix = function(){
+            var $class = $(this).attr('class');
+            $('.result_prix').hide();
+            $('#input_'+$class).show();
+        }
         
         $( function () {
 
@@ -249,7 +270,6 @@
                 $cancel_action_overlay = $(".cancel_action_overlay");
                 $confirm_reserv_place = $("#confirm_reserve_place button");
                 
-                
             // --- events
                 $loginForm.on('submit',login)
                 $slideCompte.on('click',loginFormSlide);
@@ -265,6 +285,7 @@
                 $cancel_action_overlay.on('click',cancelActionOverlay);
                 $confirm_reserv_place.on('click',reserverPlace);
                 
+                $(".choix_prix input").change(choixPrix);
                 
             // --- execute
                 controlSession();

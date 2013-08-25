@@ -28,11 +28,11 @@
             </div>
             <?php if(!$user_connect){ ?>
                 <div class="btn_profil">
-                    <div class="btn clearfix">
+                    <!--<div class="btn clearfix">
                         <span class="bouton_contour bouton_orange">
                             <span class="button orange"><span class="icon-star"></span>Ajouter aux favoris</span>
                         </span>
-                    </div>
+                    </div>-->
                     <div class="btn clearfix">
                         <a href="<?php echo base_url() ?>message/nouveau/<?php echo $info_membre->user_id ?>" class="bouton_contour bouton_bleu">
                             <span class="button bleu"><span class="icon-mail-4"></span>Contacter le covoitureur</span>
@@ -472,8 +472,6 @@
                             echo '<p>Aucun trajet n\'est à venir pour le moment.</p>';
                         }
                         ?>
-                        <p><?php echo anchor( 'accueil/lister',$this->lang->line('retour_liste_annonces'),array('title'=>'Retour à la liste des annonces', 'hreflang'=>'fr' )); ?></p>    
-                
                     </div>
                 </div>
                 <?php if($user_connect){ ?>

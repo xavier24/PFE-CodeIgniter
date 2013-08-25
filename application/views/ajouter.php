@@ -13,15 +13,24 @@
             echo '<div class="error"><p>'.lang("veuillez_preciser").' '.$error_retour.' '.lang("du_voyage").'</p></div>';
         }
         ?>
-        <div id="recherche" class="formulaire">
+        <div id="ajouter" class="formulaire">
             <h2><?php echo lang("je_suis") ?></h2>
             <div class="clearfix row-fluid">
-                <div class="span4">
+                <div class="span6">
                     <div class="choix_conducteur">
                         <div class="row-fluid clearfix">
-                            <div class="span4"><span class="choix_conducteur0 ico-passager"></span></div>
-                            <div class="span4"><span class="choix_conducteur1 ico-passager-conducteur"></span></div>
-                            <div class="span4"><span class="choix_conducteur2 ico-conducteur"></span></div>
+                            <div class="span4">
+                                <span class="choix_conducteur0 ico-passager"></span>
+                                <span class="slider_legend">Passager</span>
+                            </div>
+                            <div class="span4">
+                                <span class="choix_conducteur1 ico-passager-conducteur"></span>
+                                <span class="slider_legend">L'un ou l'autre</span>
+                            </div>
+                            <div class="span4">
+                                <span class="choix_conducteur2 ico-conducteur"></span>
+                                <span class="slider_legend">Conducteur</span>
+                            </div>
                         </div>
                         <input type="hidden" id="input_conducteur" name="input_conducteur" value="<?php echo isset($donnee['conducteur']) ? $donnee['conducteur'] : "1" ; ?>" />
                         <div id="slider_conducteur">
@@ -104,15 +113,15 @@
             </div>
             <div class="clearfix">    
                 <div id="recalculer_trajet" class="btn clearfix">
-                    <div class="bouton_contour bouton_gris">
-                        <span class="button gris">
+                    <div class="bouton_contour bouton_orange">
+                        <span class="button orange">
                             <span class="icon-arrows-cw"></span>
                             <?php echo lang("recalculer_trajet") ?>
                         </span>
                     </div>
                 </div>
             </div>
-            <div class="row-fluid visible-desktop">
+            <div class="row-fluid visible-desktop titre_date_heure">
                 <div class="span3">
                     <h2><?php echo lang("date") ?></h2>
                 </div>
@@ -131,15 +140,14 @@
                     <div class="date clearfix">
                         <h2 class="hidden-desktop"><?php echo lang("date") ?></h2>
                         <label for="input_date"><span class="ico-date"></span></label>
-                        <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="input_date input_datepicker" type="date" placeholder="<?php echo lang("jjmmaaaa") ?>" />
+                        <input id="input_date" <?php if(isset($donnee['date'])){echo 'value="'.$donnee['date'].'"';} ?> name="input_date" class="input_date input_datepicker" type="text" placeholder="<?php echo lang("jjmmaaaa") ?>" />
                         <div class="">
-                            <h4 class="input_date_retour">Date de retour</h4>
-                            <input id="input_date_retour" class="input_date_retour input_datepicker" <?php if(isset($donnee['date_retour'])){echo 'value="'.$donnee['date_retour'].'"'; } ?> type="text" value="" name="input_date_retour" placeholder="<?php echo lang("jjmmaaaa") ?>" />
+                            <h4 class="input_date_retour hidden">Date de retour</h4>
+                            <input id="input_date_retour" class="input_date_retour input_datepicker hidden" <?php if(isset($donnee['date_retour'])){echo 'value="'.$donnee['date_retour'].'"'; } ?> type="text" value="" name="input_date_retour" placeholder="<?php echo lang("jjmmaaaa") ?>" />
                         </div>
                     </div>
                     <div class="flexibilite clearfix">
                         <h2 class="hidden-desktop"><?php echo lang("flexibilite") ?></h2>
-                        <label><span class="ico-flexible"></span></label>
                         <div class="select_flexible">
                             <span>+/-</span>
                             <select name="input_flexibilite">
@@ -171,8 +179,8 @@
                         <label for="input_heure"><span class="ico-heure"></span></label>
                         <input id="input_heure" class="input_heure input_timepicker" <?php if(isset($donnee['heure'])){echo 'value="'.$donnee['heure'].'"'; } ?> type="text" value="" name="input_heure" placeholder="<?php echo lang("hhmm") ?>" />
                         <div class="clearfix">
-                            <h4 class="input_heure_retour">heure de retour</h4>
-                            <input id="input_heure_retour" class="input_heure_retour input_timepicker" <?php if(isset($donnee['heure_retour'])){echo 'value="'.$donnee['heure_retour'].'"'; } ?> type="text" value="" name="input_heure_retour" placeholder="<?php echo lang("hhmm") ?>" />
+                            <h4 class="input_heure_retour hidden">heure de retour</h4>
+                            <input id="input_heure_retour" class="input_heure_retour input_timepicker hidden" <?php if(isset($donnee['heure_retour'])){echo 'value="'.$donnee['heure_retour'].'"'; } ?> type="text" value="" name="input_heure_retour" placeholder="<?php echo lang("hhmm") ?>" />
                         </div>
                     </div>
                     <div class="places clearfix">
@@ -238,12 +246,12 @@
                                     $day = array("l","m","me","j","v","s","d");
                                     if(isset($donnee['calendar']['0']->allee)){
                                         for($i=0;$i<7;$i++){
-                                            echo '<td><input class="input_heure" value="'.$donnee['calendar']['0']->allee->$day[$i].'" id="input_allee'.$i.'" name="input_allee'.$i.'" placeholder="-" /></td>';
+                                            echo '<td><input class="input_heure input_timepicker" value="'.$donnee['calendar']['0']->allee->$day[$i].'" id="input_allee'.$i.'" name="input_allee'.$i.'" placeholder="-" /></td>';
                                         }
                                     }
                                     else{                            
                                         for($i=0;$i<7;$i++){
-                                            echo '<td><input class="input_heure" id="input_allee'.$i.'" name="input_allee'.$i.'" placeholder="-" /></td>';
+                                            echo '<td><input class="input_heure input_timepicker" id="input_allee'.$i.'" name="input_allee'.$i.'" placeholder="-" /></td>';
                                         }
                                     }?>
                                 </tr>
@@ -252,12 +260,12 @@
                                     <?php
                                     if(isset($donnee['calendar']['0']->retour)){
                                         for($i=0;$i<7;$i++){
-                                            echo '<td><input class="input_heure" value="'.$donnee['calendar']['0']->retour->$day[$i].'" id="input_retour'.$i.'" name="input_retour'.$i.'" placeholder="-" /></td>';
+                                            echo '<td><input class="input_heure input_timepicker" value="'.$donnee['calendar']['0']->retour->$day[$i].'" id="input_retour'.$i.'" name="input_retour'.$i.'" placeholder="-" /></td>';
                                         } 
                                     }
                                     else{
                                         for($i=0;$i<7;$i++){
-                                            echo '<td><input class="input_heure" id="input_retour'.$i.'" name="input_retour'.$i.'" placeholder="-" /></td>';
+                                            echo '<td><input class="input_heure input_timepicker" id="input_retour'.$i.'" name="input_retour'.$i.'" placeholder="-" /></td>';
                                         }
                                     }?>
                                 </tr>
@@ -266,29 +274,46 @@
                     </div>
                     <div class="commentaire">
                         <h2><?php echo lang("comm_trajet") ?></h2>
-                        <textarea id="input_commentaire" name="input_commentaire"><?php echo isset($donnee['commentaire']) ? $donnee['commentaire'] : "" ; ?></textarea>
+                        <textarea id="input_commentaire" placeholder="Donnez des précisions sur votre trajet..." name="input_commentaire"><?php echo isset($donnee['commentaire']) ? $donnee['commentaire'] : "" ; ?></textarea>
                     </div>
                 </div>
-                <div class="span6">
-                    <div class="calculateur">
+                <div class="span6 clearfiw">
+                    <div class="calculateur clearfix">
                         <h2><?php echo lang("calculateur_prix") ?></h2>
+                        <div class="ecran">
+                            <input id="input_prix_gratuit" class="result_prix" type="text" name="input_prix_gratuit" value="Gratuit" readonly="readonly"/>
+                            <input id="input_prix_conseil" class="result_prix" type="text" name="input_prix_conseil" value="<?php echo isset($donnee['prix_conseil']) ? $donnee['prix_conseil'] : lang("creer_itineraire") ; ?>" readonly="readonly"/>
+                            <input id="input_prix" class="result_prix" type="number" name="input_prix" value="<?php echo isset($donnee['prix']) ? $donnee['prix'] : "0" ; ?>" />
+                        </div>
+                        <fieldset>
+                            <label class="choix_prix"><input class="prix_gratuit" name="calculPrix" type="radio" value="0" />Gratuit</label>
+                            <label class="choix_prix"><input class="prix_conseil" name="calculPrix" type="radio" value="1" checked="checked"/>Prix conseil</label>
+                            <label class="choix_prix"><input class="prix" name="calculPrix" type="radio" value="2" />Mon prix</label>
+                        </fieldset>
                         <h3><?php echo lang("intro_calculateur_prix") ?></h3>
-                        <p><?php echo lang("consommation") ?>&nbsp;: <span><?php echo $user_data->consommation; ?></span> l/100km</p>
-                        <label><?php echo lang("prix_carbu") ?>&nbsp;:<input id="input_carbu" type="text" name="input_carbu" value="<?php echo isset($donnee['carbu']) ? $donnee['carbu'] : 1.5 ; ?>"/>€/L</label>
-                        <p><?php echo lang("distance") ?>&nbsp;: <span id="distance">?</span> km</p>
-                        <p><?php echo lang("duree") ?>&nbsp;: <span id="duree">?</span></p>
-                        <p><?php echo lang("prix_conseil") ?>&nbsp;:<span id="prix"><?php echo isset($donnee['prix_conseil']) ? $donnee['prix_conseil'] : lang("creer_itineraire") ; ?></span></p>
-                        <p><?php echo lang("prix_choisi") ?>&nbsp;:<input id="input_prix" type="text" name="input_prix" value="<?php echo isset($donnee['prix']) ? $donnee['prix'] : "0" ; ?>" />€</p>
-                        
-                        
-                        <input id="input_consomme" type="hidden" name="input_consomme" value="<?php echo $user_data->consommation; ?>"/>
+                        <div class="touche">
+                            <p><?php echo lang("consommation") ?>&nbsp;: <span><?php echo $user_data->consommation ? $user_data->consommation : "6"; ?></span> l/100km</p>
+                        </div>
+                        <div class="touche">
+                            <label><?php echo lang("prix_carbu") ?>&nbsp;:<input id="input_carbu" type="text" name="input_carbu" value="<?php echo isset($donnee['carbu']) ? $donnee['carbu'] : 1.5 ; ?>"/> €/L</label>
+                        </div>
+                        <div class="touche">
+                            <p><?php echo lang("distance") ?>&nbsp;: <span id="distance">?</span> km</p>
+                        </div>
+                        <div class="touche">
+                            <p><?php echo lang("duree") ?>&nbsp;: <span id="duree">? min</span></p>
+                        </div>
+                        <div class="touche">
+                            <p><?php echo lang("prix_conseil") ?>&nbsp;:<span id="prix"><?php echo isset($donnee['prix_conseil']) ? $donnee['prix_conseil'] : lang("creer_itineraire") ; ?></span></p>
+                        </div>
+                        <input id="input_consomme" type="hidden" name="input_consomme" value="<?php echo $user_data->consommation ? $user_data->consommation : "6"; ?>"/>
                         <input id="input_distance" type="hidden" name="input_distance" />
                         <input id="input_duree" type="hidden" name="input_duree" />
-                        <input id="input_prix_conseil" type="hidden" name="input_prix_conseil" value="<?php echo isset($donnee['prix_conseil']) ? $donnee['prix_conseil'] : "" ; ?>" />
+                        
                         
                         <div id="recalculer_prix" class="btn clearfix">
-                            <div class="bouton_contour bouton_gris">
-                                <span class="button gris">
+                            <div class="bouton_contour bouton_orange">
+                                <span class="button orange">
                                     <?php echo lang("recalculer_prix") ?>
                                 </span>
                             </div>
@@ -300,14 +325,15 @@
                 <input id="input_etapes" type="hidden" name="input_etape" />
                 <input id="input_coord" type="hidden" name="input_coord" />
             </div>
+            
         </div>
         <div id="publier" class="btn clearfix">
-            <div class="bouton_contour bouton_gris">
-                <button type="submit" value="true" class="button gris">
-                    <?php echo lang("publier") ?>
-                </button>
+                <div class="bouton_contour bouton_rouge">
+                    <button type="submit" value="true" class="button rouge">
+                        <?php echo lang("publier") ?>
+                    </button>
+                </div>
             </div>
-        </div>
 	<?php echo form_close(); ?>
         <div class="row-fluid clearfix">
             <div class="span8">
@@ -332,6 +358,12 @@
                         $( "#input_conducteur" ).val(ui.value );
                         $(".choix_conducteur"+$oldvalue).removeClass('select');
                         $(".choix_conducteur"+ui.value).addClass('select');
+                        if(ui.value == 0){
+                            $('.calculateur').hide();
+                        }
+                        else{
+                            $('.calculateur').show();
+                        }
                     }
                 });
             $(".input_datepicker").datepicker({

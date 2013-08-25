@@ -291,8 +291,7 @@ $(function() {
                     $("#duree").text(time);
                     $("#input_duree").val(time_taken);
                     $("#input_etapes").val(etapesString);
-                    //$("#input_distance").click();
-                    //$("#input_distance").keyup();
+                    $("#recalculer_prix span").click();
                 } else {
                     alert("Address not found");
                 }
