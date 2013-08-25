@@ -78,7 +78,7 @@ class inscription extends CI_Controller {
             // redirect('inscription');
             $erreur = True;
         }
-        if(! $data['mdp']===$data['mdp2']){
+        if( $data['mdp']!=$data['mdp2']){
             $this->session->set_flashdata('error_mdp2', 'Veuillez entrer le même mot de passe !');
             $erreur = True;
         }

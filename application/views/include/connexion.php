@@ -14,11 +14,12 @@
                     echo form_password($mdpInput);
                     echo '<input id="current_url" name="current_url" type="hidden" value="'.current_url().'"/>';
                 echo form_fieldset_close();
-                if(isset($message['error_login'])){
+                /*if(isset($message['error_login'])){
                     if($message['error_login']!=""){
                         echo '<p class="erreur_inscription">'.$message['error_login'].'</p>';
                     }
-                }                
+                }*/
+                echo '<p id="erreur_login" class="erreur hidden"></p>';
                 echo '<div class="souvenir_moi">';
                     $input_souvenir = array('name'=>'souvenir', 'id'=>'souvenir', 'value'=>true);
                     echo form_checkbox($input_souvenir);
@@ -51,6 +52,7 @@ else{?>
                 <li><a href="<?php echo base_url() ?>message/"><span class="item_message"></span>Messages</a></li>
                 <li><a href="<?php echo base_url().'annonce/mes_annonces/' ?>"><span class="item_annonce"></span>Mes annonces</a></li>
                 <li><a href="<?php echo base_url().'annonce/mes_reservations/' ?>"><span class="item_reservation"></span>Mes reservations</a></li>
+                <li><a href="<?php echo base_url().'user/profil/'.$user_data->user_id ?>"><span class="item_profil"></span>Mon profil</a></li>
                 <li><a href="#"><span class="item_parametre"></span>Paramètres</a></li>
             </ul>
             

@@ -26,6 +26,7 @@ class Ajax extends CI_Controller {
                         
             echo $villes;
         }
+        
     //RECUPERER SI CONNECTE    
         function dataSession(){
             if(get_cookie('logged_in')){
@@ -39,7 +40,27 @@ class Ajax extends CI_Controller {
             
             echo json_encode($dataSession);
         }
-        
+    
+    //CONNEXION
+        public function login(){
+            $this->load->model('M_User');
+            $this->load->library('encrypt');
+
+            $data['mdp'] = $this->encrypt->sha1($_POST[ "mdp" ]);
+            $data['email'] = $_POST[ "email" ];;
+            //$current_url = $this->input->post('current_url');
+            $souvenir = $_POST[ "souvenir" ];
+            if($this->M_User->verifier($data)){
+                $user_data = $this->M_User->getUserInfo('email',$data['email']);
+                $this->M_Ajax->set_cookie_session_data('logged_in',$user_data,$souvenir);
+                $this->lastConnex($user_data);
+                echo 0;
+            }
+            else{
+                echo json_encode('Votre identifiant ou mot de passe sont incorrects');
+            }
+        }
+     //FACEBOOK   
         function facebook_login(){
             $this->load->model('M_User');
             

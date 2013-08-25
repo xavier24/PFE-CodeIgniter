@@ -48,6 +48,7 @@
 
                             <label for="tel">N° de téléphone portable</label>
                             <input type="tel" id="tel" value="<?php echo $donnee["tel"] ?>" name="tel" placeholder="N° de portable" class="champ" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"/>
+                            <p class="tel_precision">Visible que par les personnes voyageant avec vous.</p>
                             <?php if($message['error_tel']){
                                 echo ('<p class="erreur_inscription">'.$message["error_tel"].'</p>');
                             }?>
