@@ -94,7 +94,7 @@
                         </h2>
                         <div class="naissance">
                             <span class="age">(<?php echo $info_membre->age ?>ans)</span>
-                            <input id="input_naissance" name="input_naissance" class="profil_modif" type="date" value="<?php echo $info_membre->naissance?>"/>    
+                            <input id="input_naissance" name="input_naissance" class="profil_modif" type="text" value="<?php echo $info_membre->naissance?>"/>    
                             <label for="input_naissance" class="profil_modif"><span class="icone-datepicker"></span><span class="hidden">Modifier votre date de naissance</span></label>
                         </div>
                         <div class="habite">
@@ -464,7 +464,7 @@
                                         </a>
                                     </h4>
                                     <p class="destination"><span class="ville"><?php echo $annonce->$ville_depart_lang ? $annonce->$ville_depart_lang : $annonce->ville_depart_fr ?></span><span class="icon-right-thin"> </span><span class="ville"><?php echo $annonce->$ville_arrivee_lang ? $annonce->$ville_arrivee_lang : $annonce->ville_arrivee_fr ?></span></p>
-                                    <p class="places"><?php echo $annonce->places ?> place(s) disponible(s)</p>
+                                    <p class="places"><?php echo $annonce->places_annonce ?> place(s) disponible(s)</p>
                                 </div>
                             <?php endforeach; 
                         }

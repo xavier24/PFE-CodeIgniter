@@ -44,7 +44,7 @@
                 <div class="span4">
                     <h2>De</h2>
                     <div class="depart clearfix">
-                        <label class="ico-depart"></label>
+                        <label for="input_depart" class="ico-depart"></label>
                         <div class="input">
                             <input type="text" class="champ" name="input_depart" id="input_depart" placeholder="ville de départ" <?php echo isset($donnee['depart']) ? 'value="'.$donnee['depart'].'"' : "" ; ?> />
                         </div>
@@ -59,7 +59,7 @@
                 <div class="span4">
                     <h2>à</h2>
                     <div class="arrivee clearfix">
-                        <label class="ico-arrivee"></label>
+                        <label for="input_arrivee" class="ico-arrivee"></label>
                         <div class="input">
                             <input type="text" class="champ" name="input_arrivee" id="input_arrivee" placeholder="ville d'arrivée" <?php echo isset($donnee['arrivee']) ? 'value="'.$donnee['arrivee'].'"' : "" ; ?>/>
                         </div>
@@ -154,7 +154,7 @@
                                 echo '<span class="icon-suitcase-1"></span><span class="icon-steering-wheel"></span>';
                             } ?>
                             </p>
-                            <img src="<?php echo base_url().'web/images/membre/thumb/thumb_'; echo $annonce->photo ? $annonce->photo : 'default.jpg' ?>"/>                            
+                            <img width="55" height="55" alt="photo du membre" src="<?php echo base_url().'web/images/membre/thumb/thumb_'; echo $annonce->photo ? $annonce->photo : 'default.jpg' ?>"/>                            
                         </div>
                         <div class="detail">
                             <p class="destination">
@@ -178,7 +178,7 @@
                 }?>
             </div>
             <div class="span4">
-                <img src="http://fakeimg.pl/300x250/?text=Pub">
+                <img width="300" height="250" alt="pub" src="http://fakeimg.pl/300x250/?text=Pub">
                 <?php include('include/facebook.php'); ?>
             </div>
         </div>
@@ -186,7 +186,7 @@
             <div id="map"></div>
         </div>
         <div class="pub">
-            <img src="<?php echo base_url() ?>web/images/pub/pub_1.jpg" />
+            <img alt="pub" width="1080" height="100" src="<?php echo base_url() ?>web/images/pub/pub_1.jpg" />
         </div>
     </div>
     <script type="text/javascript">

@@ -55,11 +55,9 @@
     <body>
         <h1>Car-People<?php if(isset($titre)){echo " - ".$titre;} ?></h1>
         <div class="contenu">
-            <p class="bonjour">Bonjour <?php echo isset($username) ? $username : $email ?>,</p>
-            <p>Vous venez de vous inscrire et nous sommes heureux de vous compter parmi nous.</p>
-            <p>Voici un rappel de vos identifiants, note-les précieusement :</p>
-            <p>Email de connexion : <?php echo $email ?></p>
-            <p>Mot de passe : <?php echo $mdp ?></p>
+            <p class="bonjour">Bonjour,</p>
+            <p>Nous avons le grand plaisir de vous annoncer l'ouverture officielle de votre futur site préféré pour organiser vos sorties et covoiturages.</p>
+            <p>Nous attendons avec impatience de vous compter parmi nos membres.</p>
             <p>À bientot sur Car people !</p>
             <p><a href="http://www.car-people.be">http://www.car-people.be</a></p>
         </div>

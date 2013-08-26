@@ -48,8 +48,8 @@
                         <p><?php echo $annonce->description_arrivee ? $annonce->description_arrivee : "Non précisé" ?></p>
                     </div>
                     <div class="span2">
-                        <?php if(isset($not_user)&& $annonce->conducteur){
-                            if($reservation){?>
+                        <?php if((isset($not_user)&& $annonce->conducteur)){
+                            if(isset($reservation[0])){?>
                                 <div class="btn clearfix">
                                     <span class="bouton_contour bouton_orange">
                                         <span id="reserv_place" class="button orange">
@@ -296,7 +296,7 @@
                             </div>
                             <div class="info_vehicule">
                                 <p class="marque"><?php echo $info_membre->vehicule ?></p>
-                                <p class="consommation"><span class="icon-fuel"></span> <?php echo '10' ?> litres/100km</p>
+                                <p class="consommation"><span class="icon-fuel"></span> <?php echo $info_membre->consommation ? $info_membre->consommation : "?" ?> litres/100km</p>
                                 <p class="confort">Confort&nbsp;:
                                 <?php
                                 for($i=1;$i<6;$i++){

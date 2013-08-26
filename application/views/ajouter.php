@@ -187,7 +187,7 @@
                         <h2 class="hidden-desktop"><?php echo lang("places") ?></h2>
                         <label><span class="ico-place"></span></label>
                         <div class="select_place">
-                            <select id="input_places" name="input_places">
+                            <select id="input_places_annonce" name="input_places_annonce">
                                 <?php for($i=1;$i<8;$i++){
                                     if($donnee['places']){
                                         if($i == $donnee['places']){
@@ -276,6 +276,7 @@
                         <h2><?php echo lang("comm_trajet") ?></h2>
                         <textarea id="input_commentaire" placeholder="Donnez des précisions sur votre trajet..." name="input_commentaire"><?php echo isset($donnee['commentaire']) ? $donnee['commentaire'] : "" ; ?></textarea>
                     </div>
+                    <div id="map"></div>
                 </div>
                 <div class="span6 clearfiw">
                     <div class="calculateur clearfix">
@@ -336,12 +337,7 @@
             </div>
 	<?php echo form_close(); ?>
         <div class="row-fluid clearfix">
-            <div class="span8">
-                <div id="map"></div>
-            </div>
-            <div class="span4">
-                <div id="way"></div>
-            </div>
+            <div id="way"></div>
         </div>
         <?php } ?>
         

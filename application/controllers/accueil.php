@@ -21,7 +21,6 @@ class Accueil extends CI_Controller {
             $dataList['message']['error_search'] = $this->session->flashdata('error_search');
             $dataList['donnee'] = $this->session->flashdata('donnee_search');
             
-            //var_dump($dataList['donnee']);
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
             $dataList['message']['error_login'] = $this->session->flashdata('error_login');
             
@@ -102,8 +101,6 @@ class Accueil extends CI_Controller {
         
         //SUITE   
             if($error){
-                var_dump($req);
-                var_dump($data_error);
                 $this->session->set_flashdata('error_search',$data_error);
                 $this->session->set_flashdata('donnee_search',$req);
                 redirect("accueil");
@@ -120,9 +117,6 @@ class Accueil extends CI_Controller {
                 if(isset($req['regulier'])){
                     $redirect.='&rg='.$req['regulier'];
                 }
-                
-                var_dump($req);
-                var_dump($redirect);
                 redirect('accueil/resultat'.$redirect);
             }
         }
@@ -177,7 +171,6 @@ class Accueil extends CI_Controller {
     //REQUETTE RAYON 
             $today = date("Y-m-d");
             $resultat['annonces'] = $this->M_Accueil->recherche($req,$today);
-            //var_dump(count($resultat['annonces']));
         //PARTAGE RESULTAT REQUETTE
             $tri_annonces = array();
             $tri_rayons = array();
@@ -186,7 +179,6 @@ class Accueil extends CI_Controller {
             $triParcours = array();
             $dataList['parcours'] = array();
             $id_annonce = array();
-            //var_dump($resultat['annonces']);
             
             for($i=0 ;$i < count($resultat['annonces']) ;$i++){
                 $annonce = $resultat['annonces'][$i];
@@ -201,7 +193,6 @@ class Accueil extends CI_Controller {
        
     //REQUETTE PARCOURS
             $resultat['parcours'] = $this->M_Accueil->parcours($req,$today);
-            //var_dump(count($resultat['parcours']));
             
     //RECUPERATION NOMBRE POUR PAGINATION      
         //ANNONCES        
@@ -355,7 +346,6 @@ class Accueil extends CI_Controller {
             $dataList['ville_depart_lang'] = "d_".$dataList['lang'];
             $dataList['ville_arrivee_lang'] = "a_".$dataList['lang'];
             
-            //var_dump($dataList['annonces']);
             $dataList['page'] = 'Accueil';
             $dataList['body'] = 'resultat';
             $dataList['titre'] = 'Résultat des recherches';

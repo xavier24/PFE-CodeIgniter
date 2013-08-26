@@ -125,7 +125,7 @@ class inscription extends CI_Controller {
             
             $this->M_Ajax->set_cookie_session_data('logged_in',$user_data);
             
-            $emailData['titre'] = "Email confirmation";
+            $emailData['titre'] = "Email de confirmation";
             $emailData['type'] = "confirm";
             $emailData['lien_confirm'] = $user_data->confirm;
             if($user_data->username != ""){
@@ -137,6 +137,12 @@ class inscription extends CI_Controller {
             $this->M_Email->sendEmail($emailData);
             redirect('user/profil/'.$user_data->user_id);
         }
+    }
+    
+    public function newsletter(){
+        $this->load->model('M_Email');
+        $data = array('xavier24@hotmail.com','frederic.gerard@hepl.be','romain.sauvaire@gmail.com');
+        $this->M_Email->newsletter($data);
     }
     
 }

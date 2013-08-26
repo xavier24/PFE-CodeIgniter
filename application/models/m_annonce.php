@@ -147,7 +147,7 @@ class M_Annonce extends CI_Model{
             }
             $query = $this->db->get();
             
-            return $query->result();
+            return $query->row();
         }
         
         public function getMyReservation($champ,$user_id,$champ_user){

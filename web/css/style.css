@@ -2136,6 +2136,7 @@ textarea.profil_modif{
 .ajouter_annonce .commentaire{
     margin-top: 20px;
     padding-right: 15px;
+    margin-bottom: 20px;
 }
 #input_commentaire{
     height: 100px;
@@ -2254,9 +2255,12 @@ textarea.profil_modif{
 }
 #way{
     font-size: 0.875em;
-    margin-top:-10px;
+    margin-top:20px;
     height: 310px;
     overflow: auto;
+    background-color: #fff;
+    padding: 5px 10px;
+    border: 1px solid #aaa;
 }
 /* ==========================================================================
    Annonce styles

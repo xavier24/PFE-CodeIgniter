@@ -312,30 +312,30 @@ class User extends CI_Controller {
         
         //supprime img tmp
         if(unlink($source)) {
-            echo 'deleted source successfully';
+            //echo 'deleted source successfully';
         }
         else {
-            echo 'errors occured (source)';
+            //echo 'errors occured (source)';
         }
         
         //supprime ancienne photo (lien depuis DB)
         if($oldPicture){
            if(unlink('./web/images/membre/'.$oldPicture)) {
-                echo 'deleted old successfully';
+                //echo 'deleted old successfully';
                 if(unlink('./web/images/membre/thumb/thumb_'.$oldPicture)) {
-                    echo 'deleted old thumb successfully';
+                    //echo 'deleted old thumb successfully';
                     redirect('user/profil/'.$user_id);
                 }
                 else {
-                    echo 'errors occured (old thumb)';
+                    //echo 'errors occured (old thumb)';
                 }
            }
            else {
-                echo 'errors occured (old)';
+                //echo 'errors occured (old)';
            }
         }
         else {
-            echo true;
+            //echo true;
             redirect('user/profil/'.$user_id);
         }
         

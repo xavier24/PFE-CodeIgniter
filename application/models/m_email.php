@@ -5,7 +5,7 @@ class M_email extends CI_Model{
     public function sendEmail($data){
         
         $this->load->library('email');
-        $config['charset'] = 'utf_8';
+        $config['charset'] = 'UTF-8';
         $config['mailtype']  = 'html';
         
         $this->email->set_newline("\r\n");
@@ -35,7 +35,7 @@ class M_email extends CI_Model{
     public function CorrespondanceEmail($dataList){
         
         $this->load->library('email');
-        $config['charset'] = 'utf_8';
+        $config['charset'] = 'UTF-8';
         $config['mailtype']  = 'html';
         
         
@@ -47,8 +47,8 @@ class M_email extends CI_Model{
             $this->email->set_newline("\r\n");
             $this->email->initialize($config);
             $this->email->from('noreply@car-people.be', 'Car People');
-            //$this->email->to($email);
-            $this->email->to('xavier24@hotmail.com');
+            $this->email->to($email);
+            //$this->email->to('xavier24@hotmail.com');
 
             $this->email->subject($data['titre']);
             $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
@@ -56,14 +56,12 @@ class M_email extends CI_Model{
 
 
             $this->email->send(); 
-        }
-        //var_dump($data['annonces'][0]);
-        
+        }        
     }
     
     public function demandeReservation($user_data,$place,$annonce,$user_demande){
         $this->load->library('email');
-        $config['charset'] = 'utf_8';
+        $config['charset'] = 'UTF-8';
         $config['mailtype']  = 'html';
         
         $data['type'] = 'reservation';
@@ -76,8 +74,8 @@ class M_email extends CI_Model{
         $this->email->set_newline("\r\n");
         $this->email->initialize($config);
         $this->email->from('noreply@car-people.be', 'Car People');
-        //$this->email->to($data['user_data']->email);
-        $this->email->to('xavier24@hotmail.com');
+        $this->email->to($data['user_data']->email);
+        //$this->email->to('xavier24@hotmail.com');
 
         $this->email->subject($data['titre']);
         $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
@@ -89,7 +87,7 @@ class M_email extends CI_Model{
     
     public function AccepterReservationEmail($user_data,$place,$annonce,$annonceur){
         $this->load->library('email');
-        $config['charset'] = 'utf_8';
+        $config['charset'] = 'UTF-8';
         $config['mailtype']  = 'html';
         
         $data['type'] = 'accepte_reservation';
@@ -102,8 +100,8 @@ class M_email extends CI_Model{
         $this->email->set_newline("\r\n");
         $this->email->initialize($config);
         $this->email->from('noreply@car-people.be', 'Car People');
-        //$this->email->to($data['user_data']->email);
-        $this->email->to('xavier24@hotmail.com');
+        $this->email->to($data['user_data']->email);
+        //$this->email->to('xavier24@hotmail.com');
 
         $this->email->subject($data['titre']);
         $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
@@ -115,7 +113,7 @@ class M_email extends CI_Model{
     
     public function CancelReservation($user_data,$place,$annonce,$user_demande){
         $this->load->library('email');
-        $config['charset'] = 'utf_8';
+        $config['charset'] = 'UTF-8';
         $config['mailtype']  = 'html';
         
         $data['type'] = 'cancel_reservation';
@@ -128,8 +126,8 @@ class M_email extends CI_Model{
         $this->email->set_newline("\r\n");
         $this->email->initialize($config);
         $this->email->from('noreply@car-people.be', 'Car People');
-        //$this->email->to($user_data->email);
-        $this->email->to('xavier24@hotmail.com');
+        $this->email->to($user_data->email);
+        //$this->email->to('xavier24@hotmail.com');
 
         $this->email->subject($data['titre']);
         $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
@@ -141,7 +139,7 @@ class M_email extends CI_Model{
     
     public function RefuserReservationEmail($user_data,$place,$annonce,$user_demande){
         $this->load->library('email');
-        $config['charset'] = 'utf_8';
+        $config['charset'] = 'UTF-8';
         $config['mailtype']  = 'html';
         
         $data['type'] = 'refuser_reservation';
@@ -154,8 +152,8 @@ class M_email extends CI_Model{
         $this->email->set_newline("\r\n");
         $this->email->initialize($config);
         $this->email->from('noreply@car-people.be', 'Car People');
-        //$this->email->to($data['user_demande']->email);
-        $this->email->to('xavier24@hotmail.com');
+        $this->email->to($data['user_demande']->email);
+        //$this->email->to('xavier24@hotmail.com');
 
         $this->email->subject($data['titre']);
         $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
@@ -167,7 +165,7 @@ class M_email extends CI_Model{
     
     public function deleteAnnonce($annonce,$reservations){
         $this->load->library('email');
-        $config['charset'] = 'utf_8';
+        $config['charset'] = 'UTF-8';
         $config['mailtype']  = 'html';
         
         $data['type'] = 'delete_annonce';
@@ -180,8 +178,8 @@ class M_email extends CI_Model{
             $this->email->set_newline("\r\n");
             $this->email->initialize($config);
             $this->email->from('noreply@car-people.be', 'Car People');
-            //$this->email->to($data['email']);
-            $this->email->to('xavier24@hotmail.com');
+            $this->email->to($data['email']);
+            //$this->email->to('xavier24@hotmail.com');
 
             $this->email->subject($data['titre']);
             $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
@@ -190,5 +188,27 @@ class M_email extends CI_Model{
 
             $this->email->send();
         }
+    }
+    
+    public function newsletter($data){
+        $this->load->library('email');
+        $config['charset'] = 'UTF-8';
+        $config['mailtype']  = 'html';
+        
+        $data['type'] = 'newsletter';
+        $data['titre'] = 'Ouverture du site';
+        foreach($data as $email){
+            $this->email->set_newline("\r\n");
+            $this->email->initialize($config);
+            $this->email->from('noreply@car-people.be', 'Car People');
+            $this->email->to($email);
+            //$this->email->to('xavier24@hotmail.com');
+
+            $this->email->subject($data['titre']);
+            $this->email->message($this->load->view('email/'.$data['type'].'-html', $data, TRUE));
+            //$this->email->set_alt_message($this->load->view('email/'.$data['type'].'-txt', $data, TRUE));
+
+            $this->email->send(); 
+       }
     }
 }

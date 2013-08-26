@@ -66,8 +66,6 @@ class Annonce extends CI_Controller {
                 $dataList['annonces'][$i]->date = $this->M_Date->dateLongue($dataList['annonces'][$i]->date,false,false);
             }
             
-            
-            //var_dump($dataList['annonces']);
             if($this->session->userdata('lang')){ 
                 $dataList['lang'] = $this->session->userdata('lang');
             }
@@ -78,7 +76,7 @@ class Annonce extends CI_Controller {
             $dataList['a_lang'] = "a_".$dataList['lang'];
             $dataList['ville_lang'] = "ville_".$dataList['lang'];
             $dataList['province_lang'] = "province_".$dataList['lang'];
-            //var_dump($dataList);
+            
             $dataList['body'] = "mes_annonces";
             $dataList['titre'] = "Mes annonces";
             
@@ -127,7 +125,7 @@ class Annonce extends CI_Controller {
             $dataList['a_lang'] = "a_".$dataList['lang'];
             $dataList['ville_lang'] = "ville_".$dataList['lang'];
             $dataList['province_lang'] = "province_".$dataList['lang'];
-            //var_dump($dataList);
+            
             $dataList['body'] = "mes_reservations";
             $dataList['titre'] = "Mes réservations";
             
@@ -170,7 +168,6 @@ class Annonce extends CI_Controller {
             $reservation_info = $this->M_Annonce->getReservation($id_annonce,false,$id_reservation);
             $annonce = $this->M_Annonce->voir($id_annonce);
             
-            
             if($type_reservation =="annuler"){
                 $user_data = $this->M_Annonce->getUserInfo("user_id",$annonce->user_id);
                 $this->M_Annonce->cancelReservation($id_annonce,$dataList['user_data']->user_id);
@@ -200,7 +197,6 @@ class Annonce extends CI_Controller {
         
         public function fiche($idAnnonce){
             
-            //$idAnnonce = $this->uri->segment(3);
         //user_data    
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
                       
@@ -213,20 +209,17 @@ class Annonce extends CI_Controller {
             
             $dataList['annonce']->date= $this->M_Date->dateLongue($dataList['annonce']->date,'no','no');
             $dataList['annonce']->date_retour= $this->M_Date->dateLongue($dataList['annonce']->date_retour,'no','no');
-            //var_dump($dataList['annonce']->etapes);
         //reservation du visiteur
             if($dataList['user_data']){
                 $dataList['reservation'] = $this->M_Annonce->getReservation($idAnnonce,$dataList['user_data']->user_id);
             }
         //etapes    
             $dataList['etapes'] = $this->M_Annonce->get_etapes($dataList['annonce']->id);
-            //var_dump($dataList['etapes']);
         
         //info_membre
             if(!isset($dataList['user_data']->user_id) || $dataList['user_data']->user_id != $dataList['annonce']->user_id){
                 $dataList['info_membre'] = $this->M_Annonce->getUserInfo('user_id',$dataList['annonce']->user_id);
                 $dataList['not_user'] = true;
-                //var_dump($dataList['info_membre']);
             }
             else{
                 $dataList['info_membre'] = $dataList['user_data'];
@@ -248,7 +241,7 @@ class Annonce extends CI_Controller {
             $dataList['a_lang'] = "a_".$dataList['lang'];
             $dataList['ville_lang'] = "ville_".$dataList['lang'];
             $dataList['province_lang'] = "province_".$dataList['lang'];
-            //var_dump($dataList);
+            
             $dataList['body'] = "annonce"; 
             $dataLayout['vue'] = $this->load->view('fiche',$dataList,true);
             $dataLayout['titre'] = "Annonce  ".$dataList['annonce']->$dataList['d_lang']."- ".$dataList['annonce']->$dataList['a_lang'];
@@ -271,7 +264,6 @@ class Annonce extends CI_Controller {
             if($this->session->userdata('dataRecup')){
                 $dataList['donnee'] = $this->session->userdata('dataRecup');
                 $this->session->unset_userdata('dataRecup');
-                //var_dump($dataList['donnee']);
             }
             if($this->session->userdata('dataError')){
                 $error = $this->session->userdata('dataError');
@@ -291,7 +283,6 @@ class Annonce extends CI_Controller {
                 if(isset($error['date_retour'])){
                     $dataList['error_retour'] = $error['date_retour'];
                 }
-                //var_dump($dataList['error']);
             }
             if(isset($dataList['donnee']['calendar'])){
                 $dataList['donnee']['calendar'] = json_decode($dataList['donnee']['calendar']);
@@ -299,7 +290,6 @@ class Annonce extends CI_Controller {
             
             if($this->session->userdata('lang')){ 
                 $dataList['lang'] = $this->session->userdata('lang');
-                //$dataList['lang'] = 'fr';
             }
             else{
                 $dataList['lang'] = 'fr';
@@ -367,7 +357,7 @@ class Annonce extends CI_Controller {
                 }
                                 
             //autres infos    
-                $champ = array('conducteur','description_depart','description_arrivee','flexibilite','places','etapes','heure_retour');
+                $champ = array('conducteur','description_depart','description_arrivee','flexibilite','places_annonce','etapes','heure_retour');
                 
                 for($i=0;$i<count($champ);$i++){
                     if($this->input->post('input_'.$champ[$i]) != ""){
@@ -454,7 +444,6 @@ class Annonce extends CI_Controller {
                 $etape_time = 0;
                 for($i=0;$i<5;$i++){
                     if($this->input->post('input_etape_'.$i)){
-                        //var_dump("etape");
                         $etape["villeID"]=intval($this->input->post('input_etapeID_'.$i));
                         $etape["stop"]=intval($this->input->post('input_stop_'.$i));
                         $etape["duree"]=intval($this->input->post('input_duree_'.$i));
@@ -529,11 +518,8 @@ class Annonce extends CI_Controller {
                 }
                 
                 $dataRecup['etapes'] = $recupEtapes;
-                //var_dump($data);
-                //var_dump($dataRecup);
                 
                 if(isset($error)){
-                    var_dump($data_error);
                     $this->session->set_userdata('dataRecup',$dataRecup);
                     $this->session->set_userdata('dataError',$data_error);
                     redirect('annonce/ajouter');
@@ -549,9 +535,6 @@ class Annonce extends CI_Controller {
             $this->load->helper('date');
             $this->load->model('M_Email');
             $today = date("Y-m-d");
-
-            //var_dump($data);
-            //var_dump($dataRecup);
 
             $req['user_id'] = $data['user_id'];
             $req['depart_lat'] = $dataRecup['depart_lat'];
@@ -574,8 +557,7 @@ class Annonce extends CI_Controller {
                 $req['date_min'] = $date_min[2].'-'.$date_min[1].'-'.$date_min[0];
                 $req['date_max'] = $date_max[2].'-'.$date_max[1].'-'.$date_max[0];
             }
-            //var_dump($req);
-
+            
             $annonces = $this->M_Annonce->correspondance($req,$today);
 
             $table_annonce = array();
@@ -589,9 +571,6 @@ class Annonce extends CI_Controller {
             }
 
             $this->M_Email->CorrespondanceEmail($table_annonce);
-
-            //var_dump($annonces);
-            //var_dump($table_annonce);
         }
 
         public function reservation(){

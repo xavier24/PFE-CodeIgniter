@@ -2,7 +2,7 @@
 	"use strict";
 
 	// --- global vars
-            var baseUrl = location.origin,
+            var baseUrl = location.origin + '/PFE-CodeIgniter',
                 villes,
                 depart_lat ,
                 depart_lng ,
@@ -33,7 +33,7 @@
             var ajouterMaps = function(){
                 
                 $.ajax({
-                    url:baseUrl+'/PFE-CodeIgniter/ajax/villes',
+                    url:baseUrl+'/ajax/villes',
                     type:'POST',
                     success: function($data){
                         villes = $.parseJSON($data);
@@ -156,7 +156,7 @@
                 input_distance = $("#input_distance");
                 input_consomme = $("#input_consomme");    
                 input_carbu = $("#input_carbu");
-                input_place = $("#input_places");
+                input_place = $("#input_places_annonce");
              
             // --- events
                 $("#recalculer_trajet").on('click',initialiseMaps);    

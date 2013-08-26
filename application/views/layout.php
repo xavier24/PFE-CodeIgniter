@@ -11,12 +11,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Car-People<?php if(isset($titre)){echo " - ".$titre;} ?></title>
-        <meta name="description" content="">
+        <meta name="description" content="Organisez simplement et rapidement votre covoiturage grâce à Car People et faites ainsi des économies. Voyagez dans la bonne humeur et la convivialité avec des personnes se rendant aux même endroits que vous. Economie, écologie et convivialité sont les maîtres mots.">
+        <meta name="keywords" content="covoiturage, co-voiturage, écologie, transport, voyages, voyage, trajet, parcours, voiture, carpool, carpeople, car-people, Car-People" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        <meta name="language" content="fr-FR" />
+        
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link type="image/x-icon" href="favicon.ico" rel="icon">
-        <link type="image/x-icon" href="favicon.ico" rel="shortcut icon">
+        <link type="image/x-icon" href="<?php echo base_url(); ?>web/images/favicon.ico" rel="icon">
+        <link type="image/x-icon" href="<?php echo base_url(); ?>web/images/favicon.ico" rel="shortcut icon">
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>web/css/reset.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>web/css/fontello.css">
@@ -41,7 +43,6 @@
         <script src="<?php echo base_url(); ?>web/js/jquery.ui.datepicker-fr.js"></script>
         <script src="<?php echo base_url(); ?>web/js/jquery-ui-timepicker-addon.js"></script>
         <script src="<?php echo base_url(); ?>web/js/colorPicker.js"></script>
-        <script src="<?php echo base_url(); ?>web/js/plugins.js"></script>
         <script src="<?php echo base_url(); ?>web/js/appel.googlemap.js"></script>
         <script src="<?php echo base_url(); ?>web/js/main.js"></script>
         
