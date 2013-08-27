@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <h2 class=>Date</h2>
+                    <h2>Date</h2>
                     <div class="date clearfix">
                         <label for="input_date" class="ico-date"></label>
                         <div class="input">
@@ -141,7 +141,7 @@
                 <h3>Les prochains départs</h3>                
                 <?php if($annonces){
                 foreach($annonces as $annonce): ?>
-                    <div id="annonce_<?php echo $annonce->id ?>"class="accueil_annonce clearfix <?php echo $annonce->parite ? "paire" : "impaire" ?>">
+                    <div id="annonce_<?php echo $annonce->id ?>" class="accueil_annonce clearfix <?php echo $annonce->parite ? "paire" : "impaire" ?>">
                         <div class="photo" >
                             <p class="role">
                             <?php if($annonce->conducteur== '2'){
@@ -158,7 +158,7 @@
                         </div>
                         <div class="detail">
                             <p class="destination">
-                                <a class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
+                                <a title="Voir l'annonce" class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
                                     <span class="ville"><?php echo $annonce->$ville_depart_lang ? $annonce->$ville_depart_lang : $annonce->ville_depart_fr ?></span>
                                     <span class="icon-right-thin"></span>
                                     <span class="ville"><?php echo $annonce->$ville_arrivee_lang ? $annonce->$ville_arrivee_lang : $annonce->ville_arrivee_fr ?></span>
@@ -178,7 +178,7 @@
                 }?>
             </div>
             <div class="span4">
-                <img width="300" height="250" alt="pub" src="http://fakeimg.pl/300x250/?text=Pub">
+                <img class="hidden-phone" width="300" height="250" alt="pub" src="http://fakeimg.pl/300x250/?text=Pub">
                 <?php include('include/facebook.php'); ?>
             </div>
         </div>

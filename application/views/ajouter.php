@@ -212,7 +212,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row-fluid">
+            <div class="row-fluid clearfix">
                 <div class="span6">
                     <div class="clearfix">
                         <div class="btn clearfix btn_check">
@@ -278,7 +278,7 @@
                     </div>
                     <div id="map"></div>
                 </div>
-                <div class="span6 clearfiw">
+                <div class="span6 clearfix">
                     <div class="calculateur clearfix">
                         <h2><?php echo lang("calculateur_prix") ?></h2>
                         <div class="ecran">

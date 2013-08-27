@@ -7,15 +7,15 @@
             <div class="photo">
             <?php
                 if($info_membre->photo){
-                    echo '<img src="'.base_url().'web/images/membre/'.$info_membre->photo.'" />';
+                    echo '<img width="140" height="140" alt="Photo du membre" src="'.base_url().'web/images/membre/'.$info_membre->photo.'" />';
                 }
                 else{
-                    echo '<img src="'.base_url().'web/images/membre/default.jpg"/>';
+                    echo '<img width="140" height="140" alt="Ce membre ne possède pas de photo" src="'.base_url().'web/images/membre/default.jpg"/>';
                 }
                 if($user_connect){
                     echo '<div id="upload_photo">';
                     echo form_open_multipart('user/upload',array('method'=>'post'));
-                    echo '<p><a class="edit_photo">Modifie ta photo...</a></p>';
+                    echo '<p><a title="Modifiez votre photo" class="edit_photo">Modifie ta photo...</a></p>';
                     echo form_upload('photo','fichier','id="photo" class="hidden"');
                     echo '<input type="submit" value="upload" class="hidden" />';
                     if($error['upload']){
@@ -34,14 +34,14 @@
                         </span>
                     </div>-->
                     <div class="btn clearfix">
-                        <a href="<?php echo base_url() ?>message/nouveau/<?php echo $info_membre->user_id ?>" class="bouton_contour bouton_bleu">
+                        <a title="Envoyer un nouveau message au propriétaire du profil" href="<?php echo base_url() ?>message/nouveau/<?php echo $info_membre->user_id ?>" class="bouton_contour bouton_bleu">
                             <span class="button bleu"><span class="icon-mail-4"></span>Contacter le covoitureur</span>
                         </a>
                     </div>
                 </div>
             <?php } ?>
             <div class="map visible-tablet">
-                <img src="http://maps.googleapis.com/maps/api/staticmap?&zoom=8&size=150x150&maptype=roadmap&markers=color:blue%7C<?php echo $info_membre->latitude.','.$info_membre->longitude ;?>&sensor=false"/>
+                <img alt="Carte situant la ville de résidence du membre" src="http://maps.googleapis.com/maps/api/staticmap?&zoom=8&size=150x150&maptype=roadmap&markers=color:blue%7C<?php echo $info_membre->latitude.','.$info_membre->longitude ;?>&sensor=false"/>
             </div>
             <div class="tel">
                 <?php if($user_connect){
@@ -95,7 +95,7 @@
                         <div class="naissance">
                             <span class="age">(<?php echo $info_membre->age ?>ans)</span>
                             <input id="input_naissance" name="input_naissance" class="profil_modif" type="text" value="<?php echo $info_membre->naissance?>"/>    
-                            <label for="input_naissance" class="profil_modif"><span class="icone-datepicker"></span><span class="hidden">Modifier votre date de naissance</span></label>
+                            <label for="input_naissance" class="ico_date_picker profil_modif"><span class="icone-datepicker"></span><span class="hidden">Modifier votre date de naissance</span></label>
                         </div>
                         <div class="habite">
                             <label for="ville">J'habite à <span class="edit_hidden ville_habite"><?php echo isset($info_membre->$ville_lang)? $info_membre->$ville_lang : $info_membre->ville_fr ?></span></label>
@@ -235,7 +235,7 @@
                 </div>
                 <div class="span4">
                     <div class="map visible-desktop">
-                        <img src="http://maps.googleapis.com/maps/api/staticmap?&zoom=8&size=250x250&maptype=roadmap&markers=color:blue%7C<?php echo $info_membre->latitude.','.$info_membre->longitude ;?>&sensor=false"/>
+                        <img alt="Carte situant la ville de résidence du membre" src="http://maps.googleapis.com/maps/api/staticmap?&zoom=8&size=250x250&maptype=roadmap&markers=color:blue%7C<?php echo $info_membre->latitude.','.$info_membre->longitude ;?>&sensor=false"/>
                     </div>
                 </div>
             </div>
@@ -458,7 +458,7 @@
                             foreach($annonces as $annonce): ?>
                                 <div class="annonce">
                                     <h4>
-                                        <a class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
+                                        <a title="Voir l'annonce" class="bleu" href="<?php echo base_url().'annonce/fiche/'.$annonce->id ?>">
                                             <span class="annonce_date"><?php echo $annonce->date ?></span>
                                             <span class="annonce_heure"><?php echo $annonce->heure ?><span class="heure_estime">&nbsp;(heure&nbsp;estimée)</span></span>
                                         </a>

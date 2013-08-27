@@ -285,7 +285,7 @@ body{
 	box-shadow : 2px -1px 5px rgba(0,0,0,0.6);
 }
 .footer, .push {
-	height: 100px; /* .push must be the same height as .footer */
+	min-height: 100px; /* .push must be the same height as .footer */
 	margin: 0 auto;
 	max-width:1180px;
 	padding:0 10px;
@@ -770,6 +770,8 @@ header h2.slogan{
     background-color: #1A272A;
     background-color: #eee;
     border: medium none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     border-radius: 5px;
     -moz-box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
     -webkit-box-shadow: 1px 1px 0 #666 inset, 1px 1px 0 #fff;
@@ -1043,7 +1045,11 @@ btn button.rouge,.button.rouge{
 .connex fieldset {
         background-color: #1a272a;
         border: medium none;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
         border-radius: 5px 5px 5px 5px;
+        -moz-box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #96A3A6;
+        -webkit-box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #96A3A6;
         box-shadow: 1px 1px 0 #111111 inset, 1px 1px 0 #96A3A6;
         padding: 0 0 0 34px;
 	max-width:230px;
@@ -1234,9 +1240,13 @@ btn button.rouge,.button.rouge{
 .accueil_annonce .photo .role{
     background-color : white;
     background-color: rgba(255, 255, 255, 0.7);
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
     border-radius: 5px 0 0 5px;
     top: 12px;
     border:1px solid #bbb;
+    -moz-box-shadow: 0px 0px 4px 1px #AAAAAA inset;
+    -webkit-box-shadow: 0px 0px 4px 1px #AAAAAA inset;
     box-shadow: 0px 0px 4px 1px #AAAAAA inset;
     color: #555;
     float: left;
@@ -1320,9 +1330,13 @@ btn button.rouge,.button.rouge{
 #resultat .annonce .photo .role{
     background-color : white;
     background-color: rgba(255, 255, 255, 0.7);
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
     border-radius: 5px 0 0 5px;
     top: 5px;
     border:1px solid #bbb;
+    -moz-box-shadow: 0px 0px 4px 1px #AAAAAA inset;
+    -webkit-box-shadow: 0px 0px 4px 1px #AAAAAA inset;
     box-shadow: 0px 0px 4px 1px #AAAAAA inset;
     color: #555;
     left: -25px;
@@ -1419,7 +1433,11 @@ btn button.rouge,.button.rouge{
     display:block;
     float:left;
     text-align: center;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
     border-radius:3px;
+    -moz-box-shadow: inset 1px 1px 4px  #492F01;
+    -webkit-box-shadow: inset 1px 1px 4px  #492F01;
     box-shadow: inset 1px 1px 4px  #492F01;
     margin:0 5px;
 }
@@ -1987,6 +2005,8 @@ textarea.profil_modif{
     width:20px;
     height: 20px;
     padding: 0 5px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -webkit-border-radius: 2px 2px 2px 2px;
     border-radius: 2px 2px 2px 2px;
     -moz-box-shadow: 1px 1px 0 #999999 inset, 1px 1px 0 #FFFFFF;
     -webkit-box-shadow: 1px 1px 0 #999999 inset, 1px 1px 0 #FFFFFF;
@@ -2170,6 +2190,8 @@ textarea.profil_modif{
     -moz-border-radius:10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
+    -moz-box-shadow: 0px 1px 4px 1px #595959,inset -5px -1px 10px #999, inset 1px 1px 5px #fff ;
+    -webkit-box-shadow: 0px 1px 4px 1px #595959,inset -5px -1px 10px #999, inset 1px 1px 5px #fff ;
     box-shadow: 0px 1px 4px 1px #595959,inset -5px -1px 10px #999, inset 1px 1px 5px #fff ;
 }
 .ajouter_annonce .calculateur h2{
@@ -2191,6 +2213,8 @@ textarea.profil_modif{
 }
 .ajouter_annonce .calculateur .ecran input{
     background-color: #8c8c8c;
+    -moz-box-shadow: inset 1px 1px 6px #111, 1px 1px 0 #FFFFFF;
+    -webkit-box-shadow: inset 1px 1px 6px #111, 1px 1px 0 #FFFFFF;
     box-shadow: inset 1px 1px 6px #111, 1px 1px 0 #FFFFFF;
     font-size: 2em;
     color:#333;
@@ -2219,7 +2243,11 @@ textarea.profil_modif{
     color:white;
     min-height: 35px;
     padding: 5px 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     border-radius: 5px;
+    -moz-box-shadow: inset 1px 1px 0px 0px #bbb, 0 0 1px #000;
+    -webkit-box-shadow: inset 1px 1px 0px 0px #bbb, 0 0 1px #000;
     box-shadow: inset 1px 1px 0px 0px #bbb, 0 0 1px #000;
     border: 1px solid #555;
 }
@@ -2240,6 +2268,9 @@ textarea.profil_modif{
 .ajouter_annonce .calculateur fieldset input{
     width: auto;
     margin: 0 5px 2px 2px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 #publier{
     margin: 0 auto;
@@ -2256,7 +2287,7 @@ textarea.profil_modif{
 #way{
     font-size: 0.875em;
     margin-top:20px;
-    height: 310px;
+    max-height: 310px;
     overflow: auto;
     background-color: #fff;
     padding: 5px 10px;
@@ -2495,6 +2526,8 @@ textarea.profil_modif{
     background:#ffeebb;
 }
 .modifier_annonce, .supprimer_annonce{
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
     height: 29px;
     margin-right: 1px;
@@ -2566,6 +2599,8 @@ textarea.profil_modif{
 }
 .refuser_reservation, .accepter_reservation, .voir_annonce, .annuler_reservation{
     background-color: #555555;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
     color: #EEEEEE;
     cursor: pointer;
@@ -2729,8 +2764,7 @@ textarea.profil_modif{
 	text-decoration:none;
 }
 .footer_nav li a:hover, .footer_nav li a:active, .footer_nav li a:focus{
-	color:#161b1c !important;
-	text-shadow: 0 0 20px #fff, 0 0 15px #fff, 0 0 15px #fff;
+	color:#FBB719 !important;
 	text-decoration:none;
 }
 .footer .copyright{
@@ -2866,7 +2900,7 @@ div.colorPicker-swatch {
         margin: 0 auto;
         position:relative;
         left: 50%;
-        margin-left: -125px;
+        margin-left: -50%;
     }
 }
 @media only screen and (max-width:768px){ /*TABLETTE ET PHONE*/
@@ -2881,6 +2915,12 @@ div.colorPicker-swatch {
     }
     .profil .map{
         float:right;
+    }
+    header h2.slogan {
+        font-size: 1em;
+    }
+    .ajouter_annonce .calculateur{
+        margin-top:15px;
     }
 }
 @media only screen and (max-width: 650px){ /*MOINS DE 650px*/
@@ -2936,6 +2976,7 @@ div.colorPicker-swatch {
     header{
         background-color: #333;
         height: 30px;
+        z-index: 0;
     }
     header h1{
         background: url('../images/logo_small.png') no-repeat 0 0 scroll transparent;
@@ -2969,9 +3010,10 @@ div.colorPicker-swatch {
     #menu>ul>li.nav_compte{
         z-index:1;
         position:fixed;
-        top:50px;
-        right:-170px;
-        width:170px;
+        top:0px;
+        right:-195px;
+        width: 100%;
+        max-width:200px;
         padding:0;
         margin-right:60px;
         -moz-border-radius:0 0 0 5px;
@@ -3000,9 +3042,34 @@ div.colorPicker-swatch {
         left:0;
         margin-left: 0;
      }
-    
+     .content{
+         padding-left: 5px;
+         padding-right: 5px;
+     }
+     .accueil .accueil_annonce {
+        float: none;
+        width: auto;
+        border-top: 1px solid #CCCCCC;
+    }
+    .accueil .accueil_annonce:first-child {
+        border-top: 0 none;
+    }
+    .ajouter_annonce .calculateur{
+        float:none;
+        max-width: 100%;
+    }
+    #map{
+        height:200px;
+    }
+     .footer_nav li {
+        float:none;
+        border:0 none;
+    }
+    .footer{
+        margin-bottom: 54px;
+    }
 }
-@media only screen and (max-width: 2040px) {/*MINI PHONE*/
+@media only screen and (max-width: 2040px) {
     .ico-passager, .ico-passager-conducteur, .ico-conducteur{
         background: url(../images/elements.png) no-repeat scroll -277px -312px transparent;
         height: 40px;

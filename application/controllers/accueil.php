@@ -63,7 +63,7 @@ class Accueil extends CI_Controller {
                 
             $dataList['page'] = 'Accueil';
             $dataList['body'] = 'accueil';
-            $dataList['titre'] = 'Rechercher une annonce';
+            $dataList['titre'] = 'Organisez votre covoiturage';
             $data['vue'] = $this->load->view('accueil',$dataList,true);
             $this->load->view('layout',$data);
 	}

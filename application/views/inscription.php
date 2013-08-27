@@ -11,7 +11,7 @@
                         <p class="methode_texte">C'est simple et rapide&nbsp;!</p>
                         <p class="erreur_inscription">Vous devez être majeur et en accord avec les <a href="#">Conditions générales d'utilisation</a>.</p>
                         <div class="facebook_register">
-                            <img src="<?php echo base_url()?>/web/images/facebook-connect-buttons.png"/>
+                            <img alt="bouton d'inscription via Facebook" title="Inscrivez-vous avec Facebook" src="<?php echo base_url()?>/web/images/facebook-connect-buttons.png"/>
                             <?php if($message['error_facebook_register']){
                                 echo ('<p class="erreur_inscription">'.$message["error_facebook_register"].'</p>');
                             }?>
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="btn clearfix">
                                     <span class="bouton_contour bouton_orange">
-                                        <button id="button" class="orange" value="true" type="submit" name="button">Je m'inscris</button>
+                                        <button class="orange" value="true" type="submit" name="button">Je m'inscris</button>
                                     </span>
                                 </div>
                             </div>

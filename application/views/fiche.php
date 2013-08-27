@@ -3,12 +3,12 @@
         <div class="retour_page">
             <div class="btn clearfix">
                 <span class="bouton_contour bouton_bleu">
-                    <a href="javascript:history.back()" class="button bleu">Retour</a>
+                    <a title="Retour à la page précédente" href="javascript:history.back()" class="button bleu">Retour</a>
                 </span>
             </div>
         </div>
         <div class="partager">
-            <a href="#" 
+            <a title="Partager sur Facebook" href="#" 
                 onclick="window.open(
                     'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 
                     'facebook-share-dialog', 
@@ -49,14 +49,14 @@
                     </div>
                     <div class="span2">
                         <?php if((isset($not_user)&& $annonce->conducteur)){
-                            if(isset($reservation[0])){?>
+                            if($reservation){?>
                                 <div class="btn clearfix">
                                     <span class="bouton_contour bouton_orange">
                                         <span id="reserv_place" class="button orange">
-                                            <?php if($reservation[0]->accepte){?>
-                                                Vous avez <?php echo $reservation[0]->places ?> place(s) de réservée(s) pour ce voyage
+                                            <?php if($reservation->accepte){?>
+                                                Vous avez <?php echo $reservation->places ?> place(s) de réservée(s) pour ce voyage
                                             <?php }else{?>
-                                                Vous avez <?php echo $reservation[0]->places ?> place(s) en attente de réservation pour ce voyage 
+                                                Vous avez <?php echo $reservation->places ?> place(s) en attente de réservation pour ce voyage 
                                             <?php }?>
                                         </span>
                                     </span>
@@ -121,14 +121,14 @@
                                         <input type="hidden" id="id_annonce" name="id_annonce" value="<?php echo $annonce->id ?>"/>
                                     </div>
                                     <div class="btn clearfix cancel_action_overlay">
-                                         <span class="bouton_contour bouton_gris" for="input_regulier">
+                                         <span class="bouton_contour bouton_gris">
                                              <span class="button gris">
                                                  Annuler
                                              </span>
                                          </span>
                                     </div>
                                     <div id="confirm_reserve_place" class="btn clearfix confirm_action_overlay">
-                                        <span class="bouton_contour bouton_gris" for="input_regulier">
+                                        <span class="bouton_contour bouton_gris">
                                             <button type="submit" class="button gris">
                                                 Réserver
                                             </button>
@@ -216,14 +216,16 @@
                     <div class="clearfix">
                         <div class="clearfix">
                             <div class="photo">
+                                <a href="<?php echo base_url().'user/profil/'.$info_membre->user_id ?>" title="Consulter le profil du membre">
                                 <?php
                                 if($info_membre->photo){
-                                    echo '<img src="'.base_url().'web/images/membre/thumb/thumb_'.$info_membre->photo.'" />';
+                                    echo '<img width="55" height="55" alt="photo profil du membre" src="'.base_url().'web/images/membre/thumb/thumb_'.$info_membre->photo.'" />';
                                 }
                                 else{
-                                    echo '<img src="'.base_url().'web/images/membre/thumb/thumb_default.jpg"/>';
+                                    echo '<img width="55" height="55" alt="photo profil du membre" src="'.base_url().'web/images/membre/thumb/thumb_default.jpg"/>';
                                 }
                                 ?>
+                                </a>
                             </div>
                             <div class="info_profil">
                                 <h2 class="identite <?php echo $info_membre->sexe? 'rose': 'bleu' ?>">
@@ -311,7 +313,7 @@
                             </div>
                         </div>
                         <?php if( isset($not_user) ){ ?>
-                        <?php echo form_open('',array('method'=>'post')); ?> 
+                        <?php echo form_open('annonce/contacter/'.$info_membre->user_id,array('method'=>'post')); ?> 
                             <div class="btn clearfix">
                                 <span class="bouton_contour bouton_bleu">
                                     <button class="button bleu"><span class="icon-mail-4"></span>Contacter le covoitureur</button>
@@ -331,14 +333,13 @@
         <div class="span4">
             <div class="info_trajet">
                 <h5>Infos trajet (estimations)</h5>
-                <p><span class="icon-clock"</span><span id="duree"></span></p>
-                <p><span class="icon-road"</span><span id="distance"></span>km</p>
+                <p><span class="icon-clock"></span><span id="duree"></span></p>
+                <p><span class="icon-road"></span><span id="distance"></span>km</p>
             </div>
             <div class="info_etape">
                 <h5>Arrêt(s) étape(s) sur le trajet</h5>
                 <div>
-                    <p><span class="icon-address"></span></p>
-                    <p><?php echo $annonce->heure ?></p>
+                    <p><span class="icon-address"></span><span> <?php echo $annonce->heure ?></span></p>
                     <input id="input_heure_depart" type="hidden" value="<?php echo $annonce->heure ?>" />
                     <p>Départ <?php echo isset($annonce->$d_lang)? $annonce->$d_lang : $annonce->d_fr ?> direction <?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?></p>
                 </div>
@@ -354,8 +355,7 @@
                 }                
                 ?>
                 <div>
-                    <p><span class="icon-flag"></span></p>
-                    <p><?php echo $annonce->heure_arrivee ?></p>
+                    <p><span class="icon-flag"></span><span> <?php echo $annonce->heure_arrivee ?></span></p>
                     <p>Arrivée <?php echo isset($annonce->$a_lang)? $annonce->$a_lang : $annonce->a_fr ?></p>
                 </div>
             </div>

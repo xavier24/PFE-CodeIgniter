@@ -37,10 +37,10 @@
                 
                     <?php if($this->session->userdata('logged_in') || get_cookie('logged_in')){
                     if($user_data->photo != ""){
-                        echo '<span class="nav_pict_user slide_compte"><img src="'.base_url().'web/images/membre/thumb/thumb_'.$user_data->photo.'" width="40" height="40"/></span>';
+                        echo '<span class="nav_pict_user slide_compte"><img width="55" height="55" alt="Votre photo profil" src="'.base_url().'web/images/membre/thumb/thumb_'.$user_data->photo.'" width="40" height="40"/></span>';
                     }
                     else{
-                        echo '<span class="nav_pict_user slide_compte"><img src="'.base_url().'web/images/membre/thumb/thumb_default.jpg" width="40" height="40"/></span>';
+                        echo '<span class="nav_pict_user slide_compte"><img width="55" height="55" alt="Vous ne possédez pas de photo profil" src="'.base_url().'web/images/membre/thumb/thumb_default.jpg" width="40" height="40"/></span>';
                     }
                     if(isset($user_data->facebook)){
                         echo '<div id="facebook_logout" class="">Logout facebook</div>';
