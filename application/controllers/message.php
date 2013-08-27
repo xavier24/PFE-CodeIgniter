@@ -41,19 +41,21 @@ class Message extends CI_Controller {
 			}
 		}
 		else{
-			$data['conversations'] = '';
+                    $data['conversations'] = '';
 		}
                 
                 if($this->uri->segment(3)){
                     $id_convers = $this->uri->segment(3);
                 }
-                else{
+                else if(isset($data['conversations'][0]->id_convers)){
                     $id_convers = $data['conversations'][0]->id_convers;
+                }
+                else{
+                    $id_convers = 0;
                 }
                 
                 $data['messages'] = $this->M_Message->voir($id_convers);
-                //var_dump($data['messages']);
-		$data['titre'] = "Messagerie";
+                $data['titre'] = "Messagerie";
 		$data['body'] = "messagerie";
                 //var_dump($data['conversations']);
 		$dataLayout['vue'] = $this->load->view('messages',$data,true);
@@ -80,16 +82,32 @@ class Message extends CI_Controller {
         public function nouveau($id_correspondant){
             $data['user_data'] = $this->M_Ajax->get_cookie_session_data();
             if(!$data['user_data']){
-                return ;
+                redirect('accueil') ;
             }
             $convers = $this->M_Message->getExistConvers($id_correspondant,$data['user_data']->user_id);
             if($convers){
-                redirect('message/voir/'.$convers->id_convers);
+               redirect('message/voir/'.$convers->id_convers);
             }
             else{
+                
+                $data['correspondant'] = $this->M_User->getUserInfo('user_id',$id_correspondant);
+                $data['titre'] = "Nouveau message";
+		$data['body'] = "nouveau_message";
+                $dataLayout['vue'] = $this->load->view('nouveau_message',$data,true);
+		$this->load->view('layout',$dataLayout);
                 //$id_convers = $this->M_Message->newConvers($id_correspondant,$data['user_data']->user_id);
                 //redirect('message/voir/'.$convers->id_convers);
             }
+        }
+        public function createNewConvers($id_correspondant){
+            $data['user_data'] = $this->M_Ajax->get_cookie_session_data();
+            if(!$data['user_data']){
+                redirect('accueil') ;
+            }
+            
+            $id_convers = $this->M_Message->createConvers($id_correspondant,$data['user_data']->user_id);
+            
+            $this->ajouter($id_convers);
         }
 
 }

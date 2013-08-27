@@ -55,12 +55,21 @@
             }
             
             public function getExistConvers($id_correspondant,$id_user){
-                $this->db->select('user_id,username,nom,photo');
+                $this->db->select('*');
                 $this->db->from('conversation');
-                $this->db->where(array('userID1'=>$id_correspondant,'userID2'=>$id_user));
-                $this->db->or_where(array('userID1'=>$id_user,'userID2'=>$id_correspondant));
+                $this->db->where('(userID1 = '.$id_correspondant.' and userID2 = '.$id_user.')');
+                $this->db->or_where('(userID1 = '.$id_user.' and userID2 = '.$id_correspondant.')');
                 
-                return $this->db->get()->result();
+                return $this->db->get()->row();
+            }
+            
+            public function createConvers($id_correspondant,$id_user){
+                $data['userID1'] = $id_user;
+                $data['userID2'] = $id_correspondant;
+                $this->db->insert('conversation',$data);
+                $id = $this->db->insert_id();
+                
+                return $id;
             }
     }
 ?>

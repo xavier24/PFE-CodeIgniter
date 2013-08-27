@@ -184,6 +184,7 @@ class Annonce extends CI_Controller {
         }
         
         public function delete(){
+            $this->load->model('M_Email');
             $dataList['user_data'] = $this->M_Ajax->get_cookie_session_data();
             if($dataList['user_data']){
                 $id_annonce = $this->input->post('input_id_annonce');
@@ -526,6 +527,8 @@ class Annonce extends CI_Controller {
                 }
                 else {
                     $id = $this->M_Annonce->ajouter($data,$dataCoord,$etapes);
+                    $trajet['trajet'] = intval($user_data->trajet)+1;
+                    $this->M_Annonce->upTrajet($trajet, $user_data->user_id);
                     $this->correspondance($data,$dataRecup,$id);
                     redirect('annonce/fiche/'.$id);
                 }
@@ -610,5 +613,18 @@ class Annonce extends CI_Controller {
             }
             
             redirect('annonce/fiche/'.$id_annonce);
+        }
+        
+        public function contacter($id_correspondant){
+            $this->load->model('M_Message');
+            
+            $user_data = $this->M_Ajax->get_cookie_session_data();
+            $id_convers = $this->M_Message->getExistConvers($id_correspondant,$user_data->user_id);
+            if($id_convers){
+                redirect('message/voir/'.$id_convers->id_convers);
+            }
+            else{
+                redirect('message/nouveau/'.$id_correspondant);
+            }
         }
 }

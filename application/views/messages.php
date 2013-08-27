@@ -1,8 +1,8 @@
 <section class="content messagerie">
     <h1><?php echo $titre ?></h1>
-    <div class="row-fluid accueil">
+    <div class="row-fluid">
+    <?php if($conversations){ ?>
         <div class="span4 liste_conversation">
-            <?php if($conversations){ ?>
             <ul>
                 <?php foreach($conversations as $conversation): ?>
                     <li class="item_conversation clearfix">
@@ -23,12 +23,12 @@
                     </li>
                 <?php endforeach; ?> 
             </ul>
-            <?php }?>
         </div>
         <div class="span8">
             <div id="convers_open">
                 <ul>
-                    <?php foreach($messages as $message): ?>
+                    <?php if($messages){
+                    foreach($messages as $message): ?>
                         <li class="clearfix">
                             <div class="photo">
                                 <img src="<?php echo base_url() ?>web/images/membre/thumb/thumb_<?php echo $message->photo ? $message->photo :'default.jpg' ?>"/>
@@ -51,7 +51,7 @@
                                 <p><?php echo $message->date ?></p>
                             </div>
                         </li>
-                    <?php endforeach; ?>
+                    <?php endforeach; }?>
                 </ul>
             </div>
             <div id="editeur">
@@ -72,5 +72,10 @@
                 });
             </script>
         </div>
+        <?php }
+        else{
+            echo '<p>Vous avez actuellement aucune conversation en cours.</p>';
+        } ?>
+        
     </div>
 </section>

@@ -77,7 +77,7 @@ class M_Annonce extends CI_Model{
             }
             
             //
-            return $id;
+            return $id; 
         }
         
         public function delete($id,$user_id){
@@ -193,5 +193,10 @@ class M_Annonce extends CI_Model{
             $this->db->where('id_reservation', $id_reservation);
             $this->db->where('annonceurID',$user_id);
             $this->db->delete('reservation');
+        }
+        
+        public function upTrajet($data,$id){
+            $this->db->where('user_id',$id);		
+            $this->db->update('users',$data);
         }
 }
