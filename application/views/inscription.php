@@ -1,6 +1,6 @@
 <div class="content">
     <div class="row-fluid inscription">
-        <?php echo form_open('inscription/inscrire',array('method'=>'post')); 
+        <?php echo form_open('inscription/inscrire',array('method'=>'post','id'=>'inscription')); 
             echo validation_errors();?>
             <h1>Comment s'inscrire&nbsp;?</h1>    
             <div class="row-fluid">

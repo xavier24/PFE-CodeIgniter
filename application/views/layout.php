@@ -29,7 +29,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>web/css/responsive.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>web/css/style.css">
         
-        <script src="<?php echo base_url(); ?>web/js/jquery-1.8.2.min.js"></script>
+        <script src="<?php echo base_url(); ?>web/js/jquery-1.8.3.min.js"></script>
         <!--[if lt IE 9]>
             <script type="text/javascript" src="<?php echo base_url(); ?>web/js/html5shiv.js"></script>
             <script type="text/javascript" src="<?php echo base_url(); ?>web/js/css3-mediaqueries.js"></script>
@@ -59,12 +59,12 @@
         </div>   
         <?php include('include/footer.php');?>
         
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
         <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
+        </script>-->
     </body>
 </html>
