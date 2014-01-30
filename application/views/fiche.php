@@ -49,7 +49,7 @@
                     </div>
                     <div class="span2">
                         <?php if((isset($not_user)&& $annonce->conducteur)){
-                            if($reservation){?>
+                            if(isset($reservation) && $reservation){?>
                                 <div class="btn clearfix">
                                     <span class="bouton_contour bouton_orange">
                                         <span id="reserv_place" class="button orange">
