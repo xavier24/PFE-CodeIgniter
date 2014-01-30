@@ -2,7 +2,7 @@
 	"use strict";
 
 	// --- global vars
-            var baseUrl = location.origin + '/PFE-CodeIgniter',
+            var baseUrl = location.origin+'/car-people',
                 villes,
                 depart_lat ,
                 depart_lng ,

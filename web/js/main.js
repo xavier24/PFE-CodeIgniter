@@ -5,8 +5,7 @@
 	"use strict";
 
 	// --- global vars
-        var baseUrl = location.origin + "/PFE-CodeIgniter",
-            $registerForm,
+        var baseUrl = location.origin+'/car-people',
             $loginForm,
             $slideCompte,
             $lang,
@@ -26,6 +25,7 @@
     //INITIALISE SELON PAGE
         
         var controlSession = function(){
+            
             $.ajax({
                 url:baseUrl+'/ajax/dataSession',
                 type:'POST',
@@ -37,12 +37,13 @@
                     else{
                         connect = false;
                     }
-                initialisation(connect);
+                initialise(connect);
                 }
             });
         };
         
-        var initialisation = function(connect){
+        var initialise = function(connect){
+            
             if($("body").hasClass('accueil')){ //ACCUEIL
                 //recuperer valeur slide conducteur pour ajouter la class
                 sliderConducteur();
@@ -65,61 +66,11 @@
                     $('.nav_compte').toggleClass('ouvert');
                 }
             }
-            if($("body").hasClass("profil")){//PROFIL
+			if($("body").hasClass("profil")){//PROFIL
                 autreLangTextearea();
             }
         };
         
-    //INSCRIPTION  
-        var register = function(e){
-            e.preventDefault();
-            var $email = $('#regist_email').val();
-            var $mdp = $('#regist_mdp').val();
-            var $mdp2 = $('#mdp2').val();
-            var $tel = $('#tel').val();
-            var $condition;
-            if($('#condition').is(':checked')){
-                $condition = 1; 
-            }
-            else{
-                $condition = 0;
-            }
-            $.ajax({
-                url:baseUrl+'/ajax/register',
-                type:'POST',
-                dataType:"json",
-                data: { email:$email, mdp:$mdp, mdp2:$mdp2, tel:$tel, condition:$condition },
-               success: function($data){
-                   if($data){
-                       $('.erreur_inscription').remove();
-                       if($data['error_email']){
-                           $('#regist_email').after('<p class="erreur_inscription">'+$data['error_email']+'</p>');
-                       }
-                       if($data['error_exist']){
-                           $('#regist_email').after('<p class="erreur_inscription">'+$data['error_exist']+'</p>');
-                       }
-                       if($data['error_mdp']){
-                           $('#regist_mdp').after('<p class="erreur_inscription">'+$data['error_mdp']+'</p>');
-                       }
-                       if($data['error_mdp2']){
-                           $('#mdp2').after('<p class="erreur_inscription">'+$data['error_mdp2']+'</p>');
-                       }
-                       if($data['error_tel']){
-                           $('#tel').after('<p class="erreur_inscription">'+$data['error_tel']+'</p>');
-                       }
-                       if($data['error_condition']){
-                           $('#condition').next().after('<p class="erreur_inscription">'+$data['error_condition']+'</p>');
-                       }
-                       if($data['id']){
-                          window.location = baseUrl+"/user/profil/"+$data['id']; 
-                       }
-                   }
-                   else{
-                       location.reload();
-                   }
-               } 
-            });
-        }
         
     //MENU    
 	var login = function(e){
@@ -179,7 +130,7 @@
             $(this).parent().parent().find('.profil_modif').toggle();
             $(this).parent().parent().find(".edit_hidden").toggle();
             $(this).parent().parent().find(".colorPicker-picker").toggle();
-	};//editProfil
+		};//editProfil
         
         var uploadPhoto = function(){ //modifier photo profil
             $('#photo').click();
@@ -189,7 +140,7 @@
         };//uploadPhoto
         
         var autreLangTextearea = function(){ // autre langue profil
-            if($("#lang_autre_lang").is(':checked')){
+            if($autreLang.is(':checked')){
                 $("#input_autre_lang").show();
             }
             else{
@@ -306,8 +257,7 @@
         $( function () {
 
             // --- onload routines
-		$registerForm = $("#inscription");
-                $loginForm = $('#login_form');
+		$loginForm = $('#login_form');
                 $slideCompte = $('.slide_compte');
                 $lang = $('.btn_lang');
                 $edit = $(".edit");
@@ -323,7 +273,6 @@
                 $confirm_reserv_place = $("#confirm_reserve_place button");
                 
             // --- events
-                $registerForm.on('submit',register);
                 $loginForm.on('submit',login)
                 $slideCompte.on('click',loginFormSlide);
                 $lang.on('click',changeLang);
@@ -352,7 +301,7 @@
                 $(".btn_check label").on('click',function(){
                     btnCheck($(this))
                 });
-                
+                                
             // --- Appel function externe
                 
         } );
@@ -361,7 +310,7 @@
 
 
 // Avoid `console` errors in browsers that lack a console.
-/*if (!(window.console && console.log)) {
+if (!(window.console && console.log)) {
     (function() {
         var noop = function() {};
         var methods = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'markTimeline', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn'];
@@ -371,7 +320,7 @@
             console[methods[length]] = noop;
         }
     }());
-}*/
+}
 
 // Place any jQuery/helper plugins in here.
 

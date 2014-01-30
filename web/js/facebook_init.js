@@ -15,7 +15,7 @@
               FB.api('/me', function(response) {
                   console.log(response);
                   $.ajax({
-                      url:location.origin+'/PFE-CodeIgniter/ajax/facebook_login/',
+                      url:location.origin+'/car-people/ajax/facebook_login/',
                       type:'POST',
                       dataType: "json",
                       data: { email: response.email, id:response.id },
@@ -25,7 +25,7 @@
                               //location.reload(); 
                           }
                           else{
-                              window.location.replace(location.origin+'/PFE-CodeIgniter/inscription');
+                              window.location.replace(location.origin+'/car-people/inscription');
                           }
                       }
                   });
@@ -36,14 +36,14 @@
               FB.api('/me', function(response) {
                   console.log(response);
                   $.ajax({
-                      url:location.origin+'/PFE-CodeIgniter/ajax/facebook_register/',
+                      url:location.origin+'/car-people/ajax/facebook_register/',
                       type:'POST',
                       dataType: "json",
                       data: { email: response.email, id:response.id ,nom:response.last_name, prenom:response.first_name, sexe:response.gender, naissance:response.birthday},
                       success: function($data){
                           console.log($data);
                           if($data){
-                            window.location.replace(location.origin+'/PFE-CodeIgniter/user/profil/'+$data);
+                            window.location.replace(location.origin+'/car-people/user/profil/'+$data);
                           }
                       }
                   });
@@ -77,7 +77,7 @@
               FB.getLoginStatus(function(response) {
                   if (response.authResponse) {
                       $.ajax({
-                          url:location.origin+'/PFE-CodeIgniter/ajax/facebook_logout/',
+                          url:location.origin+'/car-people/ajax/facebook_logout/',
                           type:'POST',
                           success: function($data){
                               console.log($data);
